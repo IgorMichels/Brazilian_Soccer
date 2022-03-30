@@ -1,0 +1,74 @@
+library(deSolve)
+library(dplyr)
+library(rstan)
+library("bayesplot")
+#library("rstanarm")
+#library("ggplot2")
+
+
+Sys.setlocale("LC_TIME", "English")
+dados <- read.csv2('daily-deaths-covid-19.csv', colClasses = c("character", "character","character","integer"))
+dados$Date = as.Date(strptime(dados$Date,"%b %e,%y"))
+
+#Rio de Janeiro
+entity = "Rio de Janeiro"
+diaD = '2020/03/15'
+pop = 6718903
+
+#Italy
+#entity = "Italy"
+#diaD = '2020/03/09'
+#pop = 60360000
+
+dados_observados <- dados$Daily.confirmed.deaths..deaths.[dados$Entity == entity]
+data_inicio_isolamento = as.Date(diaD)
+ind_aux = (dados$Entity == entity & as.Date(dados$Date) >= data_inicio_isolamento)
+dados_observados_apos_isolamento = dados$Daily.confirmed.deaths..deaths.[ind_aux]
+dia_inicio_isolamento = length(dados_observados)-length(dados_observados_apos_isolamento)+1
+
+N = length(dados_observados)
+sample_time = 1:N
+
+
+covid_data = list(n_obs = N,
+                  dia_inicio_calib = dia_inicio_isolamento,
+                  n_theta = 3,
+                  n_difeq = 7,
+                  n_pop = pop, 
+                  y = dados_observados,
+                  t0 = 0,
+                  ts = sample_time)
+
+parameters = c("theta", "E0", "R01", "R02", "y_out_calib")
+#parameters = c("theta", "E0", "R01", "R02") 
+
+n_chains=1
+#n_warmups=350
+#n_iter=5750
+n_warmups = 10
+n_iter = 100
+n_thin=1
+set.seed(1234)
+# Set initial values:
+ini_1 = function(){
+  list(theta=c(runif(1,0.003,0.005), runif(1,0.2,0.6), runif(1,0.2,0.6)), 
+       E0=runif(1,0,0.01)) 
+}
+model <- stan_model('Proficiencias.stan')
+
+sir_covid_fit = sampling( model,
+                      data = covid_data,
+                      pars = parameters,
+                      init = ini_1,
+                      chains = n_chains,
+                      warmup = n_warmups,
+                      iter = n_iter,
+                      thin = n_thin,
+                      seed = 438497)
+
+#temp <- t(as.matrix(sir_covid_fit))
+#temp <- temp[7:(nrow(temp)-1),sample(1:ncol(temp),50)]
+
+#color_scheme_set("red")
+#ppc_dens_overlay(y = temp[1,],
+#                yrep = temp)

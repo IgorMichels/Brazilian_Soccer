@@ -1,0 +1,147 @@
+functions {
+  real[] SIR(real t, real[] y, real[] theta, 
+             real[] x_r, int[] x_i) {
+    
+    real S = y[1];
+    real E = y[2];
+    real I = y[3];
+    real C = y[4];
+    real H = y[5];
+    real R = y[6];
+    real D = y[7];
+    real N = x_i[1];
+    int  day_change_b = x_i[2];
+    
+    real mu = theta[1];
+    real beta = (t >= day_change_b) ? theta[3]: theta[2];
+    real gamma_e = x_r[1];
+    real gamma_i = x_r[2];
+    real gamma_h = x_r[3];
+    
+    real dE_dt =  beta * I * S / N - gamma_e * E;
+    real dI_dt =  gamma_e * E * (1.0-mu) - gamma_i*I;
+    real dC_dt =  gamma_e * E * mu - gamma_i*C;
+    real dR_dt =  gamma_i * I;
+    real dH_dt =  gamma_i * C - gamma_h * H;
+    real dD_dt =  gamma_h * H;
+    real dS_dt =  - (dE_dt+dI_dt+dC_dt+dR_dt+dH_dt+dD_dt);
+    
+    //print([t, beta]);
+    
+    return {dS_dt, dE_dt, dI_dt, dC_dt, dR_dt, dH_dt, dD_dt};
+  }
+}
+data {
+  int<lower = 1> n_obs;       // number of days observed
+  int<lower = 1> dia_inicio_calib;  // initial day of calibration
+  int<lower = 1> n_theta;     // number of model parameters
+  int<lower = 1> n_difeq;     // number of differential equations
+  int<lower = 1> n_pop;       // population 
+  int y[n_obs];           // data, total number of infected individuals each day
+  real t0;                // initial time point (1)
+  real ts[n_obs];         // time points observed
+  
+}
+transformed data {
+  real x_r[3];
+  int  x_i[2];
+  int y_truncated[n_obs-dia_inicio_calib+1];
+  int n_days_calib = n_obs-dia_inicio_calib + 1;
+  int pred_days = 60;
+  real ts_aux[n_obs+pred_days];
+  
+  x_r[1] = 1.0/3.5;     // gamma_e
+  x_r[2] = 1.0/5.5;     // gamma_i
+  x_r[3] = 1.0/10.0;    // gamma_h
+  x_i[1] = n_pop;       // population
+  x_i[2] = dia_inicio_calib+40;
+  
+  y_truncated = y[dia_inicio_calib:n_obs];
+  
+  for (i in 1:(n_obs+pred_days)){
+    ts_aux[i]=i;  
+  }
+}
+
+parameters {
+  real<lower = 0> theta[n_theta]; // model parameters {beta,gamma}
+  real<lower = 0> E0;  // initial number of exposed individuals
+}
+
+transformed parameters{
+  real y_hat[n_obs, n_difeq]; // solution from the ODE solver
+  real y_init[n_difeq];       // initial conditions for both fractions of S and I
+  //real E0;                    // initial condition for E compartment
+  
+  y_init[1] = n_pop;
+  y_init[2] = E0;
+  y_init[3] = 1.0E-10;     // to avoid negative values
+  y_init[4] = 1.0E-10;
+  y_init[5] = 1.0E-10;
+  y_init[6] = 1.0E-10;
+  y_init[7] = 1.0E-10;
+  y_hat = integrate_ode_rk45(SIR, y_init, t0, ts, theta, x_r, x_i);
+  
+}
+model {
+  real lambda[n_days_calib+40];
+  //real sigma[n_days_calib];
+  //priors
+  theta[1] ~ uniform(0,0.1);     //mu
+  theta[2] ~ uniform(0.001, 3);  //beta1
+  theta[3] ~ uniform(0.001, 3);  //beta2
+  E0 ~ uniform(0, 12);
+  
+  //print(theta);
+  //print(E0);
+  //print(y_hat[n_obs])
+  
+  //likelihood
+  for (i in 1:(n_days_calib)){
+    lambda[i] = (y_hat[i+dia_inicio_calib-1,7]-y_hat[i+dia_inicio_calib-2,7]);
+  }
+  y_truncated ~ poisson(lambda);
+  //print(y_truncated);
+  //print(lambda);
+  //print(y_hat[dia_inicio_calib:n_obs, 7]);
+}
+  
+generated quantities {
+  real R01;      // Basic reproduction number before intervention
+  real R02;      // Basic reproduction number after
+  real y_aux[n_obs+60,n_difeq];
+  real y_out_calib[n_days_calib+pred_days];
+
+  //real lambda_aux[n_days_calib];
+  //real y_aux[n_obs, n_difeq]; // solution from the ODE solver
+  //real y_init_out[n_difeq];       // initial conditions for both fractions of S and I
+
+  R01 = theta[2]/x_r[2];
+  R02 = theta[3]/x_r[2];
+  
+  //y_out_calib = poisson_rng(col(to_matrix(lambda), 2));
+  
+
+  //real E0;                    // initial condition for E compartment
+  
+  //y_init_out[1] = n_pop;
+  //y_init_out[2] = E0;
+  //y_init_out[3] = 1.0E-10;     // to avoid negative values
+  //y_init_out[4] = 1.0E-10;
+  //y_init_out[5] = 1.0E-10;
+  //y_init_out[6] = 1.0E-10;
+  //y_init_out[7] = 1.0E-10;
+  
+  //y_aux = integrate_ode_rk45(SIR, y_init_out, t0, ts, theta, x_r, x_i);
+  
+  //for (i in 1:(n_days_calib)){
+  //  lambda_aux[i] = (y_hat[i+dia_inicio_calib-1,7]-y_hat[i+dia_inicio_calib-2,7]);
+  //}
+  //y_out_calib = poisson_rng(lambda_aux);
+
+  
+  y_aux = integrate_ode_rk45(SIR, y_init, t0, ts_aux, theta, x_r, x_i);
+  y_out_calib = y_aux[dia_inicio_calib:(n_obs+pred_days),7];
+  
+}
+
