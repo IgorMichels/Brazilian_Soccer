@@ -9,14 +9,16 @@ data {
 }
 
 parameters {
-  real<lower = 0> theta[n_players]; // model parameters {beta, gamma}
+  real<lower = 0> theta1[n_players]; // model parameters {beta, gamma}
+  real<lower = 0> theta2[n_players]; // model parameters {beta, gamma}
 }
 
 model {
-  theta ~ std_normal();     // mu
+  theta1 ~ std_normal();     // mu
+  theta2 ~ std_normal();     // mu
   for (n in 1:n_obs){
-    y[n, 1] ~ poisson(sum(theta[t1[n, ]]) / sum(theta[t2[n, ]]));
-    y[n, 2] ~ poisson(sum(theta[t2[n, ]]) / sum(theta[t1[n, ]]));
+    y[n, 1] ~ poisson(sum(theta1[t1[n, ]]) / sum(theta2[t2[n, ]]));
+    y[n, 2] ~ poisson(sum(theta1[t2[n, ]]) / sum(theta2[t1[n, ]]));
   }
 }
 

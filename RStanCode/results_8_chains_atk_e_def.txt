@@ -1,0 +1,17 @@
+[1] "----------------------- Ataque -----------------------"
+[1] "Numero jogadores:      " "220"                    
+[1] "Numero jogadores time: " "11"                     
+[1] "Número jogos         : " "3800"                   
+[1] "correlacao: "      "0.762151972934173"
+                                  rho 
+  "monotonicidade" "0.65912105622017" 
+[1] "R2: "              "0.257671959463453"
+[1] "----------------------- Defesa -----------------------"
+[1] "Numero jogadores:      " "220"                    
+[1] "Numero jogadores time: " "11"                     
+[1] "Número jogos         : " "3800"                   
+[1] "correlacao: "      "0.681158969462873"
+                                    rho 
+   "monotonicidade" "0.671343322269994" 
+[1] "R2: "               "-0.125378573067103"
+
