@@ -18,27 +18,25 @@ for i in range(380):
 	jogos[i, 2] = np.random.poisson(forcas[jogos[i, 3]] / forcas[jogos[i, 0]])
 
 # implementando o ELO
-def score_esperado(RA, RB, HA, HB):
-	return (1 + 10 ** (((RA + HA) - (RB + HB)) / 400)) ** (-1)
+def score_esperado(RA, RB, H):
+	return (1 + 10 ** ((RA + H - RB) / 400)) ** (-1)
 
-def atualiza_rating(RA, RB, SA, SB, KA, KB, HA, HB):
-	EA = score_esperado(RA, RB, HA, HB)
+def atualiza_rating(RA, RB, SA, SB, KA, KB, H):
+	EA = score_esperado(RA, RB, H)
 	EB = 1 - EA
 	CA = (SA - EA) * KA
 	CB = (SB - EB) * KB
 	RA = RA + CA
 	RB = RB + CB
-	HA = HA + CA
-	HB = HB + CB
+	H = H + CA
 	
-	return RA, RB, HA, HB
+	return RA, RB, H
 
 def ELO(jogos, forcas, Ki = 40, Kn = 25, filtro = 7, Hi = 120):
 	n_jogos = len(jogos)
 	n_clubes = len(forcas)
 	jogados = [0 for i in range(n_clubes)]
-	H_mandante = [Hi for i in range(n_clubes)]
-	H_visitante = [Hi for i in range(n_clubes)]
+	Hs = [Hi for i in range(n_clubes)]
 	for i in range(n_jogos):
 		cA, sA, sB, cB = jogos[i, :]
 		if sA > sB:
@@ -61,10 +59,10 @@ def ELO(jogos, forcas, Ki = 40, Kn = 25, filtro = 7, Hi = 120):
 			KB = Kn
 		
 		RA, RB = forcas[cA], forcas[cB]
-		HA, HB = H_mandante[cA], H_visitante[cB]
-		RA, RB, HA, HB = atualiza_rating(RA, RB, SA, SB, KA, KB, HA, HB)
+		H = Hs[cA]
+		RA, RB, H = atualiza_rating(RA, RB, SA, SB, KA, KB, H)
 		forcas[cA], forcas[cB] = RA, RB
-		H_mandante[cA], H_visitante[cB] = HA, HB
+		Hs[cA] = H
 	
 	return forcas
 
