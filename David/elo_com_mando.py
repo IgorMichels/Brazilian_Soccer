@@ -13,7 +13,8 @@ jogos = np.zeros((380, 4), int) # home, score home, score away, away
 ordem = pd.read_csv('ordem.csv')
 jogos[:, 0] = np.hstack([ordem['h'].values - 1, ordem['a'].values - 1])
 jogos[:, 3] = np.hstack([ordem['a'].values - 1, ordem['h'].values - 1])
-for i in range(380):
+jogos = np.vstack([jogos for i in range(10)])
+for i in range(len(jogos)):
 	jogos[i, 1] = np.random.poisson(forcas[jogos[i, 0]] / forcas[jogos[i, 3]])
 	jogos[i, 2] = np.random.poisson(forcas[jogos[i, 3]] / forcas[jogos[i, 0]])
 
@@ -67,3 +68,5 @@ def ELO(jogos, forcas, Ki = 40, Kn = 25, filtro = 7, Hi = 120):
 	return forcas
 
 novas_forcas = ELO(jogos, copy(forcas))
+print(forcas)
+print(novas_forcas)
