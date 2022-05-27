@@ -1,7 +1,3 @@
-'''
-Algoritmo ELO com mando de campo
-'''
-
 # import's
 import numpy as np
 import pandas as pd
@@ -70,54 +66,109 @@ for i in range(anos):
 		jogos[jogo, 2] = np.random.poisson(forca_time_B / forca_time_A)
 
 # implementando o ELO
-def score_esperado(RA, RB, H):
+def score_esperado(escalacao_A, escalacao_B, H, forcas):
+	tempo = 0
+	RA = 0
+	RB = 0
+	for jogador in escalacao_A:
+		tempo += jogador[1]
+		RA += forcas[jogador[0]] * jogador[1]
+		
+	for jogador in escalacao_B:
+		RB += forcas[jogador[0]] * jogador[1]
+	
+	RA = RA / tempo
+	RB = RB / tempo
 	return (1 + 10 ** ((RA + H - RB) / 400)) ** (-1)
 
-def atualiza_rating(RA, RB, SA, SB, KA, KB, H):
-	EA = score_esperado(RA, RB, H)
-	EB = 1 - EA
-	CA = (SA - EA) * KA
-	CB = (SB - EB) * KB
-	RA = RA + CA
-	RB = RB + CB
-	H = H + CA
+def atualiza_rating(escalacao_A, escalacao_B, D, H, forcas, Ks, qs):
+	'''
+	SA     : float, score do time A
+	SB     : float, score do time B
+	D      : int, diferença no placar (gols A - gols B)
+	H      : float, força do mando de campo
+	forcas : vetor com as forças de cada jogador
+	Ks     : vetor dos K's
+	qs     : vetor dos q's
+	'''
+	if D > 0:
+		SA = 1
+	elif D == 0:
+		SA = 0.5
+	else:
+		SA = 0
 	
-	return RA, RB, H
+	SB = 1 - SA
+	D = abs(D)
+	EA = score_esperado(escalacao_A, escalacao_B, H, forcas)
+	EB = 1 - EA
+	C_time = 0
+	for jogador in escalacao_A:
+		t = jogador[1] / 90 # fixado M_max = 90
+		if D == 0:
+			C = (SA - EA) * t
+		else:
+			C = (SA - EA) * D ** (1 / 2)
+		
+		K = Ks[jogador[0]]
+		q = qs[jogador[0]]
+		forcas[jogador[0]] += K * (q * C + (1 - q) * C * t)
+		if jogador[1] == 0:
+			# o jogador não jogou
+			Ks[jogador[0]] += 0.5
+			qs[jogador[0]] += 0.025
+		else:
+			# ele jogou
+			C_time += C
+			Ks[jogador[0]] -= 0.25
+			qs[jogador[0]] -= 0.025
+			
+	for jogador in escalacao_B:
+		t = jogador[1] / 90 # fixado M_max = 90
+		if D == 0:
+			C = (SB - EB) * t
+		else:
+			C = (SB - EB) * D ** (1 / 2)
+		
+		K = Ks[jogador[0]]
+		q = qs[jogador[0]]
+		# a força muda mesmo que um jogador não entrou em campo
+		# quando o time ganha ou perde
+		forcas[jogador[0]] += K * (q * C + (1 - q) * C * t)
+		if jogador[1] == 0:
+			# o jogador não jogou
+			Ks[jogador[0]] += 0.5
+			qs[jogador[0]] += 0.025
+		else:
+			# ele jogou
+			Ks[jogador[0]] -= 0.25
+			qs[jogador[0]] -= 0.025
+	
+	H += C_time
+	return forcas, Ks, qs, H
 
-def ELO(jogos, forcas, Ki = 40, Kn = 25, filtro = 7, Hi = 120):
-	n_jogos = len(jogos)
-	n_clubes = len(forcas)
-	jogados = [0 for i in range(n_clubes)]
-	Hs = [Hi for i in range(n_clubes)]
-	for i in range(n_jogos):
-		cA, sA, sB, cB = jogos[i, :]
-		if sA > sB:
-			SA = 1
-		elif sA == sB:
-			SA = 0.5
-		else:
-			SA = 0
-			
-		SB = 1 - SA
-		
-		if jogados[cA] < filtro:
-			KA = Ki
-		else:
-			KA = Kn
-			
-		if jogados[cB] < filtro:
-			KB = Ki
-		else:
-			KB = Kn
-		
-		RA, RB = forcas[cA], forcas[cB]
-		H = Hs[cA]
-		RA, RB, H = atualiza_rating(RA, RB, SA, SB, KA, KB, H)
-		forcas[cA], forcas[cB] = RA, RB
-		Hs[cA] = H
+def ELO(jogos, forcas, escalacoes, Ks, qs, Hs, anos):
+	for i in range(anos):
+		if i > 0:
+			for time in range(20):
+				for jogador in equipes[i][time]:
+					if jogador not in equipes[i - 1][time]:
+						# fazendo a correção dos parâmetros pela troca de clube
+						Ks[jogador] = 40
+						qs[jogador] = 1
+						
+		for j in range(380):
+			jogo = i * 380 + j
+			cA, sA, sB, cB = jogos[jogo, :]
+			D = sA - sB
+			H = Hs[cA]
+			escalacao_A, escalacao_B = escalacoes[i]
+			forcas, Ks, qs, H = atualiza_rating(escalacao_A, escalacao_B, D, H, forcas, Ks, qs)
+			Hs[cA] = H
 	
 	return forcas
 
-novas_forcas = ELO(jogos, copy(forcas))
-#print(forcas)
-#print(novas_forcas)
+Ks = [32 for i in range(len(jogadores))]
+qs = [1 for i in range(len(jogadores))]
+Hs = [20 for i in range(20)]
+novas_forcas = ELO(jogos, copy(forcas), escalacoes, Ks, qs, Hs, anos)
