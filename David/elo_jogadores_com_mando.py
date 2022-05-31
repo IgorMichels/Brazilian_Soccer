@@ -91,6 +91,8 @@ def atualiza_rating(escalacao_A, escalacao_B, D, H, forcas, Ks, qs):
 	Ks     : vetor dos K's
 	qs     : vetor dos q's
 	'''
+	impacto_cA = {}
+	impacto_cB = {}
 	if D > 0:
 		SA = 1
 	elif D == 0:
@@ -102,7 +104,10 @@ def atualiza_rating(escalacao_A, escalacao_B, D, H, forcas, Ks, qs):
 	D = abs(D)
 	EA = score_esperado(escalacao_A, escalacao_B, H, forcas)
 	EB = 1 - EA
-	C_time = 0
+	C_time_A = 0
+	C_time_B = 0
+	tempo_total_A = 0
+	tempo_total_B = 0
 	for jogador in escalacao_A:
 		t = jogador[1] / 90 # fixado M_max = 90
 		if D == 0:
@@ -110,26 +115,7 @@ def atualiza_rating(escalacao_A, escalacao_B, D, H, forcas, Ks, qs):
 		else:
 			C = (SA - EA) * D ** (1 / 2)
 		
-		K = Ks[jogador[0]]
-		q = qs[jogador[0]]
-		forcas[jogador[0]] += K * (q * C + (1 - q) * C * t)
-		if jogador[1] == 0:
-			# o jogador não jogou
-			Ks[jogador[0]] += 0.5
-			qs[jogador[0]] += 0.025
-		else:
-			# ele jogou
-			C_time += C
-			Ks[jogador[0]] -= 0.25
-			qs[jogador[0]] -= 0.025
-			
-	for jogador in escalacao_B:
-		t = jogador[1] / 90 # fixado M_max = 90
-		if D == 0:
-			C = (SB - EB) * t
-		else:
-			C = (SB - EB) * D ** (1 / 2)
-		
+		impacto_cA[jogador[0]] = [C, jogador[1]]
 		K = Ks[jogador[0]]
 		q = qs[jogador[0]]
 		# a força muda mesmo que um jogador não entrou em campo
@@ -141,13 +127,44 @@ def atualiza_rating(escalacao_A, escalacao_B, D, H, forcas, Ks, qs):
 			qs[jogador[0]] += 0.025
 		else:
 			# ele jogou
+			C_time_A += C
+			tempo_total_A += jogador[1]
 			Ks[jogador[0]] -= 0.25
 			qs[jogador[0]] -= 0.025
 	
-	H += C_time
-	return forcas, Ks, qs, H
+	for jogador in escalacao_B:
+		t = jogador[1] / 90 # fixado M_max = 90
+		if D == 0:
+			C = (SB - EB) * t
+		else:
+			C = (SB - EB) * D ** (1 / 2)
+		
+		impacto_cB[jogador[0]] = [C, jogador[1]]
+		K = Ks[jogador[0]]
+		q = qs[jogador[0]]
+		# a força muda mesmo que um jogador não entrou em campo
+		# quando o time ganha ou perde
+		forcas[jogador[0]] += K * (q * C + (1 - q) * C * t)
+		if jogador[1] == 0:
+			# o jogador não jogou
+			Ks[jogador[0]] += 0.5
+			qs[jogador[0]] += 0.025
+		else:
+			# ele jogou
+			C_time_B += C
+			tempo_total_B += jogador[1]
+			Ks[jogador[0]] -= 0.25
+			qs[jogador[0]] -= 0.025
+	
+	H += C_time_A
+	impacto_cA['C'] = C_time_A
+	impacto_cA['tempo'] = tempo_total_A
+	impacto_cB['C'] = C_time_B
+	impacto_cB['tempo'] = tempo_total_B
+	return forcas, Ks, qs, H, impacto_cA, impacto_cB
 
 def ELO(jogos, forcas, escalacoes, Ks, qs, Hs, anos):
+	impactos = {}
 	for i in range(anos):
 		if i > 0:
 			for time in range(20):
@@ -162,13 +179,21 @@ def ELO(jogos, forcas, escalacoes, Ks, qs, Hs, anos):
 			cA, sA, sB, cB = jogos[jogo, :]
 			D = sA - sB
 			H = Hs[cA]
-			escalacao_A, escalacao_B = escalacoes[i]
-			forcas, Ks, qs, H = atualiza_rating(escalacao_A, escalacao_B, D, H, forcas, Ks, qs)
+			escalacao_A, escalacao_B = escalacoes[jogo]
+			forcas, Ks, qs, H, impacto_cA, impacto_cB = atualiza_rating(escalacao_A, escalacao_B, D, H, forcas, Ks, qs)
 			Hs[cA] = H
+			impactos[jogo] = {}
+			impactos[jogo][cA] = impacto_cA
+			impactos[jogo][cB] = impacto_cB
 	
-	return forcas
+	return forcas, impactos
+
+def calcular_impactos(impactos):
+	pass
 
 Ks = [32 for i in range(len(jogadores))]
 qs = [1 for i in range(len(jogadores))]
 Hs = [20 for i in range(20)]
-novas_forcas = ELO(jogos, copy(forcas), escalacoes, Ks, qs, Hs, anos)
+novas_forcas, impactos = ELO(jogos, copy(forcas), escalacoes, Ks, qs, Hs, anos)
+print(impactos)
+# calcular impacto do jogador
