@@ -166,9 +166,11 @@ def atualiza_rating(escalacao_A, escalacao_B, D, H, forcas, Ks, qs):
 def ELO(jogos, forcas, escalacoes, Ks, qs, Hs, anos):
 	impactos = {}
 	for i in range(anos):
-		if i > 0:
-			for time in range(20):
-				for jogador in equipes[i][time]:
+		for time in range(20):
+			for jogador in equipes[i][time]:
+				if i == 0:
+					impactos[jogador] = {}
+				else:
 					if jogador not in equipes[i - 1][time]:
 						# fazendo a correção dos parâmetros pela troca de clube
 						Ks[jogador] = 40
@@ -182,18 +184,38 @@ def ELO(jogos, forcas, escalacoes, Ks, qs, Hs, anos):
 			escalacao_A, escalacao_B = escalacoes[jogo]
 			forcas, Ks, qs, H, impacto_cA, impacto_cB = atualiza_rating(escalacao_A, escalacao_B, D, H, forcas, Ks, qs)
 			Hs[cA] = H
-			impactos[jogo] = {}
-			impactos[jogo][cA] = impacto_cA
-			impactos[jogo][cB] = impacto_cB
+			for jogador in impacto_cA:
+				if type(jogador) == int:
+					impactos[jogador][jogo] = [impacto_cA[jogador][0], impacto_cA[jogador][1], impacto_cA['C'], impacto_cA['tempo']]
+				
+			for jogador in impacto_cB:
+				if type(jogador) == int:
+					impactos[jogador][jogo] = [impacto_cB[jogador][0], impacto_cB[jogador][1], impacto_cB['C'], impacto_cB['tempo']]
 	
 	return forcas, impactos
 
+def calcular_impacto_jogador(impactos_jogador):
+	C_total_jogador = 0
+	tempo_total_jogador = 0
+	C_total_time = 0
+	tempo_total_time = 0
+	for jogo in impactos_jogador:
+		C_jogador, tempo_jogador, C_time, tempo_time = impactos_jogador[jogo]
+		C_total_jogador += C_jogador
+		tempo_total_jogador += tempo_jogador
+		C_total_time += C_time
+		tempo_total_time += tempo_time
+	
+	return 90 * (C_total_time / tempo_total_time - (C_total_time - C_total_jogador) / (tempo_total_time - tempo_total_jogador))
+
 def calcular_impactos(impactos):
-	pass
+	impactos_final = {}
+	for jogador in impactos:
+		impactos_final[jogador] = calcular_impacto_jogador(impactos[jogador])
+	
+	return impactos_final
 
 Ks = [32 for i in range(len(jogadores))]
 qs = [1 for i in range(len(jogadores))]
 Hs = [20 for i in range(20)]
 novas_forcas, impactos = ELO(jogos, copy(forcas), escalacoes, Ks, qs, Hs, anos)
-print(impactos)
-# calcular impacto do jogador
