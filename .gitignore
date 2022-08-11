@@ -24,3 +24,5 @@ docs/site/
 Manifest.toml
 
 .ipynb_checkpoints
+
+*/__pycache__
