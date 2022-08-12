@@ -23,6 +23,6 @@ docs/site/
 # environment.
 Manifest.toml
 
+*/.ipynb_checkpoints
 .ipynb_checkpoints
-
 */__pycache__
