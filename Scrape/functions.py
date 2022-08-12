@@ -170,3 +170,16 @@ def catch_goals(text):
     goals += re.findall('\+\d+\s*\dT\s*FT[a-zA-ZÀ-ÿ\-\.\s]+', text)
     
     return goals
+    
+def find_changes(text):
+    regex  = '\d{2}:\d{2}\s*\dT[a-zA-ZÀ-ÿ\-\.\s]+\/[A-Z]{2}\s*'
+    regex += '\d+\s*\-\s*[a-zA-ZÀ-ÿ\-\.\s]+\d+\s*\-\s*[a-zA-ZÀ-ÿ\-\. ]+|'
+    regex += '\d{2}:\d{2}\s*[a-zA-ZÀ-ÿ\-\.\s]+\/[A-Z]{2}\s*'
+    regex += '\d+\s*\-\s*[a-zA-ZÀ-ÿ\-\.\s]+\d+\s*\-\s*[a-zA-ZÀ-ÿ\-\. ]+|'
+    regex += '\d{2}:\d{2}\s*[a-zA-ZÀ-ÿ\-\.\s]+\s*'
+    regex += '\d+\s*\-\s*[a-zA-ZÀ-ÿ\-\.\s]+\d+\s*\-\s*[a-zA-ZÀ-ÿ\-\. ]+|'
+    regex += '\d{2}:\d{2}\s*\dT\s*[a-zA-ZÀ-ÿ\-\.\s]+\s*'
+    regex += '\d+\s*\-\s*[a-zA-ZÀ-ÿ\-\.\s]+\d+\s*\-\s*[a-zA-ZÀ-ÿ\-\. ]+'
+    subs = re.findall(regex, text)
+    
+    return subs
