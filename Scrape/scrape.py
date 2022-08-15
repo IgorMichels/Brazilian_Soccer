@@ -1,3 +1,4 @@
+from functions import *
 from glob import glob
 from time import time
 import requests
@@ -7,13 +8,15 @@ import os
 
 from PyPDF2 import *
 
-start = time()
-#os.chdir('Área de Trabalho/FGV/00 - TCC/Scrape/')
-competitions = [('Serie_A', '142'),
+def clear():
+    os.system('clear')
+
+start_scrape = time()
+competitions = [('CdB', '424'),
+                ('Serie_A', '142'),
                 ('Serie_B', '242'),
                 ('Serie_C', '342'),
-                ('Serie_D', '542'),
-                ('CdB', '424')]
+                ('Serie_D', '542')]
 
 for competition in competitions:
     name, cod = competition
@@ -37,18 +40,19 @@ for competition in competitions:
     os.chdir('..')
 
 with open('number_of_games.json', 'r') as f:
-    games = json.load(f)
+    n_games = json.load(f)
 
 errors = {}
 for competition in competitions:
     competition, cod = competition
     errors[competition] = {}
     for year in range(2013, 2023):
-        print(f'Iniciando ano de {year} para {competition.replace("_", " ")}')
+        clear()
+        print(f'Iniciando ano de {year} para {competition.replace("_", " ")} (scrape)')
         files = glob(f'{competition}/{year}/CSVs/*.csv')
         year = str(year)
         errors[competition][year] = []
-        for game in range(1, games[competition][year]):
+        for game in range(1, n_games[competition][year]):
             save = False
             try:
                 name = f'{competition}/{year}/PDFs/{str(game).zfill(3)}.pdf'
@@ -87,10 +91,112 @@ for competition in competitions:
                 else:
                     errors[competition][year].append(name)
 
-        print(f'Finalizado ano de {year} para {competition.replace("_", " ")}\n')
-
-with open('scrape_errors.json', 'w') as f:
+with open('Errors/scrape_errors.json', 'w') as f:
     json.dump(errors, f)
 
-end = time()
-print(f'Scrape finalizado em {end - start:.2f} segundos!')
+end_scrape = time()
+start_extract = time()
+
+errors = {}
+cont_sucess = 0
+cont_fail = 0
+for competition in competitions:
+    competition = competition[0]
+    for year in range(2013, 2023):
+        clear()
+        print(f'Iniciando o ano de {year} para {competition.replace("_", " ")} (extração)')
+        games = {}
+        for game in range(1, n_games[competition][str(year)] + 1):
+            f_club, f_result, f_players, f_goals, f_changes = False, False, False, False, False
+            try:
+                file = f'{competition}/{str(year)}/CSVs/{str(game).zfill(3)}.csv'
+                f = open(file)
+                data = f.readlines()
+                f.close()
+                text = ''
+                for row in data:
+                    text += row
+                    
+                clubs = catch_teams(text)
+                assert len(clubs) == 1
+                f_club = True
+                
+                result = final_result(text)
+                assert len(result) == 1
+                result = result[0]
+                f_result = True
+                
+                players = catch_players(text)
+                assert len(players) >= 36
+                f_players = True
+                
+                goals = catch_goals(text)
+                assert len(goals) == int(result[0]) + int(result[-1])
+                f_goals = True
+                
+                changes = find_changes(text)
+                assert len(changes) <= 10
+                f_changes = True
+                
+                games[str(game).zfill(3)] = {'Mandante'      : clubs[0][0],
+                                             'Visitante'     : clubs[0][1],
+                                             'Resultado'     : result,
+                                             'Jogadores'     : players,
+                                             'Gols'          : goals,
+                                             'Substituições' : changes}
+                
+                cont_sucess += 1
+            except FileNotFoundError:
+                erro = 'scrape'
+                if competition in errors:
+                    if f'{year}' in errors[competition]:
+                        errors[competition][f'{year}'][str(game).zfill(3)] = erro
+                    else:
+                        errors[competition][f'{year}'] = {}
+                        errors[competition][f'{year}'][str(game).zfill(3)] = erro
+                else:
+                    errors[competition] = {}
+                    errors[competition][f'{year}'] = {}
+                    errors[competition][f'{year}'][str(game).zfill(3)] = erro
+            
+            except AssertionError:
+                cont_fail += 1
+                if not f_club:
+                    erro = 'clube'
+                elif not f_result:
+                    erro = 'resultado'
+                elif not f_players:
+                    erro = 'jogadores'
+                elif not f_goals:
+                    erro = 'gols'
+                elif not f_changes:
+                    erro = 'substituições'
+                else:
+                    erro = 'ver'
+                if competition in errors:
+                    if f'{year}' in errors[competition]:
+                        errors[competition][f'{year}'][str(game).zfill(3)] = erro
+                    else:
+                        errors[competition][f'{year}'] = {}
+                        errors[competition][f'{year}'][str(game).zfill(3)] = erro
+                else:
+                    errors[competition] = {}
+                    errors[competition][f'{year}'] = {}
+                    errors[competition][f'{year}'][str(game).zfill(3)] = erro
+
+        with open(f'{competition}/{str(year)}/games.json', 'w') as f:
+            json.dump(games, f)
+                    
+with open('Errors/infos_errors.json', 'w') as f:
+    json.dump(errors, f)
+    
+end_extract = time()
+clear()
+print(f'Scrape finalizado em {end_scrape - start_scrape:.2f} segundos!',
+      f'Extração finalizada em {end_extract - start_extract:.2f} segundos!',
+      f'{cont_sucess} jogos foram extraídos com sucesso.',
+      f'{cont_fail} jogos falharam.',
+      '',
+      '----------------------------------------',
+      f'Tempo total: {end_extract - start_scrape:.2f} segundos.',
+      sep = '\n')
