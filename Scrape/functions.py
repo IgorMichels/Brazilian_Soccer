@@ -117,6 +117,7 @@ def catch_players(text):
 
 def catch_goals(text):
     result = final_result(text)
+    text = text[text.find('Gols'):text.find('Cartões Amarelos')]
     if len(result) == 0: return []
     result = result[0].split()
     
