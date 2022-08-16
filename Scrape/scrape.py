@@ -57,6 +57,7 @@ def scrape(competitions, max_year):
                 try:
                     name = f'{competition}/{year}/PDFs/{str(game).zfill(3)}.pdf'
                     if name.replace('PDFs', 'CSVs').replace('pdf', 'csv') in files:
+                        count_end = 0
                         continue
 
                     pdf = requests.get(f'https://conteudo.cbf.com.br/sumulas/{year}/{cod}{game}se.pdf').content
