@@ -18,15 +18,9 @@
     "Serie_B": {
         "2013": {
             "346": {
-				"Clubes": [
-					[
-						"América / RN",
-						"América / MG"
-					]
-				],
-				"Resultado": [
-					"2 X 2"
-				],
+        		"Mandante": "América / RN",
+				"Visitante": "América / MG",
+				"Resultado": "2 x 2",
 				"Jogadores": [
 					[
 						"1Silvio Silvio Silas da Silv ... TP172168",
@@ -230,15 +224,9 @@
     "Serie_C": {
         "2013": {
         	"114": {
-				"Clubes": [
-					[
-						"Treze / PB",
-						"Baraúnas / RN"
-					]
-				],
-				"Resultado": [
-					"1 X 0"
-				],
+        		"Mandante": "Treze / PB",
+				"Visitante": "Baraúnas / RN",
+				"Resultado": "1 x 0",
 				"Jogadores": [
 					[
 						"1Eder Eder Donizete Duarte ... TP153275",
@@ -417,15 +405,9 @@
         "2019": {},
         "2020": {
         	"173": {
-				"Clubes": [
-					[
-						"Imperatriz / MA",
-						"Manaus / AM"
-					]
-				],
-				"Resultado": [
-					"1 X 2"
-				],
+        		"Mandante": "Imperatriz / MA",
+				"Visitante": "Manaus / AM",
+				"Resultado": "1 x 2",
 				"Jogadores": [
 					[
 						"1Jairo Jairo Lourencon T(g)P316731",
@@ -554,15 +536,9 @@
     "Serie_D": {
         "2013": {
         	"001": {
-    		    "Clubes": [
-					[
-						"Plácido de Castro / AC",
-						"Paragominas / PA"
-					]
-				],
-				"Resultado": [
-					"1 x 1"
-				],
+        		"Mandante": "Plácido de Castro / AC",
+				"Visitante": "Paragominas / PA",
+				"Resultado": "1 x 1",
 				"Jogadores": [
 					[
 						"1Pelingue Robson Ranner de Sou ... TP295257",
@@ -722,15 +698,9 @@
 				]
         	},
         	"026": {
-				"Clubes": [
-					[
-						"Ypiranga / AP",
-						"Maranhão / MA"
-					]
-				],
-				"Resultado": [
-					"1 X 0"
-				],
+        		"Mandante": "Ypiranga / AP",
+				"Visitante": "Maranhão / MA",
+				"Resultado": "1 x 0",
 				"Jogadores": [
 					[
 						"1Flaubert Flaubert Costa Botelho TP157713",
@@ -816,15 +786,9 @@
 				]
 			},
         	"029": {
-				"Clubes": [
-					[
-						"Gurupi / TO",
-						"Ypiranga / AP"
-					]
-				],
-				"Resultado": [
-					"03 x 02"
-				],
+        		"Mandante": "Gurupi / TO",
+				"Visitante": "Ypiranga / AP",
+				"Resultado": "3 x 2",
 				"Jogadores": [
 					[
 						"1Rafael Rafael de Jesus Mariano TP294558",
@@ -934,15 +898,9 @@
         "2014": {},
         "2015": {
         	"016": {
-				"Clubes": [
-					[
-						"Vitória da Conquista / BA",
-						"Palmeiras / SP"
-					]
-				],
-				"Resultado": [
-					"1 X 4"
-				],
+        		"Mandante": "Vitória da Conquista / BA",
+				"Visitante": "Palmeiras / SP",
+				"Resultado": "1 X 4",
 				"Jogadores": [
 					[
 						"1Viafara Julian Ramiro Viafar ... TP185052",
