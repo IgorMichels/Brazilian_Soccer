@@ -36,6 +36,7 @@ def make_directories(competitions, max_year):
 
 def scrape(competitions, max_year):
     start_scrape = time()
+    added = 0
     with open('number_of_games.json', 'r') as f:
         n_games = json.load(f)
     
@@ -92,6 +93,7 @@ def scrape(competitions, max_year):
                     with open(name, 'w') as f:
                         write = csv.writer(f)
                         write.writerows(doc)
+                        added += 1
 
                 except:
                     if save:
@@ -105,7 +107,7 @@ def scrape(competitions, max_year):
         json.dump(errors, f)
 
     end_scrape = time()
-    return start_scrape, end_scrape
+    return start_scrape, end_scrape, added
 
 def extract(competitions, max_year):
     start_extract = time()
@@ -222,16 +224,20 @@ competitions = [('CdB', '424'),
                 ('Serie_D', '542')]
 
 make_directories(competitions, max_year)
-start_scrape, end_scrape = scrape(competitions, max_year)
-start_extract, end_extract, cont_fail, cont_sucess = extract(competitions, max_year)
-
-clear()
-print(f'Scrape finalizado em {end_scrape - start_scrape:.2f} segundos!',
-      f'Extração finalizada em {end_extract - start_extract:.2f} segundos!',
-      f'{cont_sucess} jogos foram extraídos com sucesso.',
-      f'{cont_fail} jogos falharam.',
-      '',
-      '----------------------------------------',
-      f'Tempo total: {end_extract - start_scrape:.2f} segundos.',
-      sep = '\n')
-      
+start_scrape, end_scrape, added = scrape(competitions, max_year)
+if added > 0:
+    start_extract, end_extract, cont_fail, cont_sucess = extract(competitions, max_year)
+    clear()
+    print(f'Scrape finalizado em {end_scrape - start_scrape:.2f} segundos!',
+          f'Extração finalizada em {end_extract - start_extract:.2f} segundos!',
+          f'{added} jogos foram adicionados a base.',
+          f'As informações de {cont_sucess} jogos foram extraídas com sucesso.',
+          f'{cont_fail} jogos falharam ao extrair as informações.',
+          '-' * 58,
+          f'Tempo total: {end_extract - start_scrape:.2f} segundos.',
+          sep = '\n')
+else:
+    clear()
+    print(f'Scrape finalizado em {end_scrape - start_scrape:.2f} segundos!',
+          'Nenhum jogo foi adicionado a base.',
+          sep = '\n')
