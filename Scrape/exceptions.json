@@ -1,0 +1,1153 @@
+{
+    "Serie_A": {
+        "2013": {},
+        "2014": {},
+        "2015": {},
+        "2016": {
+            "378": {
+            	
+            }
+        },
+        "2017": {},
+        "2018": {},
+        "2019": {},
+        "2020": {},
+        "2021": {},
+        "2022": {}
+    },
+    "Serie_B": {
+        "2013": {
+            "346": {
+				"Clubes": [
+					[
+						"América / RN",
+						"América / MG"
+					]
+				],
+				"Resultado": [
+					"2 X 2"
+				],
+				"Jogadores": [
+					[
+						"1Silvio Silvio Silas da Silv ... TP172168",
+						"América / RN"
+					],
+					[
+						"2Neto Norberto Pereira Mar ... TP186564",
+						"América / RN"
+					],
+					[
+						"3Cleber Cleber Antonio de Ol ... TP155544",
+						"América / RN"
+					],
+					[
+						"4Edson Rocha Edson Rocha TP149012",
+						"América / RN"
+					],
+					[
+						"5Dilsinho Adilson Carlos Tavar ... TP291874",
+						"América / RN"
+					],
+					[
+						"6Wanderson Wanderson Carvalho O ... TP360298",
+						"América / RN"
+					],
+					[
+						"7Fabio Fabio Goncalves TP175065",
+						"América / RN"
+					],
+					[
+						"8Coutinho Rafael Coutinho Barc ... TP155956",
+						"América / RN"
+					],
+					[
+						"9Max Max Brendon Costa Pi ... TP178836",
+						"América / RN"
+					],
+					[
+						"10Regis Regis Augusto Salmazzo TP305723",
+						"América / RN"
+					],
+					[
+						"11Pimpao Rodrigo Pimpao Viana TP291732",
+						"América / RN"
+					],
+					[
+						"12Valdemar Valdemar Pereira Junior RP180236",
+						"América / RN"
+					],
+					[
+						"13Edvanio Edvanio dos Reis RP185846",
+						"América / RN"
+					],
+					[
+						"14Toninho José Antonio Horacio ... RP329561",
+						"América / RN"
+					],
+					[
+						"15Daniel Daniel Lopes Amora RP190040",
+						"América / RN"
+					],
+					[
+						"16Angelo Angelo Pelegrinelli Neto RP305753",
+						"América / RN"
+					],
+					[
+						"17Rai Raimundo Jose Cutrim ... RP168366",
+						"América / RN"
+					],
+					[
+						"18Vinicius Vinicius Pacheco dos ... RP157270",
+						"América / RN"
+					],
+					[
+						"19Paulo Paulo Francisco da S ... RP143862",
+						"América / RN"
+					],
+					[
+						"20Cascata Antonio Givanildo da ... RP166508",
+						"América / RN"
+					],
+					[
+						"21Laercio Laercio Gomes Costa RP188804",
+						"América / RN"
+					],
+					[
+						"22Junior Negao Gleidionor Figueired ... RP174846",
+						"América / RN"
+					],
+					[
+						"23Tiago Tiago Adan Fonseca RP176993",
+						"América / RN"
+					],
+					[
+						"1Matheus Matheus Lima Magalhaes TP323643",
+						"América / RN"
+					],
+					[
+						"2Elson Elson Ferreira de Souza TP186825",
+						"América / RN"
+					],
+					[
+						"3Jailton Jailton de Campos do... TP167214",
+						"América / RN"
+					],
+					[
+						"4Vitor Hugo Vitor Hugo Franchesc... TP300140",
+						"América / RN"
+					],
+					[
+						"5Claudinei Claudinei Junio de Souza TP306822",
+						"América / RN"
+					],
+					[
+						"6Danilo Danilo Carvalho Barcelos TP313755",
+						"América / RN"
+					],
+					[
+						"7Nicão Maycon Vinicius Ferr... TP306616",
+						"América / RN"
+					],
+					[
+						"8Marcelo Rosa Marcelo Rosa Moura M... TP330241",
+						"América / RN"
+					],
+					[
+						"9Tiago Tiago Alves Sales TP310711",
+						"América / RN"
+					],
+					[
+						"10Bady Renato Escobar Baruffi TP186547",
+						"América / RN"
+					],
+					[
+						"11Kleber Kleber do Amaral Ribeiro TP184508",
+						"América / RN"
+					],
+					[
+						"12Glaycon Glaycon Rian de Oliveira RP292137",
+						"América / RN"
+					],
+					[
+						"13Cesar Cesar Ricardo de Lucena RP139903",
+						"América / RN"
+					],
+					[
+						"14Gualberto Gualberto Luiz da Si... RP184894",
+						"América / RN"
+					],
+					[
+						"15Ygor Vinic ... Ygor Vinicius de Souza RP324550",
+						"América / RN"
+					],
+					[
+						"16Weverton Weverton Gomes Souza RP305953",
+						"América / RN"
+					],
+					[
+						"17Fabio Fabio Junior Pereira RP128978",
+						"América / RN"
+					],
+					[
+						"18Alessandro Alessandro Nunes RP137760",
+						"América / RN"
+					],
+					[
+						"19Marquinhos Marcos Assis de Santana RP185680",
+						"América / RN"
+					]
+				],
+				"Gols": [
+					"21:00 1T 10 NR Regis Augusto Salmazzo América/RN",
+					"34:00 1T 11 NR Kleber do Amaral Ribeiro América/MG",
+					"45:00 1T 11 NR Rodrigo Pimpao Viana América/RN",
+					"19:00 2T 19 NR Marcos Assis de Santana América/MG"
+				],
+				"Substituições": [
+					"24:00 1TAmérica/RN 14 - José Antonio Horacio de L ... 4 - Edson Rocha",
+					"29:00 1TAmérica/MG 19 - Marcos Assis de Santana 9 - Tiago Alves Sales",
+					"24:00 2TAmérica/RN 20 - Antonio Givanildo da Silv ... 11 - Rodrigo Pimpao Viana",
+					"30:00 2TAmérica/RN 16 - Angelo Pelegrinelli Neto 8 - Rafael Coutinho Barcelos  ...",
+					"32:00 2TAmérica/MG 16 - Weverton Gomes Souza 11 - Kleber do Amaral Ribeiro",
+					"38:00 2TAmérica/MG 15 - Ygor Vinicius de Souza 5 - Claudinei Junio de Souza"
+				]
+			}
+        },
+        "2014": {},
+        "2015": {},
+        "2016": {},
+        "2017": {},
+        "2018": {},
+        "2019": {
+        	"170": {
+        	
+        	}
+        },
+        "2020": {},
+        "2021": {},
+        "2022": {}
+    },
+    "Serie_C": {
+        "2013": {
+        	"114": {
+				"Clubes": [
+					[
+						"Treze / PB",
+						"Baraúnas / RN"
+					]
+				],
+				"Resultado": [
+					"1 X 0"
+				],
+				"Jogadores": [
+					[
+						"1Eder Eder Donizete Duarte ... TP153275",
+						"Treze / PB"
+					],
+					[
+						"2Hudson Hudson Fernando Tobi ... TP169792",
+						"Treze / PB"
+					],
+					[
+						"3Luiz Paulo Luiz Paulo Daniel Ba ... TP293201",
+						"Treze / PB"
+					],
+					[
+						"4Marco Tiago Marco Tiago Faustino TP160654",
+						"Treze / PB"
+					],
+					[
+						"5Jardson Jardson Marcolino Coelho TP307961",
+						"Treze / PB"
+					],
+					[
+						"6Junior Bar ... Joao Evangelista Bar ... TP146009",
+						"Treze / PB"
+					],
+					[
+						"7Rodrigo Ce ... Rodrigo Celeste TP313545",
+						"Treze / PB"
+					],
+					[
+						"8Tessio Tessio Lucas Ferreir ... TP361925",
+						"Treze / PB"
+					],
+					[
+						"9Tiago Tiago Oliveira de Souza TP172206",
+						"Treze / PB"
+					],
+					[
+						"11Tulio Tulio Renan Souza Xavier TP291978",
+						"Treze / PB"
+					],
+					[
+						"12Beto Carlos Weberton da S ... TP137022",
+						"Treze / PB"
+					],
+					[
+						"10Anderson P ... Anderson Paim de Rod ... RP146453",
+						"Treze / PB"
+					],
+					[
+						"13Jonata Jonata Escobar RP188207",
+						"Treze / PB"
+					],
+					[
+						"14Sandoval Sandoval Araujo Lima RP183096",
+						"Treze / PB"
+					],
+					[
+						"15Alisson Alisson Pereira Santana RP314533",
+						"Treze / PB"
+					],
+					[
+						"16Felix Felix Jhonnatans Rod ... RP184902",
+						"Treze / PB"
+					],
+					[
+						"17Ge Jeferson Henrique Ra ... RP173458",
+						"Treze / PB"
+					],
+					[
+						"19Giancarlo Giancarlo Lopes Rodr ... RP322810",
+						"Treze / PB"
+					],
+					[
+						"20Rafael Rafael Batista RP177920",
+						"Treze / PB"
+					],
+					[
+						"21Joao Joao Emanoel Ferreir ... RP381292",
+						"Treze / PB"
+					],
+					[
+						"1Erico Erico Verissimo Maia... TP136521",
+						"Treze / PB"
+					],
+					[
+						"2Angelo Angelo Nazareno Ferr... TP381894",
+						"Treze / PB"
+					],
+					[
+						"3Indio Israel da Silva Alves TP167797",
+						"Treze / PB"
+					],
+					[
+						"4Pedrosa Pedrosa Virgolino Jr TP155845",
+						"Treze / PB"
+					],
+					[
+						"5Wilker Wilker Vicente de Mo... TP175305",
+						"Treze / PB"
+					],
+					[
+						"6Renatinho Renato Jose Franceli... TP140072",
+						"Treze / PB"
+					],
+					[
+						"7Thiago Luiz Carlos Marques Lima TP298523",
+						"Treze / PB"
+					],
+					[
+						"8Fidelis Danilo Fidelis dos S... TP180904",
+						"Treze / PB"
+					],
+					[
+						"9Fabinho Fabio Almeida de Jesus TP168544",
+						"Treze / PB"
+					],
+					[
+						"10Radames Willian Radamés da S... TP372811",
+						"Treze / PB"
+					],
+					[
+						"11Du Claudivanio Pereira TP302007",
+						"Treze / PB"
+					],
+					[
+						"12Ramon Ramon Ferreira de An... RP159142",
+						"Treze / PB"
+					],
+					[
+						"13Victor Victor Minervino Bar... RP324846",
+						"Treze / PB"
+					],
+					[
+						"14Ramon Ramon dos Santos Souza RP399451",
+						"Treze / PB"
+					],
+					[
+						"15Junior Jose de Ribamar Guim... RP368174",
+						"Treze / PB"
+					],
+					[
+						"16George Kadson George Lucas ... RP310052",
+						"Treze / PB"
+					],
+					[
+						"17Pedro Moss ... Pedro Francisco de S... RP180647",
+						"Treze / PB"
+					],
+					[
+						"18Wanderson Jorge Wanderson Lima... RP178937",
+						"Treze / PB"
+					]
+				],
+				"Gols": [
+					"41:00 2T 7 C Thiago Luiz Carlos Marques Lima Treze/PB"
+				],
+				"Substituições": [
+					"45:00 INT Treze 19 - Giancarlo Lopes Rodrigues ... 11 - Tulio Renan Souza Xavier",
+					"45:00 INT Treze 20 - Rafael Batista 8 - Tessio Lucas Ferreira Caj ..."
+				]
+        	},
+            "208": {
+            	
+            }
+        },
+        "2014": {},
+        "2015": {},
+        "2016": {},
+        "2017": {
+            "134": {
+            	
+            }
+        },
+        "2018": {},
+        "2019": {},
+        "2020": {
+        	"173": {
+				"Clubes": [
+					[
+						"Imperatriz / MA",
+						"Manaus / AM"
+					]
+				],
+				"Resultado": [
+					"1 X 2"
+				],
+				"Jogadores": [
+					[
+						"1Jairo Jairo Lourencon T(g)P316731",
+						"Imperatriz / MA"
+					],
+					[
+						"2Thiago Thiago Tomais Santos ... TP439070",
+						"Imperatriz / MA"
+					],
+					[
+						"3Douglas Douglas Augusto Mend ... TP183227",
+						"Imperatriz / MA"
+					],
+					[
+						"4Ramon Ramon dos Santos Souza TP399451",
+						"Imperatriz / MA"
+					],
+					[
+						"5Lorran Lorran de Oliveira Q ... TP342629",
+						"Imperatriz / MA"
+					],
+					[
+						"6Wesley Wesley Braga Lima TP443265",
+						"Imperatriz / MA"
+					],
+					[
+						"7Blaise Blaise Loic Tsague TP692964",
+						"Imperatriz / MA"
+					],
+					[
+						"8Edu Amparo Carlos Eduardo Pereira TP171823",
+						"Imperatriz / MA"
+					],
+					[
+						"9Reginaldo JR Reginaldo Mendes dos ... TP308020",
+						"Imperatriz / MA"
+					],
+					[
+						"10Judson Judson Augusto do Bo ... TP292481",
+						"Imperatriz / MA"
+					],
+					[
+						"11Gustavo Gustavo da Silva Glo ... TP557469",
+						"Imperatriz / MA"
+					],
+					[
+						"12Rodrigo Rodrigo Pereira Calchi R(g)P169982",
+						"Imperatriz / MA"
+					],
+					[
+						"13Vinicius Vinicius Ribeiro Machado RP338229",
+						"Imperatriz / MA"
+					],
+					[
+						"5Ramon Ramon Rodrigues de M ... TP178313",
+						"Imperatriz / MA"
+					],
+					[
+						"9Paulo Paulo Sergio Simionato TP295231",
+						"Imperatriz / MA"
+					],
+					[
+						"10Rossini Rossini Alberto dos  ... TP163288",
+						"Imperatriz / MA"
+					],
+					[
+						"22Edvan Edvan Franca de Moraes TP295795",
+						"Imperatriz / MA"
+					],
+					[
+						"26Rennan Rennan Fonseca Siqueira TP295793",
+						"Imperatriz / MA"
+					],
+					[
+						"30Carrilho Rafael Carrilho Delvaux TP347208",
+						"Imperatriz / MA"
+					],
+					[
+						"31Jonathan Jonathan Braga Queiroz TP342154",
+						"Imperatriz / MA"
+					],
+					[
+						"44Patrick Patrick Hartwig Borges TP324119",
+						"Imperatriz / MA"
+					],
+					[
+						"55Panda Marcio Gama Moreira TP164658",
+						"Imperatriz / MA"
+					],
+					[
+						"77Philip Philip Luis Soares d ... TP188595",
+						"Imperatriz / MA"
+					],
+					[
+						"96Janderson Janderson Miguel Aze ... TP435228",
+						"Imperatriz / MA"
+					],
+					[
+						"87Gleibson Gleibson Medeiros da ... R(g)P170269",
+						"Imperatriz / MA"
+					],
+					[
+						"11Ivanilson Ivanilson Barbosa Chaul RP459879",
+						"Imperatriz / MA"
+					],
+					[
+						"12Cesar Cesar Augusto Paiva  ... RP308648",
+						"Imperatriz / MA"
+					]
+				],
+				"Gols": [
+					"19:00 1T 9 NR Reginaldo Mendes dos Santos Junior Imperatriz/MA",
+					"06:00 2T 26 NR Rennan Fonseca Siqueira Manaus/AM",
+					"07:00 2T 9 NR Paulo Sergio Simionato Manaus/AM"
+				],
+				"Substituições": [
+					"45:00 INT Manaus/AM 11 - Ivanilson Barbosa Chaul 22 - Edvan Franca de Moraes",
+					"45:00 INT Manaus/AM 87 - Gleibson Medeiros da Silva 31 - Jonathan Braga Queiroz",
+					"19:00 2TManaus/AM 12 - Cesar Augusto Paiva Barbosa 55 - Marcio Gama Moreira"
+				]
+			}
+		},
+        "2021": {},
+        "2022": {}
+    },
+    "Serie_D": {
+        "2013": {
+        	"001": {
+    		    "Clubes": [
+					[
+						"Plácido de Castro / AC",
+						"Paragominas / PA"
+					]
+				],
+				"Resultado": [
+					"1 x 1"
+				],
+				"Jogadores": [
+					[
+						"1Pelingue Robson Ranner de Sou ... TP295257",
+						"Plácido de Castro / AC"
+					],
+					[
+						"2Iris Irisvaldo Alves de Souza TP295248",
+						"Plácido de Castro / AC"
+					],
+					[
+						"3Gilson Caj ... Gilson Mundim Costa TP176025",
+						"Plácido de Castro / AC"
+					],
+					[
+						"4Gato Jose Edjane Pinto de ... TP295527",
+						"Plácido de Castro / AC"
+					],
+					[
+						"5Dime Dime Borges Camargo TP188388",
+						"Plácido de Castro / AC"
+					],
+					[
+						"6Leandro Leandro Bispo Puschmann TP342838",
+						"Plácido de Castro / AC"
+					],
+					[
+						"7Rogerio Rogerio Morais do Carmo TP295539",
+						"Plácido de Castro / AC"
+					],
+					[
+						"8Renato Renato Costa Silva TP177281",
+						"Plácido de Castro / AC"
+					],
+					[
+						"9Renan Renan Fabricio da Silva TP295258",
+						"Plácido de Castro / AC"
+					],
+					[
+						"10Cabeca Wellington Jose de Jesus TP190327",
+						"Plácido de Castro / AC"
+					],
+					[
+						"11Sandro Sandro da Cunha Carneiro TP130162",
+						"Plácido de Castro / AC"
+					],
+					[
+						"12Darlan Darlan Carlos Barbos ... RP166263",
+						"Plácido de Castro / AC"
+					],
+					[
+						"13Alisson Alisson dos Santos T ... RP397124",
+						"Plácido de Castro / AC"
+					],
+					[
+						"14Joel Joel Campelo Lima RP295255",
+						"Plácido de Castro / AC"
+					],
+					[
+						"15Uilian Uilian Silva Constantino RP295608",
+						"Plácido de Castro / AC"
+					],
+					[
+						"16Gustavo Gustavo Augusto dos  ... RP308255",
+						"Plácido de Castro / AC"
+					],
+					[
+						"17Zico Edivaldo Neri da Silva RP128856",
+						"Plácido de Castro / AC"
+					],
+					[
+						"18Altemir Altemir Cordeiro Pes ... RP383352",
+						"Plácido de Castro / AC"
+					],
+					[
+						"1Andre Andre Luiz Silva Dias TP144468",
+						"Plácido de Castro / AC"
+					],
+					[
+						"2Magno Francisco Magno Gond... TP183788",
+						"Plácido de Castro / AC"
+					],
+					[
+						"3Rubran Rubran Siqueira Pantoja TP182085",
+						"Plácido de Castro / AC"
+					],
+					[
+						"4San San Deivid Duarte Correa TP151083",
+						"Plácido de Castro / AC"
+					],
+					[
+						"5Dudu Eduardo Henrique Sou... TP172851",
+						"Plácido de Castro / AC"
+					],
+					[
+						"6Gilberto Gilberto Alves Rodri... TP394072",
+						"Plácido de Castro / AC"
+					],
+					[
+						"7Paulo de T ... Paulo de Tarcio Dias... TP175342",
+						"Plácido de Castro / AC"
+					],
+					[
+						"8Adriano Adriano Miranda de C... TP180700",
+						"Plácido de Castro / AC"
+					],
+					[
+						"9Weller Weller Wilson Pereira TP303924",
+						"Plácido de Castro / AC"
+					],
+					[
+						"10Fabricio Fabricio Ramos Melo TP166682",
+						"Plácido de Castro / AC"
+					],
+					[
+						"11Aleilson Aleilson Sousa Rabelo TP291610",
+						"Plácido de Castro / AC"
+					],
+					[
+						"12Andre Luis Andre Luis Chumber Lima RP384364",
+						"Plácido de Castro / AC"
+					],
+					[
+						"13Cristovam Cristovam Tavares Pi... RP184661",
+						"Plácido de Castro / AC"
+					],
+					[
+						"14Alison Antonio Alison Alves... RP339930",
+						"Plácido de Castro / AC"
+					],
+					[
+						"14Robinho Fabiano Rodrigues Soares RP423892",
+						"Plácido de Castro / AC"
+					],
+					[
+						"16Sousa Roselio Pinto Correa RP291356",
+						"Plácido de Castro / AC"
+					],
+					[
+						"17Eduardo Eduardo Gabriel dos ... RP120214",
+						"Plácido de Castro / AC"
+					],
+					[
+						"18Wegno Wegno Santos Magalhaes RP153184",
+						"Plácido de Castro / AC"
+					]
+				],
+				"Gols": [
+					"28:00 2T 11 NR Sandro da Cunha Carneiro Plácido de Castro",
+					"09:00 2T 9 NR Weller Wilson Pereira Paragominas"
+				],
+				"Substituições": [
+					"12:00 Paragominas 16 - Roselio Pinto Correa 6 - Gilberto Alves Rodrigues  ...",
+					"14:00 Plácido de Castro 13 - Alisson dos Santos Teixei ... 10 - Wellington Jose de Jesus",
+					"20:00 Paragominas 13 - Cristovam Tavares Pinto F ... 8 - Adriano Miranda de Carval ...",
+					"23:00 Plácido de Castro 15 - Uilian Silva Constantino 6 - Leandro Bispo Puschmann",
+					"35:00 Plácido de Castro 14 - Joel Campelo Lima 2 - Irisvaldo Alves de Souza"
+				]
+        	},
+        	"026": {
+				"Clubes": [
+					[
+						"Ypiranga / AP",
+						"Maranhão / MA"
+					]
+				],
+				"Resultado": [
+					"1 X 0"
+				],
+				"Jogadores": [
+					[
+						"1Flaubert Flaubert Costa Botelho TP157713",
+						"Ypiranga / AP"
+					],
+					[
+						"2Fernandinho Luiz Fernando Mirand... TP141461",
+						"Ypiranga / AP"
+					],
+					[
+						"3Leomar Kerliomar Lima Pinheiro TP365320",
+						"Ypiranga / AP"
+					],
+					[
+						"4Marcelo Marcelo da Luz Ferreira TP324914",
+						"Ypiranga / AP"
+					],
+					[
+						"5Bruno Bruno Luis Morais Ri... TP291664",
+						"Ypiranga / AP"
+					],
+					[
+						"6Otavio Otavio Gomes Teixeira TP372858",
+						"Ypiranga / AP"
+					],
+					[
+						"7Francisco  ... Francisco Pires Rodr... TP174391",
+						"Ypiranga / AP"
+					],
+					[
+						"8Jackson Jackson Coelho Silva TP119124",
+						"Ypiranga / AP"
+					],
+					[
+						"9Anselmo Anselmo Arruda da Silva TP309315",
+						"Ypiranga / AP"
+					],
+					[
+						"10Ideilson Ideilson Paixão da Cruz TP307324",
+						"Ypiranga / AP"
+					],
+					[
+						"11Hilton Hilton Conceição de ... TP346926",
+						"Ypiranga / AP"
+					],
+					[
+						"12Jade Jamesdean Carvalho d... RP138669",
+						"Ypiranga / AP"
+					],
+					[
+						"13Daylson Daylson Warwyck Sant... RP154200",
+						"Ypiranga / AP"
+					],
+					[
+						"14Diego Diego da Cunha Reis RP186544",
+						"Ypiranga / AP"
+					],
+					[
+						"15Wellington Wellington Das Chaga... RP342353",
+						"Ypiranga / AP"
+					],
+					[
+						"16Robson Robson Belfort de Ca... RP161948",
+						"Ypiranga / AP"
+					],
+					[
+						"17Luiz Henri ... Luiz Henrique Campos RP336660",
+						"Ypiranga / AP"
+					],
+					[
+						"18Dinho Dougleilton Nascimen... RP372861",
+						"Ypiranga / AP"
+					]
+				],
+				"Gols": [
+					"00:00 1T 2 NR Edinaldo Malcher de Franca Filho Ypiranga\n",
+					"44:00 1T NR Ypiranga\nNR "
+				],
+				"Substituições": [
+					"45:00 INT Maranhão 15 - Wellington das Chagas Per ... 6 - Otavio Gomes Teixeira",
+					"30:00 1TMaranhão 16 - Robson Belfort de Carvalh ... 9 - Anselmo Arruda da Silva",
+					"28:00 2TMaranhão 17 - Luiz Henrique Campos 5 - Bruno Luis Morais Ribeiro ..."
+				]
+			},
+        	"029": {
+				"Clubes": [
+					[
+						"Gurupi / TO",
+						"Ypiranga / AP"
+					]
+				],
+				"Resultado": [
+					"03 x 02"
+				],
+				"Jogadores": [
+					[
+						"1Rafael Rafael de Jesus Mariano TP294558",
+						"Gurupi / TO"
+					],
+					[
+						"2Neuran Neuran Vasconcelos d ... TP146308",
+						"Gurupi / TO"
+					],
+					[
+						"3Thiago Cam ... Thiago Campos Inacio TP143578",
+						"Gurupi / TO"
+					],
+					[
+						"4Dentinho Edevaldo Amancio da  ... TP185225",
+						"Gurupi / TO"
+					],
+					[
+						"5Uranio Uranio Carlos Pereira TP181402",
+						"Gurupi / TO"
+					],
+					[
+						"6Edson Edson Santiago Campos TP151570",
+						"Gurupi / TO"
+					],
+					[
+						"7Hermeson Hermeson Novais Dourado TP167546",
+						"Gurupi / TO"
+					],
+					[
+						"8Antonio Antonio Thomaz Santo ... TP170011",
+						"Gurupi / TO"
+					],
+					[
+						"9Rael Israel Santos Nascimento TP172266",
+						"Gurupi / TO"
+					],
+					[
+						"10Lucio Lucio Pereira da Silva TP115028",
+						"Gurupi / TO"
+					],
+					[
+						"11Ricardo Ricardo Lopes Pereira TP301030",
+						"Gurupi / TO"
+					],
+					[
+						"12Eudes Eudes Ruan de Souza  ... RP295153",
+						"Gurupi / TO"
+					],
+					[
+						"13Thiago Thiago Tauan Paz Fer ... RP438084",
+						"Gurupi / TO"
+					],
+					[
+						"14Marraquete Jose Augusto Santana ... RP146301",
+						"Gurupi / TO"
+					],
+					[
+						"15Juninho Juscelino Ferreira d ... RP291604",
+						"Gurupi / TO"
+					],
+					[
+						"16Heder Heder Alves de Sá RP178939",
+						"Gurupi / TO"
+					]
+				],
+				"Gols": [
+					"05:00 2T 8 NR Antonio Thomaz Santos de Barros Gurupi\n",
+					"16:00 2T 9 NR Armando Garrido dos Santos Ypiranga\n",
+					"19:00 2T 11 NR Ricardo Lopes Pereira Gurupi\n",
+					"34:00 2T 10 NR Lucio Pereira da Silva Gurupi\n",
+					"40:00 2T 11 NR Patrick Jean Teixeira Maia Ypiranga\nNR "
+				],
+				"Substituições": [
+					"17:00 Gurupi 15 - Juscelino Ferreira da Sil ... 4 - Edevaldo Amancio da Silva ...",
+					"19:00 Gurupi 16 - Heder Alves de Sá 9 - Israel Santos Nascimento",
+					"23:00 Ypiranga 17 - Rodrigo Bastos Cardoso 8 - Jose Romeu Tavares de Aqu ...",
+					"37:00 Ypiranga 16 - Lucacio da Silva Santana 9 - Armando Garrido dos Santo ...",
+					"39:00 Gurupi 14 - Jose Augusto Santana Cost ... 7 - Hermeson Novais Dourado",
+					"00:00 Ypiranga 14 - Edinaldo Malcher de Franc ... 10 - Cecilio Boal Marchetti"
+				]
+			}
+        },
+        "2014": {
+            "080": {
+            	
+            },
+            "129": {
+            	
+            }
+        },
+        "2015": {},
+        "2016": {},
+        "2017": {},
+        "2018": {},
+        "2019": {},
+        "2020": {
+            "391": {
+            	
+            }
+        },
+        "2021": {},
+        "2022": {}
+    },
+    "CdB": {
+        "2013": {},
+        "2014": {},
+        "2015": {
+        	"016": {
+				"Clubes": [
+					[
+						"Vitória da Conquista / BA",
+						"Palmeiras / SP"
+					]
+				],
+				"Resultado": [
+					"1 X 4"
+				],
+				"Jogadores": [
+					[
+						"1Viafara Julian Ramiro Viafar ... TP185052",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"2Diego Aragao Diego Aragao dos Santos TP184506",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"3Belem Jose Fernando de San ... TP178394",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"4Silvio Silvio da Silva Almeida TP149612",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"5Paulo Paulo Almeida Santos TP146246",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"6Matheus Matheus Izidorio Leoni TP303035",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"7Maicon Maicon Santos Costa TP371820",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"8Fausto Faustino de Castro e ... TP137811",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"9Rafael Rafael Fernandes da  ... TP189431",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"10Erivelton Erivelton Freire Cav ... TP341025",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"11Carlinho Carlos Augusto Farias TP160751",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"12William William Juarez Lesei ... RP187462",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"13Emilio Emilio Santos Souza RP179117",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"14Adriano Adriano da Silva de  ... RP346928",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"15David David Alisson Araujo ... RP173301",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"16Petter Petter Barros de Almeida RP182842",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"17Andre Andre Oliveira de Li ... RP162610",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"18Caca Sandro Ricardo Chaga ... RP306175",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"19Dionisio Dionisio Pereira de  ... RP350705",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"20Tatu Romulo Andre Lopes RP168916",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"21Neto Antonio Carlos da Si ... RP157170",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"22Mario Mario Cesar Paiva RP185550",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"1Fernando Fernando Buttenbende... TP137377",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"2Omar Ferna ... Omar Fernando Tobio TP507274",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"5Marcos Marcos Arouca da Silva TP161941",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"6Joao Paulo Joao Paulo Gomes da ... TP155855",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"7Dudu Eduardo Pereira Rodr... TP291738",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"9Cristaldo Jonatan Ezequiel Cri... TP511616",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"13Maikon Maikon Fernando Souz... TP184685",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"18Gabriel Gabriel Girotto Franco TP320839",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"20Agustin Agustin Lionel Allione TP509926",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"26Jackson Jackson de Souza TP299142",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"32Lucas Lucas Rios Marques TP178827",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"3Victor Ramos Victor Ramos Ferreira RP177152",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"15Amaral William Jose de Souza RP169939",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"16Victor Victor Luis Chuab Za... RP309431",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"17Leandro Leandro Marcos Pereira RP306149",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"19Rafael Mar ... Rafael Marques Mariano RP158615",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"22Joao Joao Pedro Maturano ... RP376586",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"23Renato Renato Augusto Santo... RP334195",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"25Aranha Mario Lucio Duarte Costa RP142720",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"27Robinho Robson Michael Signorini RP172189",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"33Gabriel Gabriel Fernando de ... RP431525",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"39Ryder Ryder Matos Santos Pinto RP419292",
+						"Vitória da Conquista / BA"
+					],
+					[
+						"49Jailson Jailson Marcelino do... RP153229",
+						"Vitória da Conquista / BA"
+					]
+				],
+				"Gols": [
+					"18:00 2T 20 NR Romulo Andre Lopes Vitória da Conquista",
+					"20:00 2T 20 NR Agustin Lionel Allione Palmeiras",
+					"34:00 2T 27 NR Robson Michael Signorini Palmeiras",
+					"38:00 2T 7 NR Eduardo Pereira Rodrigues Palmeiras",
+					"13:00 1T 9 PN Jonatan Ezequiel Cristaldo Palmeiras"
+				],
+				"Substituições": [
+					"45:00 INT Vitória da Conquista/BA 20 - Romulo Andre Lopes 10 - Erivelton Freire Cavalcan ...",
+					"15:00 2TVitória da Conquista/BA 18 - Sandro Ricardo Chagas Lim ... 9 - Rafael Fernandes da Silva ...",
+					"18:00 2TPalmeiras/SP 17 - Leandro Marcos Pereira 9 - Jonatan Ezequiel Cristald ...",
+					"33:00 2TVitória da Conquista/BA 15 - David Alisson Araujo Andr ... 6 - Matheus Izidorio Leoni",
+					"33:00 2TPalmeiras/SP 15 - William Jose de Souza 20 - Agustin Lionel Allione",
+					"40:00 2TPalmeiras/SP 23 - Renato Augusto Santos Jun ... 7 - Eduardo Pereira Rodrigues ..."
+				]
+			}
+        },
+        "2016": {},
+        "2017": {},
+        "2018": {},
+        "2019": {},
+        "2020": {},
+        "2021": {},
+        "2022": {}
+    }
+}

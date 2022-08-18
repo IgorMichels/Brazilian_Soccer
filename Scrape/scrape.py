@@ -19,10 +19,11 @@ def make_directories(competitions, max_year):
 
         os.chdir(name)
         for year in range(2013, max_year + 1):
-            if f'{year}' not in os.listdir():
-                os.mkdir(f'{year}')
+            year = str(year)
+            if year not in os.listdir():
+                os.mkdir(year)
 
-            os.chdir(f'{year}')
+            os.chdir(year)
             if 'PDFs' not in os.listdir():
                 os.mkdir('PDFs')
 
@@ -37,6 +38,9 @@ def scrape(competitions, max_year):
     start_scrape = time()
     with open('number_of_games.json', 'r') as f:
         n_games = json.load(f)
+    
+    with open('exceptions.json', 'r') as f:
+        exceptions = json.load(f)
 
     errors = {}
     for competition in competitions:
@@ -50,6 +54,9 @@ def scrape(competitions, max_year):
             errors[competition][year] = []
             count_end = 0
             for game in range(1, n_games[competition][year]):
+                if str(game).zfill(3) in exceptions[competition][year]:
+                    continue
+                
                 if count_end == 10:
                     break
                     
@@ -104,6 +111,9 @@ def extract(competitions, max_year):
     start_extract = time()
     with open('number_of_games.json', 'r') as f:
         n_games = json.load(f)
+    
+    with open('exceptions.json', 'r') as f:
+        exceptions = json.load(f)
 
     errors = {}
     cont_sucess = 0
@@ -112,16 +122,24 @@ def extract(competitions, max_year):
         competition = competition[0]
         for year in range(2013, max_year + 1):
             clear()
+            year = str(year)
             print(f'Iniciando o ano de {year} para {competition.replace("_", " ")} (extração)')
             games = {}
             count_end = 0
             for game in range(1, n_games[competition][str(year)] + 1):
+                if str(game).zfill(3) in exceptions[competition][year]:
+                    if exceptions[competition][year][str(game).zfill(3)] != {}:
+                        games[str(game).zfill(3)] = exceptions[competition][year][str(game).zfill(3)]
+                        
+                    cont_sucess += 1
+                    continue
+                
                 if count_end == 10:
                     break
                     
                 f_club, f_result, f_players, f_goals, f_changes = False, False, False, False, False
                 try:
-                    file = f'{competition}/{str(year)}/CSVs/{str(game).zfill(3)}.csv'
+                    file = f'{competition}/{year}/CSVs/{str(game).zfill(3)}.csv'
                     f = open(file)
                     data = f.readlines()
                     f.close()
@@ -139,11 +157,12 @@ def extract(competitions, max_year):
                     f_result = True
                 
                     players = catch_players(text)
-                    assert len(players) >= 36
+                    assert len(players) >= 28
                     f_players = True
                 
                     goals = catch_goals(text)
-                    assert len(goals) == int(result[0]) + int(result[-1])
+                    aux = result.upper().split('X')
+                    assert len(goals) == int(aux[0].strip()) + int(aux[-1].strip())
                     f_goals = True
                 
                     changes = find_changes(text)
@@ -160,18 +179,6 @@ def extract(competitions, max_year):
                     cont_sucess += 1
                     count_end = 0
                 except FileNotFoundError:
-                    erro = 'scrape'
-                    if competition in errors:
-                        if f'{year}' in errors[competition]:
-                            errors[competition][f'{year}'][str(game).zfill(3)] = erro
-                        else:
-                            errors[competition][f'{year}'] = {}
-                            errors[competition][f'{year}'][str(game).zfill(3)] = erro
-                    else:
-                        errors[competition] = {}
-                        errors[competition][f'{year}'] = {}
-                        errors[competition][f'{year}'][str(game).zfill(3)] = erro
-                    
                     count_end += 1
                 except AssertionError:
                     cont_fail += 1
@@ -188,17 +195,17 @@ def extract(competitions, max_year):
                     else:
                         erro = 'ver'
                     if competition in errors:
-                        if f'{year}' in errors[competition]:
-                            errors[competition][f'{year}'][str(game).zfill(3)] = erro
+                        if year in errors[competition]:
+                            errors[competition][year][str(game).zfill(3)] = erro
                         else:
-                            errors[competition][f'{year}'] = {}
-                            errors[competition][f'{year}'][str(game).zfill(3)] = erro
+                            errors[competition][year] = {}
+                            errors[competition][year][str(game).zfill(3)] = erro
                     else:
                         errors[competition] = {}
-                        errors[competition][f'{year}'] = {}
-                        errors[competition][f'{year}'][str(game).zfill(3)] = erro
+                        errors[competition][year] = {}
+                        errors[competition][year][str(game).zfill(3)] = erro
 
-            with open(f'{competition}/{str(year)}/games.json', 'w') as f:
+            with open(f'{competition}/{year}/games.json', 'w') as f:
                 json.dump(games, f)
                     
     with open('Errors/infos_errors.json', 'w') as f:

@@ -93,8 +93,37 @@ def treat_club(club):
     
     return club
     
+def treat_round_35_sB(club):
+    club = treat_club(club)
+    club = club.replace('A.s.a. /  ', 'ASA / AL')
+    club = club.replace('Avaí / ', 'Avaí / SC')
+    club = club.replace('Boa /  ', 'Boa / MG')
+    club = club.replace('Paraná /  ', 'Paraná / PR')
+    club = club.replace('Figueirense /  ', 'Figueirense / SC')
+    club = club.replace('Guaratinguetá / ', 'Guaratinguetá / SP')
+    club = club.replace('Chapecoense / ', 'Chapecoense / SC')
+    club = club.replace('América /  ', 'América / RN')
+    club = club.replace('Ceará /  ', 'Ceará / CE')
+    club = club.replace('Sport / ', 'Sport / PE')
+    club = club.replace('A.b.c. / ', 'ABC / RN')
+    club = club.replace('Icasa / ', 'Icasa / CE')
+    club = club.replace('Palmeiras / ', 'Palmeiras / SP')
+    club = club.replace('Joinville /  ', 'Joinville / SC')
+    club = club.replace('São Caetano / ', 'São Caetano / SP')
+    club = club.replace('América /  ', 'América / MG')
+    club = club.replace('Bragantino /  ', 'Red Bull Bragantino / SP')
+    club = club.replace('Atlético /  ', 'Atlético / GO')
+    club = club.replace('Paysandu /  ', 'Paysandu / PA')
+    club = club.replace('Oeste / ', 'Oeste / SP')
+    
+    return club
+    
 def catch_teams(text):
-    return re.findall('Jogo: (\D+ \/ [A-Z]{2}) X (\D+ \/ [A-Z]{2})', text)
+    if 'Campeonato: Campeonato Brasileiro - Série B / 2013 Rodada: 35 ' in text:
+        text = treat_round_35_sB(text)
+    else:
+        text = treat_club(text)
+    return re.findall('Jogo:\s*([a-zA-Z0-9À-ÿ\s\.\-]+\s*\/\s*[A-Z]{2})\s*X\s*([a-zA-Z0-9À-ÿ\s\.\-]+\s*\/\s*[A-Z]{2})', text)
 
 def final_result(text):
     result = re.findall('Resultado\s*Final:\s*(\d+\s*[xX]\s*\d+)', text)
@@ -106,6 +135,7 @@ def final_result(text):
 def catch_players(text):
     club_1, club_2 = catch_teams(text)[0]
     club = club_1
+    text[text.find('Relação de Jogadores'):text.find('Comissão Técnica')]
     players = re.findall('(\d+\D+[P|A|)|T|R]\s*\d{6})', text)
     for i in range(len(players)):
         if i > 0 and 'T(g)' in players[i]:
@@ -173,6 +203,7 @@ def catch_goals(text):
     return goals
     
 def find_changes(text):
+    text = text[text.find('Substituições'):]
     regex  = '\d{2}:\d{2}\s*\dT[a-zA-ZÀ-ÿ\-\.\s]+\/[A-Z]{2}\s*'
     regex += '\d+\s*\-\s*[a-zA-ZÀ-ÿ\-\.\s]+\d+\s*\-\s*[a-zA-ZÀ-ÿ\-\. ]+|'
     regex += '\d{2}:\d{2}\s*[a-zA-ZÀ-ÿ\-\.\s]+\/[A-Z]{2}\s*'
