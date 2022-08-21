@@ -148,21 +148,16 @@ def catch_players(text):
         changed = False
         for i in range(len(players)):
             number = re.findall('\d+', players[i][0])[0]
+            if len(number) == 3:
+                if number[1] == '0':
+                    number = number[2]
+                else:
+                    number = number[1:]
+            
             if number in numbers and not changed:
                 club = club_2
                 numbers.append(club)
                 changed = True
-            elif len(number) == 3:
-                if number[1] == '0':
-                    if number[2] in numbers and not changed:
-                        club = club_2
-                        numbers.append(number[2])
-                        changed = True
-                else:
-                    if number[1:] in numbers and not changed:
-                        club = club_2
-                        numbers.append(number[2])
-                        changed = True
                 
             numbers.append(number)
             players[i][1] = club
@@ -229,6 +224,7 @@ def catch_goals(text):
     
 def find_changes(text):
     text = text[text.find('Substituições'):]
+    text = treat_club(text)
     regex  = '\d{2}:\d{2}\s*\dT[a-zA-ZÀ-ÿ\-\.\s]+\/[A-Z]{2}\s*'
     regex += '\d+\s*\-\s*[a-zA-ZÀ-ÿ\-\.\s]+\d+\s*\-\s*[a-zA-ZÀ-ÿ\-\. ]+|'
     regex += '\d{2}:\d{2}\s*[a-zA-ZÀ-ÿ\-\.\s]+\/[A-Z]{2}\s*'

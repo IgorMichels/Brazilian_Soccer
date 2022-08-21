@@ -49,9 +49,8 @@ def extract_games(competition, cod, year, n_max, files, exceptions):
 	        if name.replace('PDFs', 'CSVs').replace('pdf', 'csv') in files:
 	            count_end = 0
 	            continue
-
-	        url = f'https://conteudo.cbf.com.br/sumulas/{year}/{cod}{game}se.pdf'
-	        pdf = get_pdf(url)
+            
+	        pdf = get_pdf(f'https://conteudo.cbf.com.br/sumulas/{year}/{cod}{game}se.pdf')
 	        if b'File or directory not found' in pdf:
 	            count_end += 1
 	            continue
@@ -208,50 +207,94 @@ def extract(competitions, max_year):
     
     return cont_fail, cont_sucess
 
-max_year = 2022
-competitions = [('CdB', '424'),
-                ('Serie_A', '142'),
-                ('Serie_B', '242'),
-                ('Serie_C', '342'),
-                ('Serie_D', '542')]
-
-make_directories(competitions, max_year)
-
-start_scrape = time()
-n = len(glob('*/*/CSVs/*.csv'))
-max_time = 300
-added = 0
-it = 1
-k = 0
-while n != k:
-    files = glob('*/*/CSVs/*.csv')
-    k = len(files)
-    if it == 1:
-        scrape(competitions, max_year, files, max_time)
-    else:
-        scrape(competitions, max_year, files, max_time / 2)
+def catch_squads(competitions, max_year):
+    with open('number_of_games.json', 'r') as f:
+        n_games = json.load(f)
     
-    n = len(glob('*/*/CSVs/*.csv'))
-    added += n - k
-    it += 1
-        
-end_scrape = time()
+    with open('exceptions.json', 'r') as f:
+        exceptions = json.load(f)
 
-if added > 0:
-    start_extract = time()
-    cont_fail, cont_sucess = extract(competitions, max_year)
-    end_extract = time()
-    clear()
-    print(f'Scrape finalizado em {end_scrape - start_scrape:.2f} segundos!',
-          f'Extração finalizada em {end_extract - start_extract:.2f} segundos!',
-          f'{added} jogos foram adicionados a base.',
-          f'As informações de {cont_sucess} jogos foram extraídas com sucesso.',
-          f'{cont_fail} jogos falharam ao extrair as informações.',
-          '-' * 58,
-          f'Tempo total: {end_extract - start_scrape:.2f} segundos.',
-          sep = '\n')
-else:
-    clear()
-    print(f'Scrape finalizado em {end_scrape - start_scrape:.2f} segundos!',
-          'Nenhum jogo foi adicionado a base.',
-          sep = '\n')
+    errors = {}
+    cont_sucess = 0
+    cont_fail = 0
+    squads = {}
+    for competition in competitions:
+        competition = competition[0]
+        squads[competition] = {}
+        for year in range(2013, max_year + 1):
+            clear()
+            year = str(year)
+            print(f'Iniciando o ano de {year} para {competition.replace("_", " ")} (escalações)')
+            squads[competition][year] = {}
+            with open(f'{competition}/{year}/games.json') as f:
+                games = json.load(f)
+            
+            for game in games:
+                if games[game] == {}:
+                    continue
+                
+                players = games[game]['Jogadores']
+                changes = games[game]['Substituições']
+                goals = games[game]['Goals']
+                for change in changes:
+                    if ' / ' not in change:
+                        if ' /' in change:
+                            change = change.replace(' /', ' / ')
+                        elif '/ ' in change:
+                            change = change.replace('/ ', ' / ')
+                        elif '/' in change:
+                            change = change.replace('/', ' / ')
+                    
+                    change = treat_club(change)
+            
+    
+
+if __name__ == '__main__':
+    max_year = 2022
+    competitions = [('CdB', '424'),
+                    ('Serie_A', '142'),
+                    ('Serie_B', '242'),
+                    ('Serie_C', '342'),
+                    ('Serie_D', '542')]
+
+    make_directories(competitions, max_year)
+
+    start_scrape = time()
+    n = len(glob('*/*/CSVs/*.csv'))
+    max_time = 10
+    added = 0
+    it = 1
+    k = 0
+    while n != k:
+        files = glob('*/*/CSVs/*.csv')
+        k = len(files)
+        if it == 1:
+            scrape(competitions, max_year, files, max_time)
+        else:
+            scrape(competitions, max_year, files, max_time / 2)
+    
+        n = len(glob('*/*/CSVs/*.csv'))
+        added += n - k
+        it += 1
+        
+    end_scrape = time()
+
+    added = 1
+    if added > 0:
+        start_extract = time()
+        cont_fail, cont_sucess = extract(competitions, max_year)
+        end_extract = time()
+        clear()
+        print(f'Scrape finalizado em {end_scrape - start_scrape:.2f} segundos!',
+              f'Extração finalizada em {end_extract - start_extract:.2f} segundos!',
+              f'{added} jogos foram adicionados a base.',
+              f'As informações de {cont_sucess} jogos foram extraídas com sucesso.',
+              f'{cont_fail} jogos falharam ao extrair as informações.',
+              '-' * 58,
+              f'Tempo total: {end_extract - start_scrape:.2f} segundos.',
+              sep = '\n')
+    else:
+        clear()
+        print(f'Scrape finalizado em {end_scrape - start_scrape:.2f} segundos!',
+              'Nenhum jogo foi adicionado a base.',
+              sep = '\n')
