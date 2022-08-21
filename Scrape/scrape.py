@@ -34,9 +34,10 @@ def make_directories(competitions, max_year):
 
         os.chdir('..')
 
-def scrape(competitions, max_year):
-    start_scrape = time()
-    added = 0
+def get_pdf(url):
+    return requests.get(url).content
+
+def scrape(competitions, max_year, files):
     with open('number_of_games.json', 'r') as f:
         n_games = json.load(f)
     
@@ -50,7 +51,6 @@ def scrape(competitions, max_year):
         for year in range(2013, max_year + 1):
             clear()
             print(f'Iniciando ano de {year} para {competition.replace("_", " ")} (scrape)')
-            files = glob(f'{competition}/{year}/CSVs/*.csv')
             year = str(year)
             errors[competition][year] = []
             count_end = 0
@@ -68,7 +68,8 @@ def scrape(competitions, max_year):
                         count_end = 0
                         continue
 
-                    pdf = requests.get(f'https://conteudo.cbf.com.br/sumulas/{year}/{cod}{game}se.pdf').content
+                    url = f'https://conteudo.cbf.com.br/sumulas/{year}/{cod}{game}se.pdf'
+                    pdf = get_pdf(url)
                     if b'File or directory not found' in pdf:
                         errors[competition][year].append(name)
                         count_end += 1
@@ -93,7 +94,6 @@ def scrape(competitions, max_year):
                     with open(name, 'w') as f:
                         write = csv.writer(f)
                         write.writerows(doc)
-                        added += 1
 
                 except:
                     if save:
@@ -106,11 +106,7 @@ def scrape(competitions, max_year):
     with open('Errors/scrape_errors.json', 'w') as f:
         json.dump(errors, f)
 
-    end_scrape = time()
-    return start_scrape, end_scrape, added
-
 def extract(competitions, max_year):
-    start_extract = time()
     with open('number_of_games.json', 'r') as f:
         n_games = json.load(f)
     
@@ -213,8 +209,7 @@ def extract(competitions, max_year):
     with open('Errors/infos_errors.json', 'w') as f:
         json.dump(errors, f)
     
-    end_extract = time()
-    return start_extract, end_extract, cont_fail, cont_sucess
+    return cont_fail, cont_sucess
 
 max_year = 2022
 competitions = [('CdB', '424'),
@@ -224,9 +219,24 @@ competitions = [('CdB', '424'),
                 ('Serie_D', '542')]
 
 make_directories(competitions, max_year)
-start_scrape, end_scrape, added = scrape(competitions, max_year)
+
+added = 0
+start_scrape = time()
+k = 0
+n = len(glob('*/*/CSVs/*.csv'))
+while n != k:
+    files = glob('*/*/CSVs/*.csv')
+    k = len(files)
+    scrape(competitions, max_year, files)
+    n = len(glob('*/*/CSVs/*.csv'))
+    added += n - k
+    
+end_scrape = time()
+
 if added > 0:
-    start_extract, end_extract, cont_fail, cont_sucess = extract(competitions, max_year)
+    start_extract = time()
+    cont_fail, cont_sucess = extract(competitions, max_year)
+    end_extract = time()
     clear()
     print(f'Scrape finalizado em {end_scrape - start_scrape:.2f} segundos!',
           f'Extração finalizada em {end_extract - start_extract:.2f} segundos!',
