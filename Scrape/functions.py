@@ -142,6 +142,30 @@ def catch_players(text):
             club = club_2
         
         players[i] = [players[i], club]
+        
+    if players[0][1] == players[-1][1]:
+        numbers = []
+        changed = False
+        for i in range(len(players)):
+            number = re.findall('\d+', players[i][0])[0]
+            if number in numbers and not changed:
+                club = club_2
+                numbers.append(club)
+                changed = True
+            elif len(number) == 3:
+                if number[1] == '0':
+                    if number[2] in numbers and not changed:
+                        club = club_2
+                        numbers.append(number[2])
+                        changed = True
+                else:
+                    if number[1:] in numbers and not changed:
+                        club = club_2
+                        numbers.append(number[2])
+                        changed = True
+                
+            numbers.append(number)
+            players[i][1] = club
             
     return players
 
@@ -177,6 +201,7 @@ def catch_goals(text):
     
     if len(goals) == int(result[0]) + int(result[-1]): return goals
     
+    # tempo normal
     goals  = re.findall('\d{2}:\d{2}\s*\dT\s*\d+\s*NR[a-zA-ZÀ-ÿ\-\.\s]+', text)
     goals += re.findall('\d{2}:\d{2}\s*\dT\s*\d+\s*PN[a-zA-ZÀ-ÿ\-\.\s]+', text)
     goals += re.findall('\d{2}:\d{2}\s*\dT\s*\d+\s*CT[a-zA-ZÀ-ÿ\-\.\s]+', text)

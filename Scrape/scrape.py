@@ -1,3 +1,4 @@
+from multiprocessing import Process
 from functions import *
 from glob import glob
 from time import time
@@ -34,10 +35,54 @@ def make_directories(competitions, max_year):
 
         os.chdir('..')
 
+def extract_games(competition, cod, year, n_max, files, exceptions):
+    count_end = 0
+    for game in range(1, n_max):
+	    if str(game).zfill(3) in exceptions[competition][year]:
+	        continue
+	    
+	    if count_end == 10:
+	        break
+	    
+	    try:
+	        name = f'{competition}/{year}/PDFs/{str(game).zfill(3)}.pdf'
+	        if name.replace('PDFs', 'CSVs').replace('pdf', 'csv') in files:
+	            count_end = 0
+	            continue
+
+	        url = f'https://conteudo.cbf.com.br/sumulas/{year}/{cod}{game}se.pdf'
+	        pdf = get_pdf(url)
+	        if b'File or directory not found' in pdf:
+	            count_end += 1
+	            continue
+
+	        with open(name, 'wb') as f:
+	            f.write(pdf)
+	            save = True
+	            count_end = 0
+
+	        reader = PdfReader(name)
+	        doc = []
+	        for i in range(len(reader.pages)):
+	            page = reader.pages[i]
+	            doc += page.extract_text().split('\n')
+
+	        for i in range(len(doc)):
+	            doc[i] = [doc[i]]
+
+	        name = name.replace('PDFs', 'CSVs')
+	        name = name.replace('pdf', 'csv')
+	        with open(name, 'w') as f:
+	            write = csv.writer(f)
+	            write.writerows(doc)
+
+	    except:
+	        pass
+
 def get_pdf(url):
     return requests.get(url).content
 
-def scrape(competitions, max_year, files):
+def scrape(competitions, max_year, files, max_time = 10):
     with open('number_of_games.json', 'r') as f:
         n_games = json.load(f)
     
@@ -53,58 +98,10 @@ def scrape(competitions, max_year, files):
             print(f'Iniciando ano de {year} para {competition.replace("_", " ")} (scrape)')
             year = str(year)
             errors[competition][year] = []
-            count_end = 0
-            for game in range(1, n_games[competition][year]):
-                if str(game).zfill(3) in exceptions[competition][year]:
-                    continue
-                
-                if count_end == 10:
-                    break
-                    
-                save = False
-                try:
-                    name = f'{competition}/{year}/PDFs/{str(game).zfill(3)}.pdf'
-                    if name.replace('PDFs', 'CSVs').replace('pdf', 'csv') in files:
-                        count_end = 0
-                        continue
-
-                    url = f'https://conteudo.cbf.com.br/sumulas/{year}/{cod}{game}se.pdf'
-                    pdf = get_pdf(url)
-                    if b'File or directory not found' in pdf:
-                        errors[competition][year].append(name)
-                        count_end += 1
-                        continue
-
-                    with open(name, 'wb') as f:
-                        f.write(pdf)
-                        save = True
-                        count_end = 0
-
-                    reader = PdfReader(name)
-                    doc = []
-                    for i in range(len(reader.pages)):
-                        page = reader.pages[i]
-                        doc += page.extract_text().split('\n')
-
-                    for i in range(len(doc)):
-                        doc[i] = [doc[i]]
-
-                    name = name.replace('PDFs', 'CSVs')
-                    name = name.replace('pdf', 'csv')
-                    with open(name, 'w') as f:
-                        write = csv.writer(f)
-                        write.writerows(doc)
-
-                except:
-                    if save:
-                        name = name.replace('PDFs', 'CSVs')
-                        name = name.replace('pdf', 'csv')
-                        errors[competition][year].append(name)
-                    else:
-                        errors[competition][year].append(name)
-
-    with open('Errors/scrape_errors.json', 'w') as f:
-        json.dump(errors, f)
+            p = Process(target = extract_games, args = (competition, cod, year, n_games[competition][year], files, exceptions))
+            p.start()
+            p.join(max_time)
+            p.terminate()
 
 def extract(competitions, max_year):
     with open('number_of_games.json', 'r') as f:
@@ -220,17 +217,24 @@ competitions = [('CdB', '424'),
 
 make_directories(competitions, max_year)
 
-added = 0
 start_scrape = time()
-k = 0
 n = len(glob('*/*/CSVs/*.csv'))
+max_time = 300
+added = 0
+it = 1
+k = 0
 while n != k:
     files = glob('*/*/CSVs/*.csv')
     k = len(files)
-    scrape(competitions, max_year, files)
+    if it == 1:
+        scrape(competitions, max_year, files, max_time)
+    else:
+        scrape(competitions, max_year, files, max_time / 2)
+    
     n = len(glob('*/*/CSVs/*.csv'))
     added += n - k
-    
+    it += 1
+        
 end_scrape = time()
 
 if added > 0:
