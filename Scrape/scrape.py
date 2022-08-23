@@ -1,4 +1,5 @@
 from multiprocessing import Process
+from copy import deepcopy
 from functions import *
 from glob import glob
 from time import time
@@ -213,6 +214,11 @@ def catch_squads(competitions, max_year):
     
     with open('exceptions.json', 'r') as f:
         exceptions = json.load(f)
+        
+    model = {'Mandante' : [],
+             'Visitante' : [],
+             'Tempo' : 0,
+             'Placar' : '0 X 0'}
 
     errors = {}
     cont_sucess = 0
@@ -233,19 +239,30 @@ def catch_squads(competitions, max_year):
                 if games[game] == {}:
                     continue
                 
+                n = 0
+                squads[competition][year][year] = {}
+                squads[competition][year][year][n] = deepcopy(model)
                 players = games[game]['Jogadores']
                 changes = games[game]['Substituições']
-                goals = games[game]['Goals']
-                for change in changes:
-                    if ' / ' not in change:
-                        if ' /' in change:
-                            change = change.replace(' /', ' / ')
-                        elif '/ ' in change:
-                            change = change.replace('/ ', ' / ')
-                        elif '/' in change:
-                            change = change.replace('/', ' / ')
+                goals = games[game]['Gols']
+                home = games[game]['Mandante']
+                away = games[game]['Visitante']
+                
+                game_players = {home : {}, away : {}}
+                for player in players:
+                    player, club = player
+                    numbers = re.findall('\d+', player)
+                    shirt, cod = numbers
+                    game_players[club][shirt] = cod
                     
-                    change = treat_club(change)
+                for i, change in enumerate(changes):
+                    club, time, player_in, player_out = treat_change(change, home, away)
+                    
+                    if i == len(changes):
+                        includ = True
+                        
+                print(game_players)
+                
             
     
 
@@ -261,7 +278,7 @@ if __name__ == '__main__':
 
     start_scrape = time()
     n = len(glob('*/*/CSVs/*.csv'))
-    max_time = 10
+    max_time = 30
     added = 0
     it = 1
     k = 0
@@ -278,8 +295,6 @@ if __name__ == '__main__':
         it += 1
         
     end_scrape = time()
-
-    added = 1
     if added > 0:
         start_extract = time()
         cont_fail, cont_sucess = extract(competitions, max_year)
