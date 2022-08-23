@@ -1,4 +1,20 @@
 import re
+import os
+
+def clear():
+    os.system('clear')
+
+def treat_time(time_string):
+    time = 0
+    if '2T' in time_string:
+        time += 45
+        
+    if '+' in time_string:
+        time += 45
+    else:
+        time += int(time_string[:2])
+        
+    return time
 
 def treat_club(club):
     club = club.replace('Saf ', '')
@@ -135,7 +151,14 @@ def final_result(text):
 def catch_players(text):
     club_1, club_2 = catch_teams(text)[0]
     club = club_1
-    text[text.find('Relação de Jogadores'):text.find('Comissão Técnica')]
+    text = text[text.find('Relação de Jogadores'):text.find('Comissão Técnica')]
+    goleiros = re.findall('CBF\n(\d+\D+[P|A|)|T|R]\s*\d{6})', text)
+    for goleiro in goleiros:
+        if 'T(g)' in goleiro:
+            continue
+        
+        text = text.replace(goleiro[-8:], goleiro[-8:].replace('T', 'T(g)'))
+    
     players = re.findall('(\d+\D+[P|A|)|T|R]\s*\d{6})', text)
     for i in range(len(players)):
         if i > 0 and 'T(g)' in players[i]:
@@ -163,6 +186,16 @@ def catch_players(text):
             players[i][1] = club
             
     return players
+    
+def treat_game_players(players, home, away):
+    game_players = {home : {}, away : {}}
+    for player in players:
+        player, club = player
+        numbers = re.findall('\d+', player)
+        shirt, cod = numbers
+        game_players[club][shirt] = cod
+        
+    return game_players
 
 def catch_goals(text):
     result = final_result(text)
@@ -173,52 +206,52 @@ def catch_goals(text):
     # tempo normal
     goals  = re.findall('\d{2}:\d{2}\s*\dT\s*\d+\s*NR[a-zA-ZÀ-ÿ\-\. 0-9]+\/[A-Z]{2}', text)
     goals += re.findall('\d{2}:\d{2}\s*\dT\s*\d+\s*PN[a-zA-ZÀ-ÿ\-\. 0-9]+\/[A-Z]{2}', text)
-    goals += re.findall('\d{2}:\d{2}\s*\dT\s*\d+\s*CT[a-zA-ZÀ-ÿ\-\.  0-9]+\/[A-Z]{2}', text)
-    goals += re.findall('\d{2}:\d{2}\s*\dT\s*\d+\s*FT[a-zA-ZÀ-ÿ\-\.  0-9]+\/[A-Z]{2}', text)
+    goals += re.findall('\d{2}:\d{2}\s*\dT\s*\d+\s*CT[a-zA-ZÀ-ÿ\-\. 0-9]+\/[A-Z]{2}', text)
+    goals += re.findall('\d{2}:\d{2}\s*\dT\s*\d+\s*FT[a-zA-ZÀ-ÿ\-\. 0-9]+\/[A-Z]{2}', text)
     
         # sem o número do jogador
-    goals += re.findall('\d{2}:\d{2}\s*\dT\s*NR[a-zA-ZÀ-ÿ\-\.  0-9]+\/[A-Z]{2}', text)
-    goals += re.findall('\d{2}:\d{2}\s*\dT\s*PN[a-zA-ZÀ-ÿ\-\.  0-9]+\/[A-Z]{2}', text)
-    goals += re.findall('\d{2}:\d{2}\s*\dT\s*CT[a-zA-ZÀ-ÿ\-\.  0-9]+\/[A-Z]{2}', text)
-    goals += re.findall('\d{2}:\d{2}\s*\dT\s*FT[a-zA-ZÀ-ÿ\-\.  0-9]+\/[A-Z]{2}', text)
+    goals += re.findall('\d{2}:\d{2}\s*\dT\s*NR[a-zA-ZÀ-ÿ\-\. 0-9]+\/[A-Z]{2}', text)
+    goals += re.findall('\d{2}:\d{2}\s*\dT\s*PN[a-zA-ZÀ-ÿ\-\. 0-9]+\/[A-Z]{2}', text)
+    goals += re.findall('\d{2}:\d{2}\s*\dT\s*CT[a-zA-ZÀ-ÿ\-\. 0-9]+\/[A-Z]{2}', text)
+    goals += re.findall('\d{2}:\d{2}\s*\dT\s*FT[a-zA-ZÀ-ÿ\-\. 0-9]+\/[A-Z]{2}', text)
     
     # acréscimos
-    goals += re.findall('\+\d+\s*\dT\s*\d+\s*NR[a-zA-ZÀ-ÿ\-\.  0-9]+\/[A-Z]{2}', text)
-    goals += re.findall('\+\d+\s*\dT\s*\d+\s*PN[a-zA-ZÀ-ÿ\-\.  0-9]+\/[A-Z]{2}', text)
-    goals += re.findall('\+\d+\s*\dT\s*\d+\s*CT[a-zA-ZÀ-ÿ\-\.  0-9]+\/[A-Z]{2}', text)
-    goals += re.findall('\+\d+\s*\dT\s*\d+\s*FT[a-zA-ZÀ-ÿ\-\.  0-9]+\/[A-Z]{2}', text)
+    goals += re.findall('\+\d+\s*\dT\s*\d+\s*NR[a-zA-ZÀ-ÿ\-\. 0-9]+\/[A-Z]{2}', text)
+    goals += re.findall('\+\d+\s*\dT\s*\d+\s*PN[a-zA-ZÀ-ÿ\-\. 0-9]+\/[A-Z]{2}', text)
+    goals += re.findall('\+\d+\s*\dT\s*\d+\s*CT[a-zA-ZÀ-ÿ\-\. 0-9]+\/[A-Z]{2}', text)
+    goals += re.findall('\+\d+\s*\dT\s*\d+\s*FT[a-zA-ZÀ-ÿ\-\. 0-9]+\/[A-Z]{2}', text)
     
         # sem o número do jogador
-    goals += re.findall('\+\d+\s*\dT\s*NR[a-zA-ZÀ-ÿ\-\.  0-9]+\/[A-Z]{2}', text)
-    goals += re.findall('\+\d+\s*\dT\s*PN[a-zA-ZÀ-ÿ\-\.  0-9]+\/[A-Z]{2}', text)
-    goals += re.findall('\+\d+\s*\dT\s*CT[a-zA-ZÀ-ÿ\-\.  0-9]+\/[A-Z]{2}', text)
-    goals += re.findall('\+\d+\s*\dT\s*FT[a-zA-ZÀ-ÿ\-\.  0-9]+\/[A-Z]{2}', text)
+    goals += re.findall('\+\d+\s*\dT\s*NR[a-zA-ZÀ-ÿ\-\. 0-9]+\/[A-Z]{2}', text)
+    goals += re.findall('\+\d+\s*\dT\s*PN[a-zA-ZÀ-ÿ\-\. 0-9]+\/[A-Z]{2}', text)
+    goals += re.findall('\+\d+\s*\dT\s*CT[a-zA-ZÀ-ÿ\-\. 0-9]+\/[A-Z]{2}', text)
+    goals += re.findall('\+\d+\s*\dT\s*FT[a-zA-ZÀ-ÿ\-\. 0-9]+\/[A-Z]{2}', text)
     
     if len(goals) == int(result[0]) + int(result[-1]): return goals
     
     # tempo normal
-    goals  = re.findall('\d{2}:\d{2}\s*\dT\s*\d+\s*NR[a-zA-ZÀ-ÿ\-\.  0-9]+', text)
-    goals += re.findall('\d{2}:\d{2}\s*\dT\s*\d+\s*PN[a-zA-ZÀ-ÿ\-\.  0-9]+', text)
-    goals += re.findall('\d{2}:\d{2}\s*\dT\s*\d+\s*CT[a-zA-ZÀ-ÿ\-\.  0-9]+', text)
-    goals += re.findall('\d{2}:\d{2}\s*\dT\s*\d+\s*FT[a-zA-ZÀ-ÿ\-\.  0-9]+', text)
+    goals  = re.findall('\d{2}:\d{2}\s*\dT\s*\d+\s*NR[a-zA-ZÀ-ÿ\-\. 0-9]+', text)
+    goals += re.findall('\d{2}:\d{2}\s*\dT\s*\d+\s*PN[a-zA-ZÀ-ÿ\-\. 0-9]+', text)
+    goals += re.findall('\d{2}:\d{2}\s*\dT\s*\d+\s*CT[a-zA-ZÀ-ÿ\-\. 0-9]+', text)
+    goals += re.findall('\d{2}:\d{2}\s*\dT\s*\d+\s*FT[a-zA-ZÀ-ÿ\-\. 0-9]+', text)
     
         # sem o número do jogador
-    goals += re.findall('\d{2}:\d{2}\s*\dT\s*NR[a-zA-ZÀ-ÿ\-\.  0-9]+', text)
-    goals += re.findall('\d{2}:\d{2}\s*\dT\s*PN[a-zA-ZÀ-ÿ\-\.  0-9]+', text)
-    goals += re.findall('\d{2}:\d{2}\s*\dT\s*CT[a-zA-ZÀ-ÿ\-\.  0-9]+', text)
-    goals += re.findall('\d{2}:\d{2}\s*\dT\s*FT[a-zA-ZÀ-ÿ\-\.  0-9]+', text)
+    goals += re.findall('\d{2}:\d{2}\s*\dT\s*NR[a-zA-ZÀ-ÿ\-\. 0-9]+', text)
+    goals += re.findall('\d{2}:\d{2}\s*\dT\s*PN[a-zA-ZÀ-ÿ\-\. 0-9]+', text)
+    goals += re.findall('\d{2}:\d{2}\s*\dT\s*CT[a-zA-ZÀ-ÿ\-\. 0-9]+', text)
+    goals += re.findall('\d{2}:\d{2}\s*\dT\s*FT[a-zA-ZÀ-ÿ\-\. 0-9]+', text)
     
     # acréscimos
-    goals += re.findall('\+\d+\s*\dT\s*\d+\s*NR[a-zA-ZÀ-ÿ\-\.  0-9]+', text)
-    goals += re.findall('\+\d+\s*\dT\s*\d+\s*PN[a-zA-ZÀ-ÿ\-\.  0-9]+', text)
-    goals += re.findall('\+\d+\s*\dT\s*\d+\s*CT[a-zA-ZÀ-ÿ\-\.  0-9]+', text)
-    goals += re.findall('\+\d+\s*\dT\s*\d+\s*FT[a-zA-ZÀ-ÿ\-\.  0-9]+', text)
+    goals += re.findall('\+\d+\s*\dT\s*\d+\s*NR[a-zA-ZÀ-ÿ\-\. 0-9]+', text)
+    goals += re.findall('\+\d+\s*\dT\s*\d+\s*PN[a-zA-ZÀ-ÿ\-\. 0-9]+', text)
+    goals += re.findall('\+\d+\s*\dT\s*\d+\s*CT[a-zA-ZÀ-ÿ\-\. 0-9]+', text)
+    goals += re.findall('\+\d+\s*\dT\s*\d+\s*FT[a-zA-ZÀ-ÿ\-\. 0-9]+', text)
     
         # sem o número do jogador
-    goals += re.findall('\+\d+\s*\dT\s*NR[a-zA-ZÀ-ÿ\-\.  0-9]+', text)
-    goals += re.findall('\+\d+\s*\dT\s*PN[a-zA-ZÀ-ÿ\-\.  0-9]+', text)
-    goals += re.findall('\+\d+\s*\dT\s*CT[a-zA-ZÀ-ÿ\-\.  0-9]+', text)
-    goals += re.findall('\+\d+\s*\dT\s*FT[a-zA-ZÀ-ÿ\-\.  0-9]+', text)
+    goals += re.findall('\+\d+\s*\dT\s*NR[a-zA-ZÀ-ÿ\-\. 0-9]+', text)
+    goals += re.findall('\+\d+\s*\dT\s*PN[a-zA-ZÀ-ÿ\-\. 0-9]+', text)
+    goals += re.findall('\+\d+\s*\dT\s*CT[a-zA-ZÀ-ÿ\-\. 0-9]+', text)
+    goals += re.findall('\+\d+\s*\dT\s*FT[a-zA-ZÀ-ÿ\-\. 0-9]+', text)
     
     return goals
     
@@ -238,7 +271,8 @@ def treat_goal(goal, home, away):
         elif '0T' in goal:
             goal = goal.replace('0T', '1T')
     
-    time = re.findall('\d+:\d+\s*[A-Z0-9]+T|\+\d+\s*\dT', goal)[0]
+    time_string = re.findall('\d+:\d+\s*[A-Z0-9]+T|\+\d+\s*\dT', goal)[0]
+    time = treat_time(time_string)
     if home in goal and away not in goal:
         return time, home
     elif home not in goal and away in goal:
@@ -264,9 +298,6 @@ def treat_goal(goal, home, away):
     
     if 'Nova Iguaçu / RJ' in [home, away] and 'Nova Iguaçu' in goal:
         return time, 'Nova Iguaçu / RJ'
-
-    if 'Duque de Caxias / RJ' in [home, away] and 'Duque de Caxias' in goal:
-        return time, 'Duque de Caxias / RJ'
 
     if 'Macaé / RJ' in [home, away] and 'Macae' in goal:
         return time, 'Macaé / RJ'
@@ -566,9 +597,17 @@ def treat_goal(goal, home, away):
         return time, 'Genus / RO'
 
     if 'Nautico / RR' in [home, away] and 'Nautico' in goal:
-        return time, 'Nautico / RR'    
+        return time, 'Nautico / RR'
 
     return time, goal
+    
+def treat_game_goals(goals, home, away):
+    for i in range(len(goals)):
+        goals[i] = treat_goal(goals[i], home, away)
+    
+    goals = sorted(goals, key = lambda x : x[0])
+    
+    return goals
     
 def find_changes(text):
     text = text[text.find('Substituições'):]
@@ -598,9 +637,9 @@ def treat_change(change, home, away):
         change = change.replace(':00', ':00 2T')
 
     change = treat_club(change)
-    time = re.findall('\d+:\d+\s*[0-9A-Z]+T', change)[0]
-    time = time.replace('TT', 'T')
-    subs = re.findall('\d+', change[len(time):])
+    time_string = re.findall('\d+:\d+\s*[0-9A-Z]+T', change)[0].replace('TT', 'T')
+    time = treat_time(time_string)
+    subs = re.findall('\d+', change[len(time_string):])
     player_in, player_out = subs
     if home in change:
         return home, time, player_in, player_out
@@ -663,3 +702,11 @@ def treat_change(change, home, away):
         return 'Águia de Marabá / PA', time, player_in, player_out
     
     return club, time, player_in, player_out
+    
+def treat_game_changes(changes, home, away):
+    for i in range(len(changes)):
+        changes[i] = treat_change(changes[i], home, away)
+    
+    changes = sorted(changes, key = lambda x : x[1])
+    
+    return changes

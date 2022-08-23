@@ -10,9 +10,6 @@ import os
 
 from PyPDF2 import *
 
-def clear():
-    os.system('clear')
-
 def make_directories(competitions, max_year):
     for competition in competitions:
         name, cod = competition
@@ -248,6 +245,9 @@ def catch_squads(competitions, max_year):
                 home = games[game]['Mandante']
                 away = games[game]['Visitante']
                 
+                for i in range(len(goals)):
+                    goals[i] = treat_goal(goals[i], home, away)
+                
                 game_players = {home : {}, away : {}}
                 for player in players:
                     player, club = player
@@ -295,6 +295,8 @@ if __name__ == '__main__':
         it += 1
         
     end_scrape = time()
+    
+    added = 1
     if added > 0:
         start_extract = time()
         cont_fail, cont_sucess = extract(competitions, max_year)
