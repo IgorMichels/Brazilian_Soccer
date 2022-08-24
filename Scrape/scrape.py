@@ -35,7 +35,7 @@ def make_directories(competitions, max_year):
 
 def extract_games(competition, cod, year, n_max, files, exceptions):
     count_end = 0
-    for game in range(1, n_max):
+    for game in range(1, n_max + 1):
 	    if str(game).zfill(3) in exceptions[competition][year]:
 	        continue
 	    
@@ -79,7 +79,7 @@ def extract_games(competition, cod, year, n_max, files, exceptions):
 def get_pdf(url):
     return requests.get(url).content
 
-def scrape(competitions, max_year, files, max_time = 10):
+def scrape(competitions, max_year, files, max_time = 120):
     with open('number_of_games.json', 'r') as f:
         n_games = json.load(f)
     
@@ -108,7 +108,6 @@ def extract(competitions, max_year):
         exceptions = json.load(f)
 
     errors = {}
-    cont_sucess = 0
     cont_fail = 0
     for competition in competitions:
         competition = competition[0]
@@ -118,12 +117,18 @@ def extract(competitions, max_year):
             print(f'Iniciando o ano de {year} para {competition.replace("_", " ")} (extração)')
             games = {}
             count_end = 0
+            if f'games.json' in os.listdir(f'{competition}/{year}'):
+                files = glob(f'{competition}/{year}/CSVs/*.csv')
+                latest_file = max(files, key = os.path.getmtime)
+                mod_time = os.path.getmtime(latest_file)
+                if mod_time < os.path.getmtime(f'{competition}/{year}/games.json'):
+                    continue
+            
             for game in range(1, n_games[competition][str(year)] + 1):
                 if str(game).zfill(3) in exceptions[competition][year]:
                     if exceptions[competition][year][str(game).zfill(3)] != {}:
                         games[str(game).zfill(3)] = exceptions[competition][year][str(game).zfill(3)]
                         
-                    cont_sucess += 1
                     continue
                 
                 if count_end == 10:
@@ -168,7 +173,6 @@ def extract(competitions, max_year):
                                                  'Gols'          : goals,
                                                  'Substituições' : changes}
 
-                    cont_sucess += 1
                     count_end = 0
                 except FileNotFoundError:
                     count_end += 1
@@ -203,7 +207,7 @@ def extract(competitions, max_year):
     with open('Errors/infos_errors.json', 'w') as f:
         json.dump(errors, f)
     
-    return cont_fail, cont_sucess
+    return cont_fail
 
 def catch_squads(competitions, max_year):
     with open('number_of_games.json', 'r') as f:
@@ -264,54 +268,4 @@ def catch_squads(competitions, max_year):
                 print(game_players)
                 
             
-    
 
-if __name__ == '__main__':
-    max_year = 2022
-    competitions = [('CdB', '424'),
-                    ('Serie_A', '142'),
-                    ('Serie_B', '242'),
-                    ('Serie_C', '342'),
-                    ('Serie_D', '542')]
-
-    make_directories(competitions, max_year)
-
-    start_scrape = time()
-    n = len(glob('*/*/CSVs/*.csv'))
-    max_time = 30
-    added = 0
-    it = 1
-    k = 0
-    while n != k:
-        files = glob('*/*/CSVs/*.csv')
-        k = len(files)
-        if it == 1:
-            scrape(competitions, max_year, files, max_time)
-        else:
-            scrape(competitions, max_year, files, max_time / 2)
-    
-        n = len(glob('*/*/CSVs/*.csv'))
-        added += n - k
-        it += 1
-        
-    end_scrape = time()
-    
-    added = 1
-    if added > 0:
-        start_extract = time()
-        cont_fail, cont_sucess = extract(competitions, max_year)
-        end_extract = time()
-        clear()
-        print(f'Scrape finalizado em {end_scrape - start_scrape:.2f} segundos!',
-              f'Extração finalizada em {end_extract - start_extract:.2f} segundos!',
-              f'{added} jogos foram adicionados a base.',
-              f'As informações de {cont_sucess} jogos foram extraídas com sucesso.',
-              f'{cont_fail} jogos falharam ao extrair as informações.',
-              '-' * 58,
-              f'Tempo total: {end_extract - start_scrape:.2f} segundos.',
-              sep = '\n')
-    else:
-        clear()
-        print(f'Scrape finalizado em {end_scrape - start_scrape:.2f} segundos!',
-              'Nenhum jogo foi adicionado a base.',
-              sep = '\n')

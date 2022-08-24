@@ -157,7 +157,7 @@ def catch_players(text):
         if 'T(g)' in goleiro:
             continue
         
-        text = text.replace(goleiro[-8:], goleiro[-8:].replace('T', 'T(g)'))
+        text = text.replace(goleiro[-10:], goleiro[-10:].replace('TP', 'T(g)P'))
     
     players = re.findall('(\d+\D+[P|A|)|T|R]\s*\d{6})', text)
     for i in range(len(players)):
