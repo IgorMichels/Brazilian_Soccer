@@ -33,7 +33,7 @@ if __name__ == '__main__':
         if added > 0 or '-e' in sys.argv:
             start_extract = time()
             cont_fail = extract(competitions, max_year)
-            #catch_squads(competitions, max_year)
+            catch_squads(competitions, max_year)
             end_extract = time()
             clear()
             print(f'Scrape finalizado em {end_scrape - start_scrape:.2f} segundos!',
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     elif '-e' in sys.argv:
         start_extract = time()
         cont_fail = extract(competitions, max_year)
-        #catch_squads(competitions, max_year)
+        catch_squads(competitions, max_year)
         end_extract = time()
         clear()
         print(f'Extração finalizada em {end_extract - start_extract:.2f} segundos!',

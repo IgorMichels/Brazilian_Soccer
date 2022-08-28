@@ -210,6 +210,7 @@ def extract(competitions, max_year):
     return cont_fail
 
 def catch_squads(competitions, max_year):
+    erros = []
     with open('number_of_games.json', 'r') as f:
         n_games = json.load(f)
     
@@ -219,20 +220,22 @@ def catch_squads(competitions, max_year):
     model = {'Mandante' : [],
              'Visitante' : [],
              'Tempo' : 0,
-             'Placar' : '0 X 0'}
+             'Placar' : [0, 0]}
 
-    errors = {}
-    cont_sucess = 0
-    cont_fail = 0
-    squads = {}
     for competition in competitions:
         competition = competition[0]
-        squads[competition] = {}
         for year in range(2013, max_year + 1):
-            clear()
             year = str(year)
+            clear()
             print(f'Iniciando o ano de {year} para {competition.replace("_", " ")} (escalações)')
-            squads[competition][year] = {}
+            if f'squads.json' in os.listdir(f'{competition}/{year}'):
+                files = glob(f'{competition}/{year}/CSVs/*.csv')
+                latest_file = max(files, key = os.path.getmtime)
+                mod_time = os.path.getmtime(latest_file)
+                if mod_time < os.path.getmtime(f'{competition}/{year}/games.json'):
+                    continue
+
+            squads = {}
             with open(f'{competition}/{year}/games.json') as f:
                 games = json.load(f)
             
@@ -240,32 +243,87 @@ def catch_squads(competitions, max_year):
                 if games[game] == {}:
                     continue
                 
-                n = 0
-                squads[competition][year][year] = {}
-                squads[competition][year][year][n] = deepcopy(model)
-                players = games[game]['Jogadores']
-                changes = games[game]['Substituições']
-                goals = games[game]['Gols']
                 home = games[game]['Mandante']
                 away = games[game]['Visitante']
+                players = games[game]['Jogadores']
+                if players[0][1] == players[-1][1]:
+                    continue
                 
-                for i in range(len(goals)):
-                    goals[i] = treat_goal(goals[i], home, away)
-                
-                game_players = {home : {}, away : {}}
+                game_players = treat_game_players(players, home, away)
+                changes = treat_game_changes(games[game]['Substituições'], home, away)
+                goals = treat_game_goals(games[game]['Gols'], home, away)
+                squads[game] = {}
+                changes_breaks = 0
+                squads[game][changes_breaks] = deepcopy(model)
                 for player in players:
-                    player, club = player
-                    numbers = re.findall('\d+', player)
-                    shirt, cod = numbers
-                    game_players[club][shirt] = cod
+                    if player[1] == home:
+                        game_club = 'Mandante'
+                    else:
+                        game_club = 'Visitante'
                     
+                    if len(squads[game][changes_breaks][game_club]) == 11:
+                        continue
+                    
+                    cod = re.findall('\d{6}', player[0])[0]
+                    squads[game][changes_breaks][game_club].append(cod)
+                    
+                actual_minute = 0
                 for i, change in enumerate(changes):
-                    club, time, player_in, player_out = treat_change(change, home, away)
+                    old_home = squads[game][changes_breaks]['Mandante']
+                    old_away = squads[game][changes_breaks]['Visitante']
+                    old_time = squads[game][changes_breaks]['Tempo']
+                    old_score = squads[game][changes_breaks]['Placar']
                     
-                    if i == len(changes):
-                        includ = True
+                    club, time, player_in, player_out = change
+                    player_in = game_players[club][player_in]
+                    player_out = game_players[club][player_out]
+                    
+                    if time != actual_minute:
+                        changes_breaks += 1
+                        squads[game][changes_breaks] = deepcopy(squads[game][changes_breaks - 1])
+                        if club == home:
+                            old_home.remove(player_out)
+                            old_home.append(player_in)
+                        else:
+                            old_away.remove(player_out)
+                            old_away.append(player_in)
                         
-                print(game_players)
-                
-            
+                        squads[game][changes_breaks]['Mandante'] = deepcopy(old_home)
+                        squads[game][changes_breaks]['Visitante'] = deepcopy(old_away)
+                        squads[game][changes_breaks - 1]['Tempo'] = time - actual_minute
+                        for goal in goals:
+                            minute, team = goal
+                            if minute > actual_minute and minute <= time:
+                                if team == home:
+                                    squads[game][changes_breaks - 1]['Placar'][0] += 1
+                                else:
+                                    squads[game][changes_breaks - 1]['Placar'][1] += 1
+                                
+                   
+                        if i == len(changes) - 1:
+                            squads[game][changes_breaks]['Tempo'] = 90 - time
+                            for goal in goals:
+                                minute, team = goal
+                                if minute > time:
+                                    if team == home:
+                                        squads[game][changes_breaks]['Placar'][0] += 1
+                                    else:
+                                        squads[game][changes_breaks]['Placar'][1] += 1
+                   
+                    else:
+                        if club == home:
+                            old_home.remove(player_out)
+                            old_home.append(player_in)
+                        else:
+                            old_away.remove(player_out)
+                            old_away.append(player_in)
+                        
+                        squads[game][changes_breaks]['Mandante'] = deepcopy(old_home)
+                        squads[game][changes_breaks]['Visitante'] = deepcopy(old_away)
+                        if i == len(changes) - 1:
+                            squads[game][changes_breaks]['Tempo'] = 90 - time
+                            
+                    actual_minute = time
+            with open(f'{competition}/{year}/squads.json', 'w') as f:
+                json.dump(squads, f)
 
