@@ -232,7 +232,7 @@ def catch_squads(competitions, max_year):
                 files = glob(f'{competition}/{year}/CSVs/*.csv')
                 latest_file = max(files, key = os.path.getmtime)
                 mod_time = os.path.getmtime(latest_file)
-                if mod_time < os.path.getmtime(f'{competition}/{year}/games.json'):
+                if mod_time < os.path.getmtime(f'{competition}/{year}/squads.json'):
                     continue
 
             squads = {}
