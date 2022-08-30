@@ -1,7 +1,4 @@
-on:
-  push:
-    branches:
-      - master
+on: [push]
 permissions: read-all|write-all
 jobs:
   build:
