@@ -21,7 +21,6 @@ jobs:
       - name: execute py script
         run: |
           python Scrape/main.py -s
-          
       - name: Commit changes
         run: |
           git config --global user.name 'IgorMichels'
