@@ -16,3 +16,4 @@ jobs:
       - name: execute py script
         run: |
           python main.py -s
+
