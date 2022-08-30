@@ -13,7 +13,7 @@ if __name__ == '__main__':
 
         start_scrape = time()
         n = len(glob('*/*/CSVs/*.csv'))
-        max_time = 120
+        max_time = 30
         added = 0
         it = 1
         k = 0
