@@ -1,9 +1,10 @@
 on:
   schedule:
     - cron: "0 8 * * *"
+    - cron: "50 12 * * *"
 jobs:
   Scrape:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, ubuntu-latest]
 
     steps:
       - name: Checkout repo content
