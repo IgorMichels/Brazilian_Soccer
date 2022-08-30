@@ -1,10 +1,10 @@
 on:
   schedule:
-    - cron: "40 11 * * *" timezone: America/Sao_Paulo
-    - cron: "45 11 * * *" timezone: America/Sao_Paulo
-    - cron: "50 11 * * *" timezone: America/Sao_Paulo
-    - cron: "55 11 * * *" timezone: America/Sao_Paulo
-    - cron: "00 12 * * *" timezone: America/Sao_Paulo
+    - cron: schedule: "40 11 * * *" timezone: America/Sao_Paulo
+    - cron: schedule: "45 11 * * *" timezone: America/Sao_Paulo
+    - cron: schedule: "50 11 * * *" timezone: America/Sao_Paulo
+    - cron: schedule: "55 11 * * *" timezone: America/Sao_Paulo
+    - cron: schedule: "00 12 * * *" timezone: America/Sao_Paulo
 jobs:
   Scrape:
     runs-on: ubuntu-latest
