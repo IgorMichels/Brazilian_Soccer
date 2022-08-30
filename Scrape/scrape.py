@@ -79,7 +79,7 @@ def extract_games(competition, cod, year, n_max, files, exceptions):
 def get_pdf(url):
     return requests.get(url).content
 
-def scrape(competitions, max_year, files, max_time = 120):
+def scrape(competitions, max_year, files, max_time = 120, cleaning = True):
     with open('number_of_games.json', 'r') as f:
         n_games = json.load(f)
     
@@ -91,7 +91,7 @@ def scrape(competitions, max_year, files, max_time = 120):
         competition, cod = competition
         errors[competition] = {}
         for year in range(2013, max_year + 1):
-            clear()
+            if cleaning: clear()
             print(f'Iniciando ano de {year} para {competition.replace("_", " ")} (scrape)')
             year = str(year)
             errors[competition][year] = []
@@ -100,7 +100,7 @@ def scrape(competitions, max_year, files, max_time = 120):
             p.join(max_time)
             p.terminate()
 
-def extract(competitions, max_year):
+def extract(competitions, max_year, cleaning = True):
     with open('number_of_games.json', 'r') as f:
         n_games = json.load(f)
     
@@ -112,7 +112,7 @@ def extract(competitions, max_year):
     for competition in competitions:
         competition = competition[0]
         for year in range(2013, max_year + 1):
-            clear()
+            if cleaning: clear()
             year = str(year)
             print(f'Iniciando o ano de {year} para {competition.replace("_", " ")} (extração)')
             games = {}
@@ -209,7 +209,7 @@ def extract(competitions, max_year):
     
     return cont_fail
 
-def catch_squads(competitions, max_year):
+def catch_squads(competitions, max_year, cleaning = True):
     erros = []
     with open('number_of_games.json', 'r') as f:
         n_games = json.load(f)
@@ -226,7 +226,7 @@ def catch_squads(competitions, max_year):
         competition = competition[0]
         for year in range(2013, max_year + 1):
             year = str(year)
-            clear()
+            if cleaning: clear()
             print(f'Iniciando o ano de {year} para {competition.replace("_", " ")} (escalações)')
             if f'squads.json' in os.listdir(f'{competition}/{year}'):
                 files = glob(f'{competition}/{year}/CSVs/*.csv')

@@ -8,6 +8,12 @@ if __name__ == '__main__':
                     ('Serie_B', '242'),
                     ('Serie_C', '342'),
                     ('Serie_D', '542')]
+                    
+    if '-a' in sys.argv:
+        cleaning = False
+    else:
+        cleaning = True
+    
     if '-s' in sys.argv:
         make_directories(competitions, max_year)
 
@@ -21,9 +27,9 @@ if __name__ == '__main__':
             files = glob('*/*/CSVs/*.csv')
             k = len(files)
             if it == 1:
-                scrape(competitions, max_year, files, max_time)
+                scrape(competitions, max_year, files, max_time, cleaning = cleaning)
             else:
-                scrape(competitions, max_year, files, max_time / 2)
+                scrape(competitions, max_year, files, max_time / 2, cleaning = cleaning)
     
             n = len(glob('*/*/CSVs/*.csv'))
             added += n - k
@@ -32,10 +38,10 @@ if __name__ == '__main__':
         end_scrape = time()
         if added > 0 or '-e' in sys.argv:
             start_extract = time()
-            cont_fail = extract(competitions, max_year)
-            catch_squads(competitions, max_year)
+            cont_fail = extract(competitions, max_year, cleaning = cleaning)
+            catch_squads(competitions, max_year, cleaning = cleaning)
             end_extract = time()
-            clear()
+            if cleaning: clear()
             print(f'Scrape finalizado em {end_scrape - start_scrape:.2f} segundos!',
                   f'Extração finalizada em {end_extract - start_extract:.2f} segundos!',
                   f'{added} jogos foram adicionados a base.',
@@ -44,7 +50,7 @@ if __name__ == '__main__':
                   f'Tempo total: {end_extract - start_scrape:.2f} segundos.',
                   sep = '\n')
         else:
-            clear()
+            if cleaning: clear()
             print(f'Scrape finalizado em {end_scrape - start_scrape:.2f} segundos!',
                   'Nenhum jogo foi adicionado a base.',
                   sep = '\n')
@@ -54,7 +60,7 @@ if __name__ == '__main__':
         cont_fail = extract(competitions, max_year)
         catch_squads(competitions, max_year)
         end_extract = time()
-        clear()
+        if cleaning: clear()
         print(f'Extração finalizada em {end_extract - start_extract:.2f} segundos!',
               f'{cont_fail} jogos falharam ao extrair as informações.',
               sep = '\n')
