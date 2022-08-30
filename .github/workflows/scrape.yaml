@@ -1,8 +1,8 @@
-on: [push]
-env:
-  CI: true
+on:
+  schedule:
+    - cron: "0 8 * * *"
 jobs:
-  python_test:
+  Scrape:
     runs-on: ubuntu-latest
 
     steps:
