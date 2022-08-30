@@ -11,10 +11,12 @@ jobs:
         with:
           python-version: 3.8
       - name: Install dependencies
+        uses: actions/checkout@v2
         run: |
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: execute py script
+        uses: actions/checkout@v2
         run: |
           python Scrape/main.py -s
 
