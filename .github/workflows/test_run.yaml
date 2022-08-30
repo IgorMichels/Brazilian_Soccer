@@ -29,7 +29,7 @@ jobs:
         run: |
           git config --global user.name 'IgorMichels'
           git config --global user.email 'igorxadrezbr@gmail.com'
-          git add .
-          git commit -am "Automated update"
-          git push origin master
+          git add *
+          git commit -m "Automated update"
+          git push
 
