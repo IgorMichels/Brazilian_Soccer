@@ -3,6 +3,7 @@ import os
 
 def clear():
     os.system('clear')
+    os.setenv()
 
 def treat_time(time_string):
     time = 0
