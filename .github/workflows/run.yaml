@@ -16,7 +16,3 @@ jobs:
       - name: execute py script
         run: |
           python main.py -s
-        env:
-          key: ${{ secrets.key }}
-      - name: export index
-        ....
