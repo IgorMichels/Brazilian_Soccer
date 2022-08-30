@@ -6,10 +6,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: "Show environmetn variables"
-        run: |
-          env
-
       - name: checkout repo content
         uses: actions/checkout@v2
       
