@@ -12,5 +12,5 @@ jobs:
           python-version: 3.8
       - name: execute py script
         run: |
-          python main.py -s
+          python Scrape/main.py -s
 
