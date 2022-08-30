@@ -1,7 +1,6 @@
 on:
   schedule:
-    - cron: "0 8 * * *"
-    - cron: "50 12 * * *"
+    - cron: "0 9 * * *"
 jobs:
   Scrape:
     runs-on: [self-hosted, ubuntu-latest]
