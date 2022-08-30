@@ -1,25 +1,24 @@
-on:
-  schedule:
-    cron:
-      - description: "Teste 1"
-        schedule: "40 11 * * *" 
-        timezone: America/Sao_Paulo
-        
-      - description: "Teste 2"
-        schedule: "45 11 * * *" 
-        timezone: America/Sao_Paulo
-        
-      - description: "Teste 3"
-        schedule: "50 11 * * *" 
-        timezone: America/Sao_Paulo
-        
-      - description: "Teste 4"
-        schedule: "55 11 * * *" 
-        timezone: America/Sao_Paulo
-        
-      - description: "Teste 5"
-        schedule: "00 12 * * *" 
-        timezone: America/Sao_Paulo
+cron:
+  - description: "Teste 1"
+    schedule: "40 11 * * *" 
+    timezone: America/Sao_Paulo
+    
+  - description: "Teste 2"
+    schedule: "45 11 * * *" 
+    timezone: America/Sao_Paulo
+    
+  - description: "Teste 3"
+    schedule: "50 11 * * *" 
+    timezone: America/Sao_Paulo
+    
+  - description: "Teste 4"
+    schedule: "55 11 * * *" 
+    timezone: America/Sao_Paulo
+    
+  - description: "Teste 5"
+    schedule: "00 12 * * *" 
+    timezone: America/Sao_Paulo
+
 jobs:
   Scrape:
     runs-on: ubuntu-latest
