@@ -253,31 +253,30 @@ def catch_squads(competitions, max_year, cleaning = True):
                 changes = treat_game_changes(games[game]['Substituições'], home, away)
                 goals = treat_game_goals(games[game]['Gols'], home, away)
                 squads[game] = {}
-                changes_breaks = 0
-                squads[game][changes_breaks] = deepcopy(model)
+                squads[game][0] = deepcopy(model)
                 for player in players:
                     if player[1] == home:
                         game_club = 'Mandante'
                     else:
                         game_club = 'Visitante'
                     
-                    if len(squads[game][changes_breaks][game_club]) == 11:
+                    if len(squads[game][0][game_club]) == 11:
                         continue
                     
                     cod = re.findall('\d{6}', player[0])[0]
-                    squads[game][changes_breaks][game_club].append(cod)
+                    squads[game][0][game_club].append(cod)
                     
                 actual_minute = 0
+                changes_breaks = 0
                 for i, change in enumerate(changes):
-                    old_home = squads[game][changes_breaks]['Mandante']
-                    old_away = squads[game][changes_breaks]['Visitante']
+                    old_home = deepcopy(squads[game][changes_breaks]['Mandante'])
+                    old_away = deepcopy(squads[game][changes_breaks]['Visitante'])
                     old_time = squads[game][changes_breaks]['Tempo']
                     old_score = squads[game][changes_breaks]['Placar']
                     
                     club, time, player_in, player_out = change
                     player_in = game_players[club][player_in]
                     player_out = game_players[club][player_out]
-                    
                     if time != actual_minute:
                         changes_breaks += 1
                         squads[game][changes_breaks] = deepcopy(squads[game][changes_breaks - 1])
