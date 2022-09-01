@@ -10,14 +10,14 @@ import os
 
 from PyPDF2 import *
 
-def make_directories(competitions, max_year):
+def make_directories(competitions, min_year, max_year):
     for competition in competitions:
         name, cod = competition
         if name not in os.listdir():
             os.mkdir(name)
 
         os.chdir(name)
-        for year in range(2013, max_year + 1):
+        for year in range(min_year, max_year + 1):
             year = str(year)
             if year not in os.listdir():
                 os.mkdir(year)
@@ -79,7 +79,7 @@ def extract_games(competition, cod, year, n_max, files, exceptions):
 def get_pdf(url):
     return requests.get(url).content
 
-def scrape(competitions, max_year, files, max_time = 120, cleaning = True):
+def scrape(competitions, min_year, max_year, files, max_time = 120, cleaning = True):
     with open('number_of_games.json', 'r') as f:
         n_games = json.load(f)
     
@@ -90,7 +90,7 @@ def scrape(competitions, max_year, files, max_time = 120, cleaning = True):
     for competition in competitions:
         competition, cod = competition
         errors[competition] = {}
-        for year in range(2013, max_year + 1):
+        for year in range(min_year, max_year + 1):
             if cleaning: clear()
             print(f'Iniciando ano de {year} para {competition.replace("_", " ")} (scrape)')
             year = str(year)
@@ -100,7 +100,7 @@ def scrape(competitions, max_year, files, max_time = 120, cleaning = True):
             p.join(max_time)
             p.terminate()
 
-def extract(competitions, max_year, cleaning = True):
+def extract(competitions, min_year, max_year, cleaning = True):
     with open('number_of_games.json', 'r') as f:
         n_games = json.load(f)
     
@@ -111,7 +111,7 @@ def extract(competitions, max_year, cleaning = True):
     cont_fail = 0
     for competition in competitions:
         competition = competition[0]
-        for year in range(2013, max_year + 1):
+        for year in range(min_year, max_year + 1):
             if cleaning: clear()
             year = str(year)
             print(f'Iniciando o ano de {year} para {competition.replace("_", " ")} (extração)')
@@ -209,7 +209,7 @@ def extract(competitions, max_year, cleaning = True):
     
     return cont_fail
 
-def catch_squads(competitions, max_year, cleaning = True):
+def catch_squads(competitions, min_year, max_year, cleaning = True):
     erros = []
     with open('number_of_games.json', 'r') as f:
         n_games = json.load(f)
@@ -224,7 +224,7 @@ def catch_squads(competitions, max_year, cleaning = True):
 
     for competition in competitions:
         competition = competition[0]
-        for year in range(2013, max_year + 1):
+        for year in range(min_year, max_year + 1):
             year = str(year)
             if cleaning: clear()
             print(f'Iniciando o ano de {year} para {competition.replace("_", " ")} (escalações)')
