@@ -10,6 +10,12 @@ jobs:
       - name: Checkout repo content
         uses: actions/checkout@v2
       
+      - name: Configure repo
+        run: |
+          git config --global user.name 'IgorMichels'
+          git config --global user.email 'igorxadrezbr@gmail.com'
+          git pull
+      
       - name: Setup python
         uses: actions/setup-python@v2
         with:
@@ -28,8 +34,6 @@ jobs:
       
       - name: Commit changes
         run: |
-          git config --global user.name 'IgorMichels'
-          git config --global user.email 'igorxadrezbr@gmail.com'
           git add *
           git commit -m "Automated update"
           git push
