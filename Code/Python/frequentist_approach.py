@@ -1,6 +1,6 @@
+from scipy.optimize import minimize, LinearConstraint
 from numpy.random import poisson as rv_poisson
 from numpy.random import multivariate_normal
-from scipy.optimize import minimize
 from scipy.stats import poisson
 from glob import glob
 
@@ -101,7 +101,8 @@ for game in squads:
 mu1, mu2 = 1, 2
 x, y, z = 2, 1, 2
 proficiencies = np.abs(multivariate_normal([mu1, mu2], [[x, y], [y, z]], i)).reshape(2 * len(players), 1)
-res = minimize(likelihood, proficiencies, args = (players, squads))
+cons = LinearConstraint(np.eye(len(proficiencies)), lb = 0, ub = np.inf)
+res = minimize(likelihood, proficiencies, args = (players, squads), constraints = cons)
 print(res)
 
 
