@@ -101,10 +101,9 @@ for game in squads:
 mu1, mu2 = 1, 2
 x, y, z = 2, 1, 2
 proficiencies = np.abs(multivariate_normal([mu1, mu2], [[x, y], [y, z]], i)).reshape(2 * len(players), 1)
-print(likelihood(proficiencies, players, squads))
 res = minimize(likelihood, proficiencies, args = (players, squads))
-print(res.fun)
-print(res.nit)
+print(res)
+
 
 #n = 1000000
 # probs = games_probs(lamb_1 = 2, lamb_2 = 1, lamb_3 = 0, size = n)
