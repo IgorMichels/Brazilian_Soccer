@@ -28,5 +28,6 @@ Manifest.toml
 */__pycache__
 Scrape/tests.py
 Scrape/test.json
+Scrape/mail_data.py
 Outros/
 Code/Python/tests.py
