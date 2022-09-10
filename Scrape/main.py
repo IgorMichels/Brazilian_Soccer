@@ -1,6 +1,4 @@
-from mail_data import get_mail_data
 from datetime import datetime
-from mail import send_log
 from scrape import *
 import sys
 
@@ -125,17 +123,3 @@ if __name__ == '__main__':
         f.write('-' * 85 + '\n')
         f.write('\n')
         
-    with open('scrape.log', 'r') as f:
-        log = f.readlines()
-        log = ''.join(log)
-        log = log.split('\n\n'+ '-' * 85 + '\n\n')
-        if '' in log:
-            log.remove('')
-        
-        log = log[-1]
-    
-    from_mail, password = get_mail_data()
-    to_mail = from_mail
-    subject = '[Scrape] - Log de execução'
-    body = log
-    send_log(from_mail, password, to_mail, subject, body)
