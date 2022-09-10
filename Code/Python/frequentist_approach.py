@@ -51,7 +51,7 @@ def game_likelihood(lambs, goals):
     
     return lik_score_1 + lik_score_2
 
-def likelihood(proficiencies, players, squads):
+def likelihood(proficiencies, players, squads, n):
     if proficiencies.shape[0] != len(players):
         proficiencies = proficiencies.reshape(len(players), 2)
     
@@ -78,7 +78,10 @@ def likelihood(proficiencies, players, squads):
                 lamb_22 *= t / 90
                 lambs = [lamb_11 / lamb_22, lamb_21 / lamb_12]
                 lik += game_likelihood(lambs, goals)
-            
+    
+        if game == str(n).zfill(3):
+            break
+        
     return - lik
 
 with open('../../Scrape/Serie_A/2022/squads.json', 'r') as f:
@@ -101,9 +104,20 @@ for game in squads:
 mu1, mu2 = 1, 2
 x, y, z = 2, 1, 2
 proficiencies = np.abs(multivariate_normal([mu1, mu2], [[x, y], [y, z]], i)).reshape(2 * len(players), 1)
-cons = LinearConstraint(np.eye(len(proficiencies)), lb = 0, ub = np.inf)
-res = minimize(likelihood, proficiencies, args = (players, squads), constraints = cons)
-print(res)
+bounds = [(0, None) for i in range(len(proficiencies))]
+bounds[0] = (1, 1)
+proficiencies[0] = 1
+
+for n in range(10, len(squads), 10):
+    print(f'Iteração: {int(n / 10)}')
+    res = minimize(likelihood, proficiencies, args = (players, squads, n), method = 'Nelder-Mead', bounds = bounds,
+                   options = {'maxiter': 2000 * len(proficiencies), 'disp': True,
+                              'xatol': 1, 'fatol': n / 2, 'adaptive': True})
+                              
+    print()
+    proficiencies = res.x
+ 
+print(res.x)
 
 
 #n = 1000000
