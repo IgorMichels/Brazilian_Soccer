@@ -2,6 +2,7 @@ from scipy.optimize import minimize, LinearConstraint
 from numpy.random import poisson as rv_poisson
 from numpy.random import multivariate_normal
 from scipy.stats import poisson
+from math import factorial
 from glob import glob
 
 import os
@@ -46,8 +47,8 @@ def games_results(lamb_1 = 1, lamb_2 = 1, lamb_3 = 0, size = 100000):
     return R, (w, d, l)
 
 def game_likelihood(lambs, goals):
-    lik_score_1 = poisson.logcdf(goals[0], lambs[0])
-    lik_score_2 = poisson.logcdf(goals[1], lambs[1])
+    lik_score_1 = poisson.logpmf(goals[0], lambs[0])
+    lik_score_2 = poisson.logpmf(goals[1], lambs[1])
     
     return lik_score_1 + lik_score_2
 
@@ -84,6 +85,63 @@ def likelihood(proficiencies, players, squads, n):
         
     return - lik
 
+def likelihood(proficiencies, players, squads, n):
+    if proficiencies.shape[0] != len(players):
+        proficiencies = proficiencies.reshape(len(players), 2)
+    
+    lik = 0
+    for game in squads:
+        for sub in squads[game]:
+            lamb_1, lamb_2 = 0, 0
+            goals = squads[game][sub]['Placar']
+            t = squads[game][sub]['Tempo']
+            if t != 0:
+                for i in range(11):
+                    player = squads[game][sub]['Mandante'][i]
+                    lamb_1 += proficiencies[players[player]]
+                
+                    player = squads[game][sub]['Visitante'][i]
+                    lamb_2 += proficiencies[players[player]]
+            
+                lamb_1 *= t / 90
+                lamb_2 *= t / 90
+                lambs = [lamb_1 / lamb_2, lamb_2 / lamb_1]
+                lik += game_likelihood(lambs, goals)
+    
+        if game == str(n).zfill(3):
+            break
+        
+    return - lik
+
+def likelihood(proficiencies, players, squads):
+    if proficiencies.shape[0] != len(players):
+        proficiencies = proficiencies.reshape(len(players), 2)
+    
+    lik_1, lik_2 = 0, 0
+    for game in squads:
+        for sub in squads[game]:
+            lamb_ma, lamb_md, lamb_va, lamb_vd = 0, 0, 0, 0
+            goals = squads[game][sub]['Placar']
+            t = squads[game][sub]['Tempo']
+            if t != 0:
+                for i in range(11):
+                    player = squads[game][sub]['Mandante'][i]
+                    lamb_ma += proficiencies[players[player], 0]
+                    lamb_md += proficiencies[players[player], 1]
+                
+                    player = squads[game][sub]['Visitante'][i]
+                    lamb_va += proficiencies[players[player], 0]
+                    lamb_vd += proficiencies[players[player], 1]
+            
+                lamb_1 = lamb_ma / lamb_vd * t / 90
+                lamb_2 = lamb_va / lamb_md * t / 90
+                lambs = [lamb_1, lamb_2]
+                lik_1 += game_likelihood(lambs, goals)
+                lik_2 += - lamb_1 + goals[0] * np.log(lamb_1) - np.log(factorial(goals[0]))
+                lik_2 += - lamb_2 + goals[1] * np.log(lamb_2) - np.log(factorial(goals[1]))
+    
+    return (- lik_1, - lik_2)
+
 with open('../../Scrape/Serie_A/2022/squads.json', 'r') as f:
     squads = json.load(f)
     
@@ -104,20 +162,24 @@ for game in squads:
 mu1, mu2 = 1, 2
 x, y, z = 2, 1, 2
 proficiencies = np.abs(multivariate_normal([mu1, mu2], [[x, y], [y, z]], i)).reshape(2 * len(players), 1)
+
+print(likelihood(proficiencies, players, squads))
+
+# proficiencies = np.abs(np.random.normal(1, 1, i))
 bounds = [(0, None) for i in range(len(proficiencies))]
 bounds[0] = (1, 1)
 proficiencies[0] = 1
 
-for n in range(10, len(squads), 10):
-    print(f'Iteração: {int(n / 10)}')
-    res = minimize(likelihood, proficiencies, args = (players, squads, n), method = 'Nelder-Mead', bounds = bounds,
-                   options = {'maxiter': 2000 * len(proficiencies), 'disp': True,
-                              'xatol': 1, 'fatol': n / 2, 'adaptive': True})
-                              
-    print()
-    proficiencies = res.x
- 
-print(res.x)
+#for n in range(10, len(squads), 10):
+#    print(f'Iteração: {int(n / 10)}')
+#    res = minimize(likelihood, proficiencies, args = (players, squads, n), method = 'Nelder-Mead', bounds = bounds,
+#                   options = {'maxiter': 2000 * len(proficiencies), 'disp': True,
+#                              'xatol': 1, 'fatol': n / 10, 'adaptive': True})
+#
+#    print()
+#    proficiencies = res.x
+#
+#print(res.x)
 
 
 #n = 1000000
