@@ -52,71 +52,8 @@ def game_likelihood(lambs, goals):
     
     return lik_score_1 + lik_score_2
 
-def likelihood(proficiencies, players, squads, n):
-    if proficiencies.shape[0] != len(players):
-        proficiencies = proficiencies.reshape(len(players), 2)
-    
-    lik = 0
-    for game in squads:
-        for sub in squads[game]:
-            lamb_11, lamb_12 = 0, 0
-            lamb_21, lamb_22 = 0, 0
-            goals = squads[game][sub]['Placar']
-            t = squads[game][sub]['Tempo']
-            if t != 0:
-                for i in range(11):
-                    player = squads[game][sub]['Mandante'][i]
-                    lamb_11 += proficiencies[players[player], 0]
-                    lamb_12 += proficiencies[players[player], 1]
-                
-                    player = squads[game][sub]['Visitante'][i]
-                    lamb_21 += proficiencies[players[player], 0]
-                    lamb_22 += proficiencies[players[player], 1]
-            
-                lamb_11 *= t / 90
-                lamb_12 *= t / 90
-                lamb_21 *= t / 90
-                lamb_22 *= t / 90
-                lambs = [lamb_11 / lamb_22, lamb_21 / lamb_12]
-                lik += game_likelihood(lambs, goals)
-    
-        if game == str(n).zfill(3):
-            break
-        
-    return - lik
-
-def likelihood(proficiencies, players, squads, n):
-    if proficiencies.shape[0] != len(players):
-        proficiencies = proficiencies.reshape(len(players), 2)
-    
-    lik = 0
-    for game in squads:
-        for sub in squads[game]:
-            lamb_1, lamb_2 = 0, 0
-            goals = squads[game][sub]['Placar']
-            t = squads[game][sub]['Tempo']
-            if t != 0:
-                for i in range(11):
-                    player = squads[game][sub]['Mandante'][i]
-                    lamb_1 += proficiencies[players[player]]
-                
-                    player = squads[game][sub]['Visitante'][i]
-                    lamb_2 += proficiencies[players[player]]
-            
-                lamb_1 *= t / 90
-                lamb_2 *= t / 90
-                lambs = [lamb_1 / lamb_2, lamb_2 / lamb_1]
-                lik += game_likelihood(lambs, goals)
-    
-        if game == str(n).zfill(3):
-            break
-        
-    return - lik
-
 def likelihood(proficiencies, players, squads):
-    if proficiencies.shape[0] != len(players):
-        proficiencies = proficiencies.reshape(len(players), 2)
-    
+    n = len(players)
     lik_1, lik_2 = 0, 0
     for game in squads:
         for sub in squads[game]:
@@ -126,21 +63,52 @@ def likelihood(proficiencies, players, squads):
             if t != 0:
                 for i in range(11):
                     player = squads[game][sub]['Mandante'][i]
-                    lamb_ma += proficiencies[players[player], 0]
-                    lamb_md += proficiencies[players[player], 1]
+                    lamb_ma += proficiencies[players[player]]
+                    lamb_md += proficiencies[players[player] + n]
                 
                     player = squads[game][sub]['Visitante'][i]
-                    lamb_va += proficiencies[players[player], 0]
-                    lamb_vd += proficiencies[players[player], 1]
+                    lamb_va += proficiencies[players[player]]
+                    lamb_vd += proficiencies[players[player] + n]
             
-                lamb_1 = lamb_ma / lamb_vd * t / 90
-                lamb_2 = lamb_va / lamb_md * t / 90
+                lamb_1 = lamb_ma / lamb_vd * t
+                lamb_2 = lamb_va / lamb_md * t
                 lambs = [lamb_1, lamb_2]
                 lik_1 += game_likelihood(lambs, goals)
                 lik_2 += - lamb_1 + goals[0] * np.log(lamb_1) - np.log(factorial(goals[0]))
                 lik_2 += - lamb_2 + goals[1] * np.log(lamb_2) - np.log(factorial(goals[1]))
-    
-    return (- lik_1, - lik_2)
+                
+    return lik_1
+
+def likelihood_gradient(proficiencies, players, squads):
+    n = len(players)
+    gradient = np.zeros(2 * n)
+    lik_1, lik_2 = 0, 0
+    for game in squads:
+        for sub in squads[game]:
+            lamb_ma, lamb_md, lamb_va, lamb_vd = 0, 0, 0, 0
+            s_m, s_v = squads[game][sub]['Placar']
+            t = squads[game][sub]['Tempo']
+            if t != 0:
+                for i in range(11):
+                    player = squads[game][sub]['Mandante'][i]
+                    lamb_ma += proficiencies[players[player]]
+                    lamb_md += proficiencies[players[player] + n]
+                
+                    player = squads[game][sub]['Visitante'][i]
+                    lamb_va += proficiencies[players[player]]
+                    lamb_vd += proficiencies[players[player] + n]
+            
+                for i in range(11):
+                    player = squads[game][sub]['Mandante'][i]
+                    gradient[players[player]] += - t / lamb_vd + s_m / lamb_ma
+                    gradient[players[player] + n] += t / lamb_md * lamb_va / lamb_md - s_v / lamb_md
+                    
+                    player = squads[game][sub]['Visitante'][i]
+                    gradient[players[player]] += - t / lamb_md + s_v / lamb_va
+                    gradient[players[player] + n] += t / lamb_vd * lamb_ma / lamb_vd - s_m / lamb_vd
+                
+    return gradient
+
 
 with open('../../Scrape/Serie_A/2022/squads.json', 'r') as f:
     squads = json.load(f)
@@ -159,28 +127,19 @@ for game in squads:
                 players[player] = i
                 i += 1
 
-mu1, mu2 = 1, 2
-x, y, z = 2, 1, 2
-proficiencies = np.abs(multivariate_normal([mu1, mu2], [[x, y], [y, z]], i)).reshape(2 * len(players), 1)
-
-print(likelihood(proficiencies, players, squads))
-
-# proficiencies = np.abs(np.random.normal(1, 1, i))
-bounds = [(0, None) for i in range(len(proficiencies))]
+mu = 0
+sigma = 3
+proficiencies = np.abs(np.random.normal(mu, sigma, 2 * len(players)))
+bounds = [(0.00001, None) for i in range(len(proficiencies))]
 bounds[0] = (1, 1)
 proficiencies[0] = 1
+res = minimize(likelihood, proficiencies, jac = likelihood_gradient, args = (players, squads), bounds = bounds)
+                          
+#res = minimize(likelihood, proficiencies, args = (players, squads), method = 'Nelder-Mead', bounds = bounds,
+#               options = {'maxiter': 2000 * len(proficiencies), 'disp': True,
+#                          'xatol': 0.001, 'fatol': 0.001, 'adaptive': True})
 
-#for n in range(10, len(squads), 10):
-#    print(f'Iteração: {int(n / 10)}')
-#    res = minimize(likelihood, proficiencies, args = (players, squads, n), method = 'Nelder-Mead', bounds = bounds,
-#                   options = {'maxiter': 2000 * len(proficiencies), 'disp': True,
-#                              'xatol': 1, 'fatol': n / 10, 'adaptive': True})
-#
-#    print()
-#    proficiencies = res.x
-#
-#print(res.x)
-
+np.save('result.npy', res.x)
 
 #n = 1000000
 # probs = games_probs(lamb_1 = 2, lamb_2 = 1, lamb_3 = 0, size = n)
