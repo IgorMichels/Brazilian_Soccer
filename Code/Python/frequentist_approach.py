@@ -53,6 +53,11 @@ def game_likelihood(lambs, goals):
     return lik_score_1 + lik_score_2
 
 def likelihood(proficiencies, players, squads):
+    global lik_entry
+    lik_entry += 1
+    if lik_entry % 100 == 0:
+        print(f'Entrando na função pela {lik_entry}a. vez.')
+        
     n = len(players)
     lik_1, lik_2 = 0, 0
     for game in squads:
@@ -80,6 +85,11 @@ def likelihood(proficiencies, players, squads):
     return lik_1
 
 def likelihood_gradient(proficiencies, players, squads):
+    global grad_entry
+    grad_entry += 1
+    if grad_entry % 100 == 0:
+        print(f'Entrando no gradiente pela {grad_entry}a. vez.')
+        
     n = len(players)
     gradient = np.zeros(2 * n)
     lik_1, lik_2 = 0, 0
@@ -110,7 +120,7 @@ def likelihood_gradient(proficiencies, players, squads):
     return gradient
 
 
-with open('../../Scrape/Serie_A/2022/squads.json', 'r') as f:
+with open('../../Scrape/Serie_A/2021/squads.json', 'r') as f:
     squads = json.load(f)
     
 i = 0
@@ -129,17 +139,27 @@ for game in squads:
 
 mu = 0
 sigma = 3
+menor, maior = 1e-20, 1e20
 proficiencies = np.abs(np.random.normal(mu, sigma, 2 * len(players)))
-bounds = [(0.00001, None) for i in range(len(proficiencies))]
+proficiencies = np.load('result.npy')
+bounds = [(menor, maior) for i in range(len(proficiencies))]
 bounds[0] = (1, 1)
 proficiencies[0] = 1
-res = minimize(likelihood, proficiencies, jac = likelihood_gradient, args = (players, squads), bounds = bounds)
+lik_entry = 0
+grad_entry = 0
+res = minimize(likelihood, proficiencies, jac = likelihood_gradient, args = (players, squads), bounds = bounds, tol = 1e-6)
                           
 #res = minimize(likelihood, proficiencies, args = (players, squads), method = 'Nelder-Mead', bounds = bounds,
 #               options = {'maxiter': 2000 * len(proficiencies), 'disp': True,
 #                          'xatol': 0.001, 'fatol': 0.001, 'adaptive': True})
 
 np.save('result.npy', res.x)
+print(res.x)
+print(res.fun)
+
+print(np.sum(res.x == menor))
+print(np.sum(res.x == maior))
+print(res.x.shape)
 
 #n = 1000000
 # probs = games_probs(lamb_1 = 2, lamb_2 = 1, lamb_3 = 0, size = n)
