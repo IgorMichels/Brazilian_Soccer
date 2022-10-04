@@ -9,16 +9,16 @@ data {
 }
 
 parameters {
-  real<lower = 0> theta1[n_players];
-  real<lower = 0> theta2[n_players];
+  real<lower = 0> theta_1[n_players];
+  real<lower = 0> theta_2[n_players];
 }
 
 model {
-  theta1 ~ std_normal();
-  theta2 ~ std_normal();
+  theta_1 ~ std_normal();
+  theta_2 ~ std_normal();
   for (n in 1:n_obs){
-    results[n, 1] ~ poisson(sum(theta1[club_1[n, ]]) / sum(theta2[club_2[n, ]]) * times[n]);
-    results[n, 2] ~ poisson(sum(theta1[club_2[n, ]]) / sum(theta2[club_1[n, ]]) * times[n]);
+    results[n, 1] ~ poisson(sum(theta_1[club_1[n, ]]) / sum(theta_2[club_2[n, ]]) * times[n]);
+    results[n, 2] ~ poisson(sum(theta_1[club_2[n, ]]) / sum(theta_2[club_1[n, ]]) * times[n]);
   }
 }
 
