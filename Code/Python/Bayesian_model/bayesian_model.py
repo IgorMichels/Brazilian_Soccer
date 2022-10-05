@@ -90,4 +90,6 @@ for i in range(40):
         df[column] = df[column] / df[df.columns[7]]
 
     df.to_csv(f'parameters_iter_{i + 1}.csv')
+    del posterior
+    del fit
     del df
