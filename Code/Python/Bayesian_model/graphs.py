@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-df = pd.read_csv('parameters_std_normal_prior_chain_1.csv')
+df = pd.read_csv('parameters_std_normal_prior.csv')
 players = [
            ['303716', 'Pedro - Flamengo'],
            ['502361', 'Pedro Raul - Goiás'],
