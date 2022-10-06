@@ -3,12 +3,10 @@ import json
 import httpstan.cache
 import httpstan.models
 
-# cleaning cache
 def clean_cache(model):
     model_name = httpstan.models.calculate_model_name(model)
     httpstan.cache.delete_model_directory(model_name)
 
-# collecting data
 def collect_data(competitions, years):
     players = {}
     n_obs = 0
@@ -55,17 +53,16 @@ def collect_data(competitions, years):
     with open('players.json', 'w') as f:
         json.dump(players, f)
 
-    data = {"n_obs": n_obs,
-            "n_players": n_players,
-            "times": times,
-            "n_players_per_game": n_players_per_game,
-            "results": results,
-            "club_1": club_1,
-            "club_2": club_2}
+    data = {'n_obs': n_obs,
+            'n_players': n_players,
+            'times': times,
+            'n_players_per_game': n_players_per_game,
+            'results': results,
+            'club_1': club_1,
+            'club_2': club_2}
 
     return data, players
 
-# fitting and running
 def run(model, data, n_iter, base_player, name, num_samples = 1000, num_warmup = 1000, clear_cache = True):
     for chain in range(1, n_iter + 1):
         if clear_cache:
@@ -83,8 +80,6 @@ def run(model, data, n_iter, base_player, name, num_samples = 1000, num_warmup =
 if __name__ == '__main__':
     competitions = ['Serie_A', 'Serie_B']
     years = range(2021, 2023)
-    competitions = ['Serie_A']
-    years = range(2022, 2023)
     data, players = collect_data(competitions, years)
     base_player = '502361'
     base_player = players[base_player]
