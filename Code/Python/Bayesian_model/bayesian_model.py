@@ -110,5 +110,5 @@ if __name__ == '__main__':
             '''
     
     n_iter = 1
-    name = 'parameters_std_normal_prior20B'
+    name = 'parameters_std_normal_prior_20B'
     run(model, data, n_iter, base_player, name, num_samples = 1000)
