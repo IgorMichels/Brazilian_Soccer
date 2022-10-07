@@ -46,6 +46,20 @@ def games_results(lamb_1 = 1, lamb_2 = 1, lamb_3 = 0, size = 100000):
     
     return R, (w, d, l)
 
+def calculate_lambs(subgame, players, proficiencies):
+    n = len(players)
+    lamb_ma, lamb_md, lamb_va, lamb_vd = 0, 0, 0, 0
+    for i in range(11):
+        player = players[subgame['Mandante'][i]]
+        lamb_ma += proficiencies[player    ]
+        lamb_md += proficiencies[player + n]
+        
+        player = players[subgame['Visitante'][i]]
+        lamb_va += proficiencies[player    ]
+        lamb_vd += proficiencies[player + n]
+    
+    return lamb_ma, lamb_md, lamb_va, lamb_vd
+
 def game_likelihood(lambs, goals):
     lik_score_1 = poisson.logpmf(goals[0], lambs[0])
     lik_score_2 = poisson.logpmf(goals[1], lambs[1])
@@ -53,51 +67,39 @@ def game_likelihood(lambs, goals):
     return lik_score_1 + lik_score_2
 
 def likelihood(proficiencies, players, squads):
+    if any(proficiencies <= 0): return np.inf
     n = len(players)
-    lik_1, lik_2 = 0, 0
+    lik = 0
     for game in squads:
         for sub in squads[game]:
             lamb_ma, lamb_md, lamb_va, lamb_vd = 0, 0, 0, 0
             goals = squads[game][sub]['Placar']
             t = squads[game][sub]['Tempo']
             if t != 0:
-                for i in range(11):
-                    player = squads[game][sub]['Mandante'][i]
-                    lamb_ma += proficiencies[players[player]]
-                    lamb_md += proficiencies[players[player] + n]
-                
-                    player = squads[game][sub]['Visitante'][i]
-                    lamb_va += proficiencies[players[player]]
-                    lamb_vd += proficiencies[players[player] + n]
+                lamb_ma, lamb_md, lamb_va, lamb_vd = calculate_lambs(squads[game][sub],
+                                                                     players,
+                                                                     proficiencies)
             
                 lamb_1 = lamb_ma / lamb_vd * t
                 lamb_2 = lamb_va / lamb_md * t
                 if lamb_1 <= 0 or lamb_2 <= 0: return np.inf
                 lambs = [lamb_1, lamb_2]
-                lik_1 += game_likelihood(lambs, goals)
-                lik_2 += - lamb_1 + goals[0] * np.log(lamb_1) - np.log(factorial(goals[0]))
-                lik_2 += - lamb_2 + goals[1] * np.log(lamb_2) - np.log(factorial(goals[1]))
+                lik += game_likelihood(lambs, goals)
                 
-    return lik_1
+    return lik
 
 def likelihood_gradient(proficiencies, players, squads):
     n = len(players)
     gradient = np.zeros(2 * n)
     for game in squads:
         for sub in squads[game]:
-            lamb_ma, lamb_md, lamb_va, lamb_vd = 0, 0, 0, 0
             s_m, s_v = squads[game][sub]['Placar']
             t = squads[game][sub]['Tempo']
             if t != 0:
-                for i in range(11):
-                    player = players[squads[game][sub]['Mandante'][i]]
-                    lamb_ma += proficiencies[player    ]
-                    lamb_md += proficiencies[player + n]
+                lamb_ma, lamb_md, lamb_va, lamb_vd = calculate_lambs(squads[game][sub],
+                                                                     players,
+                                                                     proficiencies)
                 
-                    player = players[squads[game][sub]['Visitante'][i]]
-                    lamb_va += proficiencies[player    ]
-                    lamb_vd += proficiencies[player + n]
-            
                 for i in range(11):
                     player = players[squads[game][sub]['Mandante'][i]]
                     gradient[player    ] += - t / lamb_vd + s_m / lamb_ma
@@ -114,19 +116,13 @@ def likelihood_hessian(proficiencies, players, squads):
     hessian = np.zeros((2 * n, 2 * n))
     for game in squads:
         for sub in squads[game]:
-            lamb_ma, lamb_md, lamb_va, lamb_vd = 0, 0, 0, 0
             s_m, s_v = squads[game][sub]['Placar']
             t = squads[game][sub]['Tempo']
             if t != 0:
-                for i in range(11):
-                    player = players[squads[game][sub]['Mandante'][i]]
-                    lamb_ma += proficiencies[player    ]
-                    lamb_md += proficiencies[player + n]
+                lamb_ma, lamb_md, lamb_va, lamb_vd = calculate_lambs(squads[game][sub],
+                                                                     players,
+                                                                     proficiencies)
                 
-                    player = players[squads[game][sub]['Visitante'][i]]
-                    lamb_va += proficiencies[player    ]
-                    lamb_vd += proficiencies[player + n]
-            
                 for i in range(11):
                     player_i = players[squads[game][sub]['Mandante'][i]]
                     for j in range(11):
@@ -178,29 +174,24 @@ for game in squads:
 mu = 0
 sigma = 3
 proficiencies = np.abs(np.random.normal(mu, sigma, 2 * len(players)))
-# menor, maior = 1e-20, 1e20
-# bounds = [(menor, maior) for i in range(len(proficiencies))]
-# bounds[0] = (1, 1)
 proficiencies[0] = 1
-res = minimize(likelihood,
+print(proficiencies)
+res = minimize(
+               likelihood,
                proficiencies,
                args = (players, squads),
-               method = 'Newton-CG',
+               method = 'trust-exact',
+               # method = 'Newton-CG',
                jac = likelihood_gradient,
                hess = likelihood_hessian,
-               # bounds = bounds,
-               tol = 1e-6
+               tol = 1e-20,
+               # options = {
+               #            'xtol': 1e-20,
+               #            'eps' : 1e-10
+               #           }
               )
 
-np.save('result_hessian.npy', res.x)
+np.save('result_trust_exact.npy', res.x)
 print(res.x)
 print(res.fun)
-
-# n = 1000000
-# probs = games_probs(lamb_1 = 2, lamb_2 = 1, lamb_3 = 0, size = n)
-# results, probs = games_results(lamb_1 = 2, lamb_2 = 1, lamb_3 = 0, size = n)
-
-# print(probs)
-# print(game_likelihood([2, 1], [3, 2]))
-# print(game_likelihood([3, 2], [3, 2]))
-
+print(res)
