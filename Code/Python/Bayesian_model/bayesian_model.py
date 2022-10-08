@@ -18,7 +18,7 @@ def collect_data(competitions, years):
     club_2 = []
     for competition in competitions:
         for year in years:
-            with open(f'../../../Scrape/Serie_A/{year}/squads.json', 'r') as f:
+            with open(f'../../../Scrape/{competition}/{year}/squads.json', 'r') as f:
                 squads = json.load(f)
 
             for game in squads:
@@ -79,7 +79,7 @@ def run(model, data, n_iter, base_player, name, num_samples = 1000, num_warmup =
 
 if __name__ == '__main__':
     competitions = ['Serie_A', 'Serie_B']
-    years = range(2020, 2023)
+    years = range(2020, 2022)
     data, players = collect_data(competitions, years)
     base_player = '502361'
     base_player = players[base_player]
