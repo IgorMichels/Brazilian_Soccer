@@ -7,7 +7,7 @@ def clean_cache(model):
     model_name = httpstan.models.calculate_model_name(model)
     httpstan.cache.delete_model_directory(model_name)
 
-def collect_data(competitions, years):
+def collect_data(competitions, years, save_name = 'players'):
     players = {}
     n_obs = 0
     n_players = 1
@@ -50,7 +50,7 @@ def collect_data(competitions, years):
     assert len(club_1) == len(results)
     assert len(club_1) == len(times)
     assert len(club_1) == n_obs
-    with open('players.json', 'w') as f:
+    with open(f'{save_name}.json', 'w') as f:
         json.dump(players, f)
 
     data = {'n_obs': n_obs,
@@ -78,11 +78,6 @@ def run(model, data, n_iter, base_player, name, num_samples = 1000, num_warmup =
         df.to_csv(f'{name}.csv')
 
 if __name__ == '__main__':
-    competitions = ['Serie_A', 'Serie_B']
-    years = range(2020, 2022)
-    data, players = collect_data(competitions, years)
-    base_player = '502361'
-    base_player = players[base_player]
     model = '''
               data {
                 int<lower = 1> n_obs;
@@ -109,6 +104,12 @@ if __name__ == '__main__':
               }
             '''
     
-    n_iter = 1
-    name = 'parameters_std_normal_prior_20B'
-    run(model, data, n_iter, base_player, name, num_samples = 1000)
+    competitions = ['Serie_A', 'Serie_B']
+    for base_year in range(2013, 2022):
+        years = range(base_year, 2022)
+        data, players = collect_data(competitions, years, save_name = f'players_{str(years[0])[-2:]}{competitions[-1][-1]}')
+        base_player = '502361'
+        base_player = players[base_player]
+        n_iter = 1
+        name = f'parameters_std_normal_prior_{str(years[0])[-2:]}{competitions[-1][-1]}'
+        # run(model, data, n_iter, base_player, name, num_samples = 1000)
