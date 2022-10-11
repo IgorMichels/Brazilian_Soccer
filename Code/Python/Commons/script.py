@@ -32,7 +32,7 @@ def sum_players_times(years, competitions):
 
     return players_time, players_subgames
 
-def create_clustered_players(years, competitions, time = False, params = {'k' = 10, 'min_time' = 600, 'interval' = 15}):
+def create_clustered_players(years, competitions, time = False, params = {'k' : 10, 'min_time' : 600, 'interval' : 15}):
     if time:
         players, _ = sum_players_times(years, competitions)
         min_time, interval = params['min_time'], params['interval']
@@ -57,12 +57,12 @@ def create_clustered_players(years, competitions, time = False, params = {'k' = 
     return players
 
 def create_players(years, competitions):
-    return create_clustered_players(years, competitions, time = False, params = {k = 0})
+    return create_clustered_players(years, competitions, time = False, params = {'k' : 0})
 
 if __name__ == '__main__':
     competitions = ['Serie_A', 'Serie_B']
     for base_year in range(2013, 2022):
         years = range(base_year, 2022)
         players = create_players(years, competitions)
-        with open(f'players_{str(years[0])[:-2}{competitions[-1][-1]}', 'w') as f:
+        with open(f'players_{str(years[0])[:-2]}{competitions[-1][-1]}', 'w') as f:
             json.dump(players, f)
