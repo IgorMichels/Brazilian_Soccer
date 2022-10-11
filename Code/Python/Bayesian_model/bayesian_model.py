@@ -7,8 +7,10 @@ def clean_cache(model):
     model_name = httpstan.models.calculate_model_name(model)
     httpstan.cache.delete_model_directory(model_name)
 
-def collect_data(competitions, years, save_name = 'players'):
-    players = {}
+def collect_data(competitions, years, players_file):
+    with open(players_file, 'r') as f:
+        players = json.load(f)
+    
     n_obs = 0
     n_players = 1
     times = []
@@ -32,17 +34,9 @@ def collect_data(competitions, years, save_name = 'players'):
                     club_2.append([])
                     results.append(squads[game][substituition]['Placar'])
                     for player in squads[game][substituition]['Mandante']:
-                        if player not in players:
-                            players[player] = n_players
-                            n_players += 1
-                
                         club_1[-1].append(players[player])
             
                     for player in squads[game][substituition]['Visitante']:
-                        if player not in players:
-                            players[player] = n_players
-                            n_players += 1
-                        
                         club_2[-1].append(players[player])
 
     n_players -= 1
@@ -50,9 +44,6 @@ def collect_data(competitions, years, save_name = 'players'):
     assert len(club_1) == len(results)
     assert len(club_1) == len(times)
     assert len(club_1) == n_obs
-    with open(f'{save_name}.json', 'w') as f:
-        json.dump(players, f)
-
     data = {'n_obs': n_obs,
             'n_players': n_players,
             'times': times,
@@ -108,7 +99,7 @@ if __name__ == '__main__':
     competitions = ['Serie_A', 'Serie_B']
     for base_year in range(2013, 2022):
         years = range(base_year, 2022)
-        data, players = collect_data(competitions, years, save_name = f'players_{str(years[0])[-2:]}{competitions[-1][-1]}')
+        data, players = collect_data(competitions, years, f'../Commons/players_{str(years[0])[-2:]}{competitions[-1][-1]}')
         base_player = '502361'
         base_player = players[base_player]
         n_iter = 1
