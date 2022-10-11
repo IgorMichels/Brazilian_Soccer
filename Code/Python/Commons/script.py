@@ -64,5 +64,5 @@ if __name__ == '__main__':
     for base_year in range(2013, 2022):
         years = range(base_year, 2022)
         players = create_players(years, competitions)
-        with open(f'players_{str(years[0])[:-2]}{competitions[-1][-1]}', 'w') as f:
+        with open(f'players_{str(years[0])[:-2]}{competitions[-1][-1]}.json', 'w') as f:
             json.dump(players, f)
