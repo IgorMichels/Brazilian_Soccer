@@ -74,8 +74,9 @@ def run(model, data, n_iter, base_player, name, num_samples = 1000, num_warmup =
         
         for column in df.columns[7:]:
             df[column] = df[column] / df.loc[0, f'theta_1.{base_player}']
-
-        df.to_csv(f'{name}.csv')
+            
+        df[:len(df) // 2].to_csv(f'{name}_part_1.csv')
+        df[len(df) // 2:].to_csv(f'{name}_part_2.csv')
 
 if __name__ == '__main__':
     model = '''
@@ -112,4 +113,4 @@ if __name__ == '__main__':
         base_player = players[base_player]
         n_iter = 1
         name = f'parameters_std_normal_prior_{str(years[0])[-2:]}{competitions[-1][-1]}'
-        # run(model, data, n_iter, base_player, name, num_samples = 1000)
+        run(model, data, n_iter, base_player, name, num_samples = 1000)
