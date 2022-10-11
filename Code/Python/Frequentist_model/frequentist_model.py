@@ -148,29 +148,29 @@ if __name__ == '__main__':
     proficiencies = np.abs(np.random.normal(mu, sigma, 2 * len(players)))
     proficiencies[0] = 1
     print(proficiencies)
-    res = minimize(
-                   likelihood,
-                   proficiencies,
-                   args = (players, squads),
-                   method = 'trust-exact',
-                   # method = 'Newton-CG',
-                   jac = likelihood_gradient,
-                   hess = likelihood_hessian,
-                   tol = 1e-20,
-                   # options = {
-                   #            'xtol': 1e-20,
-                   #            'eps' : 1e-10
-                   #           }
-                  )
+    #res = minimize(
+    #               likelihood,
+    #               proficiencies,
+    #               args = (players, squads),
+    #               # method = 'trust-exact',
+    #               method = 'Newton-CG',
+    #               jac = likelihood_gradient,
+    #               # hess = likelihood_hessian,
+    #               tol = 1e-20,
+    #               # options = {
+    #               #            'xtol': 1e-20,
+    #               #            'eps' : 1e-10
+    #               #           }
+    #              )
                   
-    #res = fmin(
-    #           likelihood,
-    #           proficiencies,
-    #           args = (players, squads),
-    #          )
+    res = fmin(
+               likelihood,
+               proficiencies,
+               args = (players, squads),
+              )
 
-    #np.save('result_fmin.npy', res.x)
-    np.save('result_trust_exact.npy', res.x)
+    np.save('result_fmin.npy', res.x)
+    #np.save('result_trust_exact.npy', res.x)
     print(res.x)
     print(res.fun)
     print(res)
