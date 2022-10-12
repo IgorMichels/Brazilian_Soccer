@@ -48,21 +48,19 @@ def create_clustered_players(years, competitions, time = False, params = {'k' : 
         k = params['k']
         n = k
         for player in players:
-            if players[player] < k:
-                players[player] -= 1
-            else:
+            if players[player] >= k:
                 players[player] = n
                 n += 1
     
     return players
 
 def create_players(years, competitions):
-    return create_clustered_players(years, competitions, time = False, params = {'k' : 0})
+    return create_clustered_players(years, competitions, time = False, params = {'k' : 1})
 
 if __name__ == '__main__':
     competitions = ['Serie_A', 'Serie_B']
     for base_year in range(2013, 2022):
         years = range(base_year, 2022)
         players = create_players(years, competitions)
-        with open(f'players_{str(years[0])[-2:]}{competitions[-1][-1]}.json', 'w') as f:
+        with open(f'players_{str(years[0])[-2:]}{competitions[-1][-1]}_all.json', 'w') as f:
             json.dump(players, f)
