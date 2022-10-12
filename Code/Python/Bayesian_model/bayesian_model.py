@@ -12,7 +12,7 @@ def collect_data(competitions, years, players_file):
         players = json.load(f)
     
     n_obs = 0
-    n_players = 1
+    n_players = len(players)
     times = []
     n_players_per_game = 11
     results = []
@@ -39,7 +39,6 @@ def collect_data(competitions, years, players_file):
                     for player in squads[game][substituition]['Visitante']:
                         club_2[-1].append(players[player])
 
-    n_players -= 1
     assert len(club_1) == len(club_2)
     assert len(club_1) == len(results)
     assert len(club_1) == len(times)
@@ -74,16 +73,16 @@ if __name__ == '__main__':
               data {
                 int<lower = 1> n_obs;
                 int<lower = 1> n_players;
-                int<lower = 1> times[n_obs];
+                array[n_obs] int<lower = 1> times;
                 int<lower = 1> n_players_per_game;
-                int results[n_obs, 2];
-                int club_1[n_obs, n_players_per_game];
-                int club_2[n_obs, n_players_per_game];
+                array[n_obs, 2] int results;
+                array[n_obs, n_players_per_game] int club_1;
+                array[n_obs, n_players_per_game] int club_2;
               }
 
               parameters {
-                real<lower = 0> theta_1[n_players];
-                real<lower = 0> theta_2[n_players];
+                array[n_players] real<lower = 0> theta_1;
+                array[n_players] real<lower = 0> theta_2;
               }
 
               model {
@@ -99,7 +98,7 @@ if __name__ == '__main__':
     competitions = ['Serie_A', 'Serie_B']
     for base_year in range(2013, 2022):
         years = range(base_year, 2022)
-        data, players = collect_data(competitions, years, f'../Commons/players_{str(years[0])[-2:]}{competitions[-1][-1]}')
+        data, players = collect_data(competitions, years, f'../Commons/players_{str(years[0])[-2:]}{competitions[-1][-1]}_all.json')
         base_player = '502361'
         base_player = players[base_player]
         n_iter = 1
