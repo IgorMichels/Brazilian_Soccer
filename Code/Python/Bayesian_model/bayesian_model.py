@@ -1,5 +1,6 @@
 import stan
 import json
+import numpy as np
 import httpstan.cache
 import httpstan.models
 
@@ -61,9 +62,9 @@ def run(model, data, n_iter, base_player, name, num_samples = 1000, num_warmup =
         posterior = stan.build(model, data = data, random_seed = chain)
         fit = posterior.sample(num_chains = 1, num_samples = num_samples, num_warmup = num_warmup)
         df = fit.to_frame()
-        
+        avg = np.mean(df[f'theta_1.{base_player}'])
         for column in df.columns[7:]:
-            df[column] = df[column] / df.loc[0, f'theta_1.{base_player}']
+            df[column] = df[column] / avg
             
         df[:len(df) // 2].to_csv(f'{name}_part_1.csv')
         df[len(df) // 2:].to_csv(f'{name}_part_2.csv')
@@ -96,10 +97,10 @@ if __name__ == '__main__':
             '''
     
     competitions = ['Serie_A', 'Serie_B']
-    for base_year in range(2013, 2022):
-        years = range(base_year, 2022)
+    for base_year in range(2022, 2023):
+        years = range(base_year, 2023)
         data, players = collect_data(competitions, years, f'../Commons/players_{str(years[0])[-2:]}{competitions[-1][-1]}_all.json')
-        base_player = '502361'
+        base_player = '691654' # german cano
         base_player = players[base_player]
         n_iter = 1
         name = f'parameters_std_normal_prior_{str(years[0])[-2:]}{competitions[-1][-1]}'

@@ -59,8 +59,30 @@ def create_players(years, competitions):
 
 if __name__ == '__main__':
     competitions = ['Serie_A', 'Serie_B']
-    for base_year in range(2013, 2022):
+    years = range(2013, 2022)
+    for base_year in years:
         years = range(base_year, 2022)
         players = create_players(years, competitions)
+        print(f'players_{str(years[0])[-2:]}{competitions[-1][-1]}_all.json')
         with open(f'players_{str(years[0])[-2:]}{competitions[-1][-1]}_all.json', 'w') as f:
             json.dump(players, f)
+    
+    with open('players_13B_all.json', 'r') as f:
+        players = json.load(f)
+        
+    for competition in competitions:
+        for year in years:
+            opening = f'../../../Scrape/{competition}/{year}/squads.json'
+            print(opening)
+            with open(opening, 'r') as f:
+                squads = json.load(f)
+    
+            for game in squads:
+                for sub in squads[game]:
+                    for player in squads[game][sub]['Mandante']:
+                        if player not in players:
+                            print(player, squads[game][sub]['Tempo'])
+                    
+                    for player in squads[game][sub]['Visitante']:
+                        if player not in players:
+                            print(player, squads[game][sub]['Tempo'])
