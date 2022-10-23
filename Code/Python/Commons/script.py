@@ -59,12 +59,12 @@ def create_players(years, competitions):
 
 if __name__ == '__main__':
     competitions = ['Serie_A', 'Serie_B']
-    years = range(2013, 2022)
+    years = range(2013, 2023)
     for base_year in years:
-        years = range(base_year, 2022)
-        players = create_players(years, competitions)
-        print(f'players_{str(years[0])[-2:]}{competitions[-1][-1]}_all.json')
-        with open(f'players_{str(years[0])[-2:]}{competitions[-1][-1]}_all.json', 'w') as f:
+        new_years = range(base_year, 2023)
+        players = create_players(new_years, competitions)
+        print(f'players_{str(new_years[0])[-2:]}{competitions[-1][-1]}_all.json')
+        with open(f'players_{str(new_years[0])[-2:]}{competitions[-1][-1]}_all.json', 'w') as f:
             json.dump(players, f)
     
     with open('players_13B_all.json', 'r') as f:
