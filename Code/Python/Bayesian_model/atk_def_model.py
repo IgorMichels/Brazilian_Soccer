@@ -62,13 +62,12 @@ def run(model, data, n_iter, base_player, name, num_samples = 1000, num_warmup =
         posterior = stan.build(model, data = data, random_seed = chain)
         fit = posterior.sample(num_chains = 1, num_samples = num_samples, num_warmup = num_warmup)
         df = fit.to_frame()
-        avg = np.mean(df[f'theta_1.{base_player}'])
+        avg = np.mean(df[f'theta_atk.{base_player}'])
         for column in df.columns[7:]:
             df[column] = df[column] / avg
             
-        df[:len(df) // 2].to_csv(f'{name}_part_1.csv')
-        df[len(df) // 2:].to_csv(f'{name}_part_2.csv')
-
+        df.to_parquet(f'{name}.parquet')
+        
 if __name__ == '__main__':
     model = '''
               data {
@@ -82,26 +81,26 @@ if __name__ == '__main__':
               }
 
               parameters {
-                array[n_players] real<lower = 0> theta_1;
-                array[n_players] real<lower = 0> theta_2;
+                array[n_players] real<lower = 0> theta_atk;
+                array[n_players] real<lower = 0> theta_def;
               }
 
               model {
-                theta_1 ~ std_normal();
-                theta_2 ~ std_normal();
+                theta_atk ~ std_normal();
+                theta_def ~ std_normal();
                 for (n in 1:n_obs){
-                  results[n, 1] ~ poisson(sum(theta_1[club_1[n, ]]) / sum(theta_2[club_2[n, ]]) * times[n]);
-                  results[n, 2] ~ poisson(sum(theta_1[club_2[n, ]]) / sum(theta_2[club_1[n, ]]) * times[n]);
+                  results[n, 1] ~ poisson(sum(theta_atk[club_1[n, ]]) / sum(theta_def[club_2[n, ]]) * times[n]);
+                  results[n, 2] ~ poisson(sum(theta_atk[club_2[n, ]]) / sum(theta_def[club_1[n, ]]) * times[n]);
                 }
               }
             '''
     
     competitions = ['Serie_A', 'Serie_B']
-    for base_year in range(2022, 2023):
+    for base_year in range(2013, 2023):
         years = range(base_year, 2023)
         data, players = collect_data(competitions, years, f'../Commons/players_{str(years[0])[-2:]}{competitions[-1][-1]}_all.json')
         base_player = '691654' # german cano
         base_player = players[base_player]
         n_iter = 1
-        name = f'parameters_std_normal_prior_{str(years[0])[-2:]}{competitions[-1][-1]}'
+        name = f'atk_def_model/parameters_std_normal_prior_{str(years[0])[-2:]}{competitions[-1][-1]}_home_away'
         run(model, data, n_iter, base_player, name, num_samples = 1000)
