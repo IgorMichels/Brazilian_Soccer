@@ -31,5 +31,5 @@ Scrape/test.json
 Scrape/mail_data.py
 Scrape/moving_files.py
 Outros/
-Code/Python/tests.py
-Code/Python/Bayesian_model/build/*
+Code/tests.py
+Code/Bayesian_model/build/*
