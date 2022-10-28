@@ -5,7 +5,7 @@ def sum_players_times(years, competitions):
     players_subgames = {}
     for competition in competitions:
         for year in years:
-            with open(f'../../Scrape/{competition}/{year}/squads.json', 'r') as f:
+            with open(f'../../../Scrape/{competition}/{year}/squads.json', 'r') as f:
                 squads = json.load(f)
 
             for game in squads:
@@ -72,7 +72,7 @@ if __name__ == '__main__':
         
     for competition in competitions:
         for year in years:
-            opening = f'../../Scrape/{competition}/{year}/squads.json'
+            opening = f'../../../Scrape/{competition}/{year}/squads.json'
             print(opening)
             with open(opening, 'r') as f:
                 squads = json.load(f)
