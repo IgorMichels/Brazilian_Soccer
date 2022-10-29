@@ -20,6 +20,8 @@ def treat_club(club):
     club = club.replace('Saf ', '')
     club = club.replace('S.a.f ', '')
     club = club.replace('S.A.F ', '')
+    club = club.replace('S.a.f. ', '')
+    club = club.replace('S.A.F. ', '')
     club = club.replace('Fc ', '')
     club = club.replace('FC ', '')
     club = club.replace('Futebol Clube ', '')
