@@ -1,5 +1,21 @@
 import json
 
+def create_clubs(years, competitions):
+    clubs = {}
+    n_clubs = 1
+    for competition in competitions:
+        for year in years:
+            with open(f'../../Scrape/{competition}/{year}/games.json', 'r') as f:
+                games = json.load(f)
+                
+            for game in games:
+                club = games[game]['Mandante']
+                if club not in clubs:
+                    clubs[club] = n_clubs
+                    n_clubs += 1
+                    
+    return clubs
+
 def sum_players_times(years, competitions):
     players_time = {}
     players_subgames = {}
@@ -66,6 +82,11 @@ if __name__ == '__main__':
         print(f'players_{str(new_years[0])[-2:]}{competitions[-1][-1]}_all.json')
         with open(f'players_{str(new_years[0])[-2:]}{competitions[-1][-1]}_all.json', 'w') as f:
             json.dump(players, f)
+            
+        clubs = create_clubs(years, competitions)
+        print(f'clubs_{str(new_years[0])[-2:]}{competitions[-1][-1]}.json')
+        with open(f'clubs_{str(new_years[0])[-2:]}{competitions[-1][-1]}.json', 'w') as f:
+            json.dump(clubs, f)
     
     with open('players_13B_all.json', 'r') as f:
         players = json.load(f)
