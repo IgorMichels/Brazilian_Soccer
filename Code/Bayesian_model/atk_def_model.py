@@ -63,10 +63,13 @@ def run(model, data, n_iter, base_player, name, num_samples = 1000, num_warmup =
         fit = posterior.sample(num_chains = 1, num_samples = num_samples, num_warmup = num_warmup)
         df = fit.to_frame()
         avg = np.mean(df[f'theta_atk.{base_player}'])
-        for column in df.columns[7:]:
-            df[column] = df[column] / avg
+        #for column in df.columns[7:]:
+        #    df[column] = df[column] / avg
             
-        df.to_parquet(f'{name}.parquet')
+        df[:len(df) // 4].to_parquet(f'{name}_chain_{chain}_part_1.parquet')
+        df[len(df) // 4:len(df) // 2].to_parquet(f'{name}_chain_{chain}_part_2.parquet')
+        df[len(df) // 2:3 * len(df) // 4].to_parquet(f'{name}_chain_{chain}_part_3.parquet')
+        df[3 * len(df) // 4:].to_parquet(f'{name}_chain_{chain}_part_4.parquet')
         
 if __name__ == '__main__':
     model = '''
@@ -96,11 +99,11 @@ if __name__ == '__main__':
             '''
     
     competitions = ['Serie_A', 'Serie_B']
-    for base_year in range(2013, 2023):
+    for base_year in range(2022, 2012, -1):
         years = range(base_year, 2023)
         data, players = collect_data(competitions, years, f'../Commons/players_{str(years[0])[-2:]}{competitions[-1][-1]}_all.json')
         base_player = '691654' # german cano
         base_player = players[base_player]
-        n_iter = 1
-        name = f'atk_def_model/parameters_std_normal_prior_{str(years[0])[-2:]}{competitions[-1][-1]}_home_away'
-        run(model, data, n_iter, base_player, name, num_samples = 1000)
+        n_iter = 2
+        name = f'atk_def_model/parameters_std_normal_prior_{str(years[0])[-2:]}{competitions[-1][-1]}'
+        run(model, data, n_iter, base_player, name, num_samples = 500, num_warmup = 500)
