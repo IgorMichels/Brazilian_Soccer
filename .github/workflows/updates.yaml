@@ -31,12 +31,6 @@ jobs:
           cd Scrape/
           python main.py -s -a
           cd ../
-          
-      - name: Commit changes (scraping)
-        run: |
-          git add *
-          git commit -m "Automated update"
-          git push
       
       - name: Execute script
         run: |
@@ -44,9 +38,17 @@ jobs:
           cd Commons/
           python script.py
           cd ../
+          cd ../
+          
+      - name: Commit changes (scraping)
+        run: |
+          git add *
+          git commit -m "Automated update"
+          git push
       
       - name: Execute models
         run: |
+          cd Code/
           cd Bayesian_model/
           python atk_def_model.py
           python home_away_model.py
