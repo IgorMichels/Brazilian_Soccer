@@ -87,23 +87,3 @@ if __name__ == '__main__':
         print(f'clubs_{str(new_years[0])[-2:]}{competitions[-1][-1]}.json')
         with open(f'clubs_{str(new_years[0])[-2:]}{competitions[-1][-1]}.json', 'w') as f:
             json.dump(clubs, f)
-    
-    with open('players_13B_all.json', 'r') as f:
-        players = json.load(f)
-        
-    for competition in competitions:
-        for year in years:
-            opening = f'../../Scrape/{competition}/{year}/squads.json'
-            print(opening)
-            with open(opening, 'r') as f:
-                squads = json.load(f)
-    
-            for game in squads:
-                for sub in squads[game]:
-                    for player in squads[game][sub]['Mandante']:
-                        if player not in players:
-                            print(player, squads[game][sub]['Tempo'])
-                    
-                    for player in squads[game][sub]['Visitante']:
-                        if player not in players:
-                            print(player, squads[game][sub]['Tempo'])
