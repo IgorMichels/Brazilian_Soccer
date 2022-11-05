@@ -1,2 +1,4 @@
 requests==2.27.1
 PyPDF2==2.10.0
+pystan==2.19.1.1
+httpstan==4.8.2
