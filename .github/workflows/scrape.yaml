@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: "55 7 * * 1"
+    - cron: "25 7 * * *"
 
 jobs:
   Scrape:
@@ -26,27 +26,15 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       
-      - name: Execute script
+      - name: Execute scraping
         run: |
-          cd Code/
-          cd Commons/
-          python script.py
-          cd ../
-          cd ../
-          
-      - name: Execute models
-        run: |
-          cd Code/
-          cd Bayesian_model/
-          python atk_def_model.py
-          python home_away_model.py
-          python home_away_model_2.py
-          cd ../
+          cd Scrape/
+          python main.py -s -a
           cd ../
       
       - name: Commit changes
         run: |
           git add *
-          git commit -m "Automated update (parameters sampling)"
+          git commit -m "Automated update"
           git push
 
