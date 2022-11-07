@@ -74,7 +74,7 @@ def run(model, data, n_iter, base_player, name, num_samples = 1000, num_warmup =
         
 if __name__ == '__main__':
     print(os.getcwd())
-    os.chdir('atk_def_model')
+    os.chdir('./atk_def_model/')
     model = '''
               data {
                 int<lower = 1> n_obs;
