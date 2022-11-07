@@ -1,3 +1,4 @@
+import os
 import stan
 import json
 import numpy as np
@@ -21,7 +22,7 @@ def collect_data(competitions, years, players_file):
     club_2 = []
     for competition in competitions:
         for year in years:
-            with open(f'../../Scrape/{competition}/{year}/squads.json', 'r') as f:
+            with open(f'../../../Scrape/{competition}/{year}/squads.json', 'r') as f:
                 squads = json.load(f)
 
             for game in squads:
@@ -72,6 +73,7 @@ def run(model, data, n_iter, base_player, name, num_samples = 1000, num_warmup =
         df[3 * len(df) // 4:].to_parquet(f'{name}_chain_{chain}_part_4.parquet')
         
 if __name__ == '__main__':
+    os.chdir('atk_def_model')
     model = '''
               data {
                 int<lower = 1> n_obs;
@@ -101,9 +103,11 @@ if __name__ == '__main__':
     competitions = ['Serie_A', 'Serie_B']
     for base_year in range(2022, 2017, -1):
         years = range(base_year, 2023)
-        data, players = collect_data(competitions, years, f'../Commons/players_{str(years[0])[-2:]}{competitions[-1][-1]}_all.json')
+        data, players = collect_data(competitions, years, f'../../Commons/players_{str(years[0])[-2:]}{competitions[-1][-1]}_all.json')
         base_player = '691654' # german cano
         base_player = players[base_player]
         n_iter = 2
-        name = f'atk_def_model/parameters_std_normal_prior_{str(years[0])[-2:]}{competitions[-1][-1]}'
+        name = f'parameters_std_normal_prior_{str(years[0])[-2:]}{competitions[-1][-1]}'
         run(model, data, n_iter, base_player, name, num_samples = 500, num_warmup = 500)
+        
+    os.chdir('..')
