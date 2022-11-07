@@ -3,7 +3,7 @@ on:
     - cron: "55 7 * * 1"
 
 jobs:
-  Scrape:
+  Parameters:
     runs-on: ubuntu-latest
 
     steps:
