@@ -115,7 +115,7 @@ if __name__ == '__main__':
             '''
     
     competitions = ['Serie_A', 'Serie_B']
-    for base_year in range(2022, 2012, -1):
+    for base_year in range(2022, 2017, -1):
         years = range(base_year, 2023)
         data, players, clubs = collect_data(competitions, years)
         base_player = '691654' # german cano
