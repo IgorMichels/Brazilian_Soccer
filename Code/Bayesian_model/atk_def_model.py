@@ -73,6 +73,7 @@ def run(model, data, n_iter, base_player, name, num_samples = 1000, num_warmup =
         df[3 * len(df) // 4:].to_parquet(f'{name}_chain_{chain}_part_4.parquet')
         
 if __name__ == '__main__':
+    print(os.getcwd())
     os.chdir('atk_def_model')
     model = '''
               data {
