@@ -1,9 +1,14 @@
 import os
+import sys
 import stan
 import json
+import shutil
 import numpy as np
 import httpstan.cache
 import httpstan.models
+
+from time import time
+from datetime import datetime
 
 def clean_cache(model):
     model_name = httpstan.models.calculate_model_name(model)
@@ -73,6 +78,20 @@ def run(model, data, n_iter, base_player, name, num_samples = 1000, num_warmup =
         df[3 * len(df) // 4:].to_parquet(f'{name}_chain_{chain}_part_4.parquet')
         
 if __name__ == '__main__':
+    start_time = time()
+    with open('models.log', 'a') as f:
+        f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - AD Model] - Iniciando recálculo dos parâmetros.\n')
+    
+    with open('../../Scrape/scrape.log', 'r') as f:
+        log = f.readlines()
+        
+    recalcular = log[-9].split() != []
+    if not recalcular:
+        with open('models.log', 'a') as f:
+            f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - AD Model] - Parâmetros já atualizados.\n\n')
+        
+        sys.exit('Nenhuma súmula foi adicionada recentemente, parâmetros já atualizados.')
+
     os.chdir('atk_def_model')
     model = '''
               data {
@@ -108,7 +127,12 @@ if __name__ == '__main__':
         base_player = players[base_player]
         n_iter = 2
         name = f'{str(years[0])[-2:]}{competitions[-1][-1]}'
-        print(name)
+        print(name, 'ADM')
         run(model, data, n_iter, base_player, name, num_samples = 500, num_warmup = 500)
         
+    shutil.rmtree('build', ignore_errors = True)
     os.chdir('..')
+    end_time = time()
+    print(f'Cálculos finalizados em {end_extract - start_extract:.2f} segundos!')
+    with open('models.log', 'a') as f:
+        f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - AD Model] - Finalizado recálculo dos parâmetros.\n\n')
