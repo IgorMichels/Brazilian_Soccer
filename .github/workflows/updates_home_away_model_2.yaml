@@ -1,9 +1,12 @@
 on:
-  schedule:
-    - cron: "25 7 * * *"
+  push:
+    branches:
+      - main
+    paths:
+      - Code/Bayesian_model/home_away_model/*
 
 jobs:
-  Scrape:
+  Parameters_HAM2:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,23 +29,18 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       
-      - name: Execute scraping
-        run: |
-          cd Scrape/
-          python main.py -s -a
-          cd ../
-          
-      - name: Reindex players
+      - name: Execute models
         run: |
           cd Code/
-          cd Commons/
-          python script.py
+          cd Bayesian_model/
+          python home_away_model_2.py
           cd ../
           cd ../
-                
+      
       - name: Commit changes
         run: |
+          git pull
           git add *
-          git commit -m "Automated update"
+          git commit -m "Automated update (parameters sampling - home away model 2)"
           git push
 

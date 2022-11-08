@@ -1,9 +1,12 @@
 on:
-  schedule:
-    - cron: "55 7 * * 1"
+  push:
+    branches:
+      - main
+    paths:
+      - Code/Bayesian_model/atk_def_model/*
 
 jobs:
-  Parameters:
+  Parameters_HAM:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,21 +29,11 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       
-      - name: Execute script
-        run: |
-          cd Code/
-          cd Commons/
-          python script.py
-          cd ../
-          cd ../
-          
       - name: Execute models
         run: |
           cd Code/
           cd Bayesian_model/
-          python atk_def_model.py
           python home_away_model.py
-          python home_away_model_2.py
           cd ../
           cd ../
       
@@ -48,6 +41,6 @@ jobs:
         run: |
           git pull
           git add *
-          git commit -m "Automated update (parameters sampling)"
+          git commit -m "Automated update (parameters sampling - home away model)"
           git push
 

@@ -1,9 +1,13 @@
 on:
-  schedule:
-    - cron: "25 7 * * *"
+  push:
+    branches:
+      - main
+    paths:
+      - Scrape/Serie_A/*
+      - Scrape/Serie_B/*
 
 jobs:
-  Scrape:
+  Parameters_ADM:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,23 +30,18 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       
-      - name: Execute scraping
-        run: |
-          cd Scrape/
-          python main.py -s -a
-          cd ../
-          
-      - name: Reindex players
+      - name: Execute models
         run: |
           cd Code/
-          cd Commons/
-          python script.py
+          cd Bayesian_model/
+          python atk_def_model.py
           cd ../
           cd ../
-                
+      
       - name: Commit changes
         run: |
+          git pull
           git add *
-          git commit -m "Automated update"
+          git commit -m "Automated update (parameters sampling - atk def model)"
           git push
 
