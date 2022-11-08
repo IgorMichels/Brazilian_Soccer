@@ -124,6 +124,7 @@ def extract(competitions, min_year, max_year, cleaning = True):
                 if mod_time < os.path.getmtime(f'{competition}/{year}/games.json'):
                     continue
             
+            summary = [['Game', 'Home', 'Away']]
             for game in range(1, n_games[competition][str(year)] + 1):
                 if str(game).zfill(3) in exceptions[competition][year]:
                     if exceptions[competition][year][str(game).zfill(3)] != {}:
@@ -136,10 +137,9 @@ def extract(competitions, min_year, max_year, cleaning = True):
                     
                 f_club, f_result, f_players, f_goals, f_changes = False, False, False, False, False
                 try:
-                    file = f'{competition}/{year}/CSVs/{str(game).zfill(3)}.csv'
-                    f = open(file)
-                    data = f.readlines()
-                    f.close()
+                    with open(f'{competition}/{year}/CSVs/{str(game).zfill(3)}.csv', 'r') as f:
+                        data = f.readlines()
+                    
                     text = ''
                     for row in data:
                         text += row
@@ -174,6 +174,8 @@ def extract(competitions, min_year, max_year, cleaning = True):
                                                  'Substituições' : changes}
 
                     count_end = 0
+                    summary.append([str(game).zfill(3), clubs[0][0], clubs[0][1]])
+                    
                 except FileNotFoundError:
                     count_end += 1
                 except AssertionError:
@@ -203,6 +205,11 @@ def extract(competitions, min_year, max_year, cleaning = True):
 
             with open(f'{competition}/{year}/games.json', 'w') as f:
                 json.dump(games, f)
+                
+            with open(f'{competition}/{year}/summary.csv', 'w') as f:
+                writer = csv.writer(f)
+                for row in summary:
+                    writer.writerow(row)
                     
     with open('Errors/infos_errors.json', 'w') as f:
         json.dump(errors, f)
