@@ -3,7 +3,7 @@ on:
     branches:
       - main
     paths:
-      - Code/Bayesian_model/atk_def_model/*
+      - Code/Bayesian_model/atk_def_model/**
 
 jobs:
   Parameters_HAM:

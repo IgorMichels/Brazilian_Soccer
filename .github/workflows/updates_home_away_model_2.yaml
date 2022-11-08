@@ -3,7 +3,7 @@ on:
     branches:
       - main
     paths:
-      - Code/Bayesian_model/home_away_model/*
+      - Code/Bayesian_model/home_away_model/**
 
 jobs:
   Parameters_HAM2:

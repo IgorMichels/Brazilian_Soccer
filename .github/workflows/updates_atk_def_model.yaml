@@ -3,8 +3,8 @@ on:
     branches:
       - main
     paths:
-      - Scrape/Serie_A/*
-      - Scrape/Serie_B/*
+      - Scrape/Serie_A/**
+      - Scrape/Serie_B/**
 
 jobs:
   Parameters_ADM:
