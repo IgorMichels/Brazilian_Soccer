@@ -123,8 +123,8 @@ if __name__ == '__main__':
         base_player = '691654' # german cano
         base_player = players[base_player]
         n_iter = 2
-        name = f'parameters_std_normal_prior_{str(years[0])[-2:]}{competitions[-1][-1]}_home_away_2'
-        clean_cache(model)
+        name = f'{str(years[0])[-2:]}{competitions[-1][-1]}'
+        print(name)
         run(model, data, n_iter, base_player, name, num_samples = 500, num_warmup = 500)
         
     os.chdir('..')
