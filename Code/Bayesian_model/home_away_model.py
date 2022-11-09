@@ -137,6 +137,6 @@ if __name__ == '__main__':
         shutil.rmtree('build', ignore_errors = True)
         os.chdir('..')
         end_time = time()
-        print(f'Cálculos finalizados em {end_extract - start_extract:.2f} segundos!')
+        print(f'Cálculos finalizados em {end_time - start_time:.2f} segundos!')
         with open(f'{model_name}.log', 'a') as f:
             f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - HM Model] - Finalizado recálculo dos parâmetros.\n\n')
