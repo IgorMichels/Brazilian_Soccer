@@ -1,14 +1,10 @@
 on:
   schedule:
-    - cron: "15 14 * * *"
+    - cron: "5 14 * * *"
 
 jobs:
-  Parameters:
+  Scrape:
     runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        script: [atk_def_model.py, home_away_model.py, home_away_model_2.py]
 
     steps:
       - name: Checkout repo content
@@ -30,18 +26,23 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       
-      - name: Execute models
+      - name: Execute scraping
+        run: |
+          cd Scrape/
+          python main.py -s -a
+          cd ../
+          
+      - name: Reindex players
         run: |
           cd Code/
-          cd Bayesian_model/
-          python ${{ matrix.script }}
+          cd Commons/
+          python script.py
           cd ../
           cd ../
-      
+                
       - name: Commit changes
         run: |
           git add *
-          git pull
-          git commit -m "Automated update (parameters sampling)"
+          git commit -m "Automated update"
           git push
 
