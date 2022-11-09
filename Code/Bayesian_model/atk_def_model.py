@@ -90,49 +90,48 @@ if __name__ == '__main__':
         with open('models.log', 'a') as f:
             f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - AD Model] - Parâmetros já atualizados.\n\n')
         
-        sys.exit('Nenhuma súmula foi adicionada recentemente, parâmetros já atualizados.')
+    else:
+        os.chdir('atk_def_model')
+        model = '''
+                  data {
+                    int<lower = 1> n_obs;
+                    int<lower = 1> n_players;
+                    array[n_obs] int<lower = 1> times;
+                    int<lower = 1> n_players_per_game;
+                    array[n_obs, 2] int results;
+                    array[n_obs, n_players_per_game] int club_1;
+                    array[n_obs, n_players_per_game] int club_2;
+                   }
 
-    os.chdir('atk_def_model')
-    model = '''
-              data {
-                int<lower = 1> n_obs;
-                int<lower = 1> n_players;
-                array[n_obs] int<lower = 1> times;
-                int<lower = 1> n_players_per_game;
-                array[n_obs, 2] int results;
-                array[n_obs, n_players_per_game] int club_1;
-                array[n_obs, n_players_per_game] int club_2;
-              }
+                  parameters {
+                    array[n_players] real<lower = 0> theta_atk;
+                    array[n_players] real<lower = 0> theta_def;
+                   }
 
-              parameters {
-                array[n_players] real<lower = 0> theta_atk;
-                array[n_players] real<lower = 0> theta_def;
-              }
-
-              model {
-                theta_atk ~ std_normal();
-                theta_def ~ std_normal();
-                for (n in 1:n_obs){
-                  results[n, 1] ~ poisson(sum(theta_atk[club_1[n, ]]) / sum(theta_def[club_2[n, ]]) * times[n]);
-                  results[n, 2] ~ poisson(sum(theta_atk[club_2[n, ]]) / sum(theta_def[club_1[n, ]]) * times[n]);
-                }
-              }
-            '''
+                  model {
+                    theta_atk ~ std_normal();
+                    theta_def ~ std_normal();
+                    for (n in 1:n_obs){
+                      results[n, 1] ~ poisson(sum(theta_atk[club_1[n, ]]) / sum(theta_def[club_2[n, ]]) * times[n]);
+                      results[n, 2] ~ poisson(sum(theta_atk[club_2[n, ]]) / sum(theta_def[club_1[n, ]]) * times[n]);
+                    }
+                  }
+                '''
     
-    competitions = ['Serie_A', 'Serie_B']
-    for base_year in range(2022, 2017, -1):
-        years = range(base_year, 2023)
-        data, players = collect_data(competitions, years, f'../../Commons/players_{str(years[0])[-2:]}{competitions[-1][-1]}_all.json')
-        base_player = '691654' # german cano
-        base_player = players[base_player]
-        n_iter = 2
-        name = f'{str(years[0])[-2:]}{competitions[-1][-1]}'
-        print(name, 'ADM')
-        run(model, data, n_iter, base_player, name, num_samples = 500, num_warmup = 500)
-        
-    shutil.rmtree('build', ignore_errors = True)
-    os.chdir('..')
-    end_time = time()
-    print(f'Cálculos finalizados em {end_extract - start_extract:.2f} segundos!')
-    with open('models.log', 'a') as f:
-        f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - AD Model] - Finalizado recálculo dos parâmetros.\n\n')
+        competitions = ['Serie_A', 'Serie_B']
+        for base_year in range(2022, 2017, -1):
+            years = range(base_year, 2023)
+            data, players = collect_data(competitions, years, f'../../Commons/players_{str(years[0])[-2:]}{competitions[-1][-1]}_all.json')
+            base_player = '691654' # german cano
+            base_player = players[base_player]
+            n_iter = 2
+            name = f'{str(years[0])[-2:]}{competitions[-1][-1]}'
+            print(name, 'ADM')
+            run(model, data, n_iter, base_player, name, num_samples = 500, num_warmup = 500)
+            
+        shutil.rmtree('build', ignore_errors = True)
+        os.chdir('..')
+        end_time = time()
+        print(f'Cálculos finalizados em {end_extract - start_extract:.2f} segundos!')
+        with open('models.log', 'a') as f:
+            f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - AD Model] - Finalizado recálculo dos parâmetros.\n\n')

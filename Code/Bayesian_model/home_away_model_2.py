@@ -102,53 +102,52 @@ if __name__ == '__main__':
         with open('models.log', 'a') as f:
             f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - HM2 Model] - Parâmetros já atualizados.\n\n')
         
-        sys.exit('Nenhuma súmula foi adicionada recentemente, parâmetros já atualizados.')
+    else:
+        os.chdir('home_away_model_2')
+        model = '''
+                  data {
+                    int n_obs;
+                    int n_clubs;
+                    int n_players;
+                    int n_players_per_game;
+                    array[n_obs] int times;
+                    array[n_obs] int home_clubs;
+                    array[n_obs, 2] int results;
+                    array[n_obs, n_players_per_game] int club_1;
+                    array[n_obs, n_players_per_game] int club_2;
+                  }
 
-    os.chdir('home_away_model_2')
-    model = '''
-              data {
-                int n_obs;
-                int n_clubs;
-                int n_players;
-                int n_players_per_game;
-                array[n_obs] int times;
-                array[n_obs] int home_clubs;
-                array[n_obs, 2] int results;
-                array[n_obs, n_players_per_game] int club_1;
-                array[n_obs, n_players_per_game] int club_2;
-              }
+                  parameters {
+                    array[n_players] real<lower = 0> theta_atk;
+                    array[n_players] real<lower = 0> theta_def;
+                    array[n_clubs] real<lower = 0> sigma;
+                  }
 
-              parameters {
-                array[n_players] real<lower = 0> theta_atk;
-                array[n_players] real<lower = 0> theta_def;
-                array[n_clubs] real<lower = 0> sigma;
-              }
-
-              model {
-                theta_atk ~ std_normal();
-                theta_def ~ std_normal();
-                sigma ~ std_normal();
-                for (n in 1:n_obs){
-                  results[n, 1] ~ poisson((sum(theta_atk[club_1[n, ]]) / sum(theta_def[club_2[n, ]]) + sigma[home_clubs[n]]) * times[n]);
-                  results[n, 2] ~ poisson(sum(theta_atk[club_2[n, ]]) / sum(theta_def[club_1[n, ]]) * times[n]);
-                }
-              }
-            '''
+                  model {
+                    theta_atk ~ std_normal();
+                    theta_def ~ std_normal();
+                    sigma ~ std_normal();
+                    for (n in 1:n_obs){
+                      results[n, 1] ~ poisson((sum(theta_atk[club_1[n, ]]) / sum(theta_def[club_2[n, ]]) + sigma[home_clubs[n]]) * times[n]);
+                      results[n, 2] ~ poisson(sum(theta_atk[club_2[n, ]]) / sum(theta_def[club_1[n, ]]) * times[n]);
+                    }
+                  }
+                '''
     
-    competitions = ['Serie_A', 'Serie_B']
-    for base_year in range(2022, 2017, -1):
-        years = range(base_year, 2023)
-        data, players, clubs = collect_data(competitions, years)
-        base_player = '691654' # german cano
-        base_player = players[base_player]
-        n_iter = 2
-        name = f'{str(years[0])[-2:]}{competitions[-1][-1]}'
-        print(name, 'HAM2')
-        run(model, data, n_iter, base_player, name, num_samples = 500, num_warmup = 500)
-        
-    shutil.rmtree('build', ignore_errors = True)
-    os.chdir('..')
-    end_time = time()
-    print(f'Cálculos finalizados em {end_extract - start_extract:.2f} segundos!')
-    with open('models.log', 'a') as f:
-        f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - HM2 Model] - Finalizado recálculo dos parâmetros.\n\n')
+        competitions = ['Serie_A', 'Serie_B']
+        for base_year in range(2022, 2017, -1):
+            years = range(base_year, 2023)
+            data, players, clubs = collect_data(competitions, years)
+            base_player = '691654' # german cano
+            base_player = players[base_player]
+            n_iter = 2
+            name = f'{str(years[0])[-2:]}{competitions[-1][-1]}'
+            print(name, 'HAM2')
+            run(model, data, n_iter, base_player, name, num_samples = 500, num_warmup = 500)
+            
+        shutil.rmtree('build', ignore_errors = True)
+        os.chdir('..')
+        end_time = time()
+        print(f'Cálculos finalizados em {end_extract - start_extract:.2f} segundos!')
+        with open('models.log', 'a') as f:
+            f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - HM2 Model] - Finalizado recálculo dos parâmetros.\n\n')
