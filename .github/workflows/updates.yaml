@@ -1,6 +1,11 @@
+run-name: Updates
+
 on:
-  schedule:
-    - cron: "15 14 * * *"
+  workflow_run:
+    workflows: ["Scrape"]
+    branches: [main]
+    types: 
+      - completed
 
 jobs:
   Parameters:
