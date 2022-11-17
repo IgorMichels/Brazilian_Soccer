@@ -8,10 +8,10 @@ if __name__ == '__main__':
     home = []
     away = []
     competitions = ['Serie_A', 'Serie_B']
-    years = range(2013, 2022)
+    years = range(2018, 2023)
     for competition in competitions:
         for year in years:
-            opening = f'../../../Scrape/{competition}/{year}/squads.json'
+            opening = f'../../Scrape/{competition}/{year}/squads.json'
             with open(opening, 'r') as f:
                 squads = json.load(f)
     
@@ -44,8 +44,8 @@ if __name__ == '__main__':
     away_counts = away_counts / np.sum(away_counts)
     plt.bar(home, home_counts * 100, label = 'Gols - mandante', alpha = 0.7)
     plt.bar(away, away_counts * 100, label = 'Gols - visitante', alpha = 0.7)
-    plt.plot(home, home_pois * 100, label = f'Poisson({home_avg:.2f})')
-    plt.plot(away, away_pois * 100, label = f'Poisson({away_avg:.2f})')
+    plt.plot(home, home_pois * 100, label = f'Pois({home_avg:.2f})')
+    plt.plot(away, away_pois * 100, label = f'Pois({away_avg:.2f})')
     plt.legend()
     plt.xlabel('Gols')
     plt.ylabel('Jogos (%)')

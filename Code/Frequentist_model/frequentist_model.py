@@ -125,7 +125,7 @@ def collect_data(years, competitions, players_file):
     new_squads = {}
     for competition in competitions:
         for year in years:
-            with open(f'../../../Scrape/{competition}/{year}/squads.json', 'r') as f:
+            with open(f'../../Scrape/{competition}/{year}/squads.json', 'r') as f:
                 squads = json.load(f)
             
             for game in squads:
@@ -164,8 +164,8 @@ def optimizer(proficiencies, players, squads, max_iter = 10000, eps = 1e-6, tol 
 
 if __name__ == '__main__':
     competitions = ['Serie_A', 'Serie_B']
-    years = range(2020, 2022)
-    players_file = f'../Commons/players_{str(years[0])[-2:]}{competitions[-1][-1]}_all.json'
+    years = [2022]#range(2018, 2023)
+    players_file = f'../Commons/players_{str(years[0])[-2:]}{competitions[-1][-1]}_20_games.json'
     players, squads = collect_data(years, competitions, players_file)
     mu = 0
     sigma = 3
@@ -179,7 +179,7 @@ if __name__ == '__main__':
                    # method = 'Newton-CG',
                    jac = likelihood_gradient,
                    hess = likelihood_hessian,
-                   tol = 1e-20,
+                   tol = 1e-6,
                    #options = {
                    #           'xtol': 1e-20,
                    #           'eps' : 1e-10
