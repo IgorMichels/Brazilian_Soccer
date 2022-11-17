@@ -7,3 +7,4 @@ pystan==3.5.0
 matplotlib==3.6.1
 scipy==1.7.0
 fastparquet==0.8.3
+tabulate==0.8.9
