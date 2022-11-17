@@ -42,6 +42,14 @@ jobs:
           python script.py
           cd ../
           cd ../
+          
+      - name: Counts stats
+        run: |
+          cd Code/
+          cd Graphs/
+          python players_and_subgames.py > players_and_subgames.txt
+          cd ../
+          cd ../
                 
       - name: Commit changes
         run: |
