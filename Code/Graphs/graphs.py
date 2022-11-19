@@ -2,7 +2,7 @@ import json
 import numpy as np
 import matplotlib.pyplot as plt
 
-from scipy.stats import poisson, chi2
+from scipy.stats import poisson, chi2, ttest_ind
 
 if __name__ == '__main__':
     home = []
@@ -23,6 +23,8 @@ if __name__ == '__main__':
                 
                 home.append(home_score)
                 away.append(away_score)
+    
+    print(ttest_ind(home, away, equal_var = True))
     
     home_avg = np.mean(home)
     away_avg = np.mean(away)
