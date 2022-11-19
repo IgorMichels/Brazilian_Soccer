@@ -121,16 +121,18 @@ if __name__ == '__main__':
                   parameters {
                     array[n_players] real<lower = 0> theta_atk;
                     array[n_players] real<lower = 0> theta_def;
-                    array[n_clubs] real<lower = 0> sigma;
+                    array[n_clubs] real<lower = 0> sigma_atk;
+                    array[n_clubs] real<lower = 0> sigma_def;
                   }
 
                   model {
                     theta_atk ~ std_normal();
                     theta_def ~ std_normal();
-                    sigma ~ std_normal();
+                    sigma_atk ~ std_normal();
+                    sigma_def ~ std_normal();
                     for (n in 1:n_obs){
-                      results[n, 1] ~ poisson((sum(theta_atk[club_1[n, ]]) / sum(theta_def[club_2[n, ]]) + sigma[home_clubs[n]]) * times[n]);
-                      results[n, 2] ~ poisson(sum(theta_atk[club_2[n, ]]) / sum(theta_def[club_1[n, ]]) * times[n]);
+                      results[n, 1] ~ poisson(((sum(theta_atk[club_1[n, ]]) + sigma_atk[home_clubs[n]]) / sum(theta_def[club_2[n, ]])) * times[n]);
+                      results[n, 2] ~ poisson(sum(theta_atk[club_2[n, ]]) / (sum(theta_def[club_1[n, ]] + sigma_def[home_clubs[n]])) * times[n]);
                     }
                   }
                 '''
