@@ -132,7 +132,7 @@ if __name__ == '__main__':
                     sigma_def ~ std_normal();
                     for (n in 1:n_obs){
                       results[n, 1] ~ poisson(((sum(theta_atk[club_1[n, ]]) + sigma_atk[home_clubs[n]]) / sum(theta_def[club_2[n, ]])) * times[n]);
-                      results[n, 2] ~ poisson((sum(theta_atk[club_2[n, ]]) / (sum(theta_def[club_1[n, ]] + sigma_def[home_clubs[n]]))) * times[n]);
+                      results[n, 2] ~ poisson((sum(theta_atk[club_2[n, ]]) / (sum(theta_def[club_1[n, ]]) + sigma_def[home_clubs[n]])) * times[n]);
                     }
                   }
                 '''
