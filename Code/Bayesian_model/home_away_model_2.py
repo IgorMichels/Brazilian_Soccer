@@ -99,6 +99,7 @@ if __name__ == '__main__':
         log = f.readlines()
         
     recalcular = log[-9].split() != []
+    recalcular = True
     if not recalcular:
         with open(f'{model_name}.log', 'a') as f:
             f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - HM2 Model] - Parâmetros já atualizados.\n\n')
@@ -138,7 +139,8 @@ if __name__ == '__main__':
                 '''
     
         competitions = ['Serie_A', 'Serie_B']
-        for base_year in range(2022, 2017, -1):
+        # for base_year in range(2022, 2017, -1):
+        for base_year in range(2022, 2020, -1):
             years = range(base_year, 2023)
             data, players, clubs = collect_data(competitions, years)
             base_player = '691654' # german cano

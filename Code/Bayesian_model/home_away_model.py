@@ -87,6 +87,7 @@ if __name__ == '__main__':
         log = f.readlines()
         
     recalcular = log[-9].split() != []
+    recalcular = True
     if not recalcular:
         with open(f'{model_name}.log', 'a') as f:
             f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - HM Model] - Parâmetros já atualizados.\n\n')
