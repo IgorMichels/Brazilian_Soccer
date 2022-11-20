@@ -76,8 +76,8 @@ def run(model, data, n_iter, name, num_samples = 1000, num_warmup = 1000, clear_
 if __name__ == '__main__':
     start_time = time()
     model_name = 'HAM'
-    log = False
-    if log:
+    write_log = False
+    if write_log:
         with open(f'{model_name}.log', 'a') as f:
             f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - AD Model] - Iniciando recálculo dos parâmetros.\n')
     
@@ -87,7 +87,7 @@ if __name__ == '__main__':
     recalcular = log[-9].split() != []
     recalcular = True
     if not recalcular:
-        if log:
+        if write_log:
             with open(f'{model_name}.log', 'a') as f:
                 f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - AD Model] - Parâmetros já atualizados.\n\n')
         
@@ -139,6 +139,6 @@ if __name__ == '__main__':
         os.chdir('..')
         end_time = time()
         print(f'Cálculos finalizados em {end_time - start_time:.2f} segundos!')
-        if log:
+        if write_log:
             with open(f'{model_name}.log', 'a') as f:
                 f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - AD Model] - Finalizado recálculo dos parâmetros.\n\n')
