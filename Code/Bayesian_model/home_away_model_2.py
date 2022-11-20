@@ -88,8 +88,10 @@ def run(model, data, n_iter, name, num_samples = 1000, num_warmup = 1000, clear_
 if __name__ == '__main__':
     start_time = time()
     model_name = 'HAM2'
-    with open(f'{model_name}.log', 'a') as f:
-        f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - HM2 Model] - Iniciando recálculo dos parâmetros.\n')
+    log = False
+    if log:
+        with open(f'{model_name}.log', 'a') as f:
+            f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - AD Model] - Iniciando recálculo dos parâmetros.\n')
     
     with open('../../Scrape/scrape.log', 'r') as f:
         log = f.readlines()
@@ -97,8 +99,9 @@ if __name__ == '__main__':
     recalcular = log[-9].split() != []
     recalcular = True
     if not recalcular:
-        with open(f'{model_name}.log', 'a') as f:
-            f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - HM2 Model] - Parâmetros já atualizados.\n\n')
+        if log:
+            with open(f'{model_name}.log', 'a') as f:
+                f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - AD Model] - Parâmetros já atualizados.\n\n')
         
     else:
         os.chdir('home_away_model_2')
@@ -150,5 +153,6 @@ if __name__ == '__main__':
         os.chdir('..')
         end_time = time()
         print(f'Cálculos finalizados em {end_time - start_time:.2f} segundos!')
-        with open(f'{model_name}.log', 'a') as f:
-            f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - HM2 Model] - Finalizado recálculo dos parâmetros.\n\n')
+        if log:
+            with open(f'{model_name}.log', 'a') as f:
+                f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - AD Model] - Finalizado recálculo dos parâmetros.\n\n')
