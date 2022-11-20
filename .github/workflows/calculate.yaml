@@ -9,14 +9,15 @@ on:
   #  - cron: "3 6 * * *"
 
 jobs:
-  HAM21:
-    name: HAM21
+
+  HAM22:
+    name: HAM22
     runs-on: ubuntu-latest
     
     strategy:
       matrix:
         detail: [20B, 19B, 18B]
-        chain: [1]
+        chain: [2]
 
     steps:
       - name: Checkout repo content
@@ -52,16 +53,15 @@ jobs:
           git pull
           git commit -m "Automated update (parameters sampling HAM2)"
           git push
-
-  HAM22:
-    name: HAM22
-    needs: HAM21
+  HAM21:
+    name: HAM21
+    needs: HAM22
     runs-on: ubuntu-latest
     
     strategy:
       matrix:
-        detail: [20B, 19B, 18B]
-        chain: [2]
+        detail: [18B]
+        chain: [1]
 
     steps:
       - name: Checkout repo content
