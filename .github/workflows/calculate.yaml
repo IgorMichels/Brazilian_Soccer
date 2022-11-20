@@ -16,7 +16,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        detail: [19B]
+        detail: [18B]
         chain: [1, 2, 3, 4]
 
     steps:
