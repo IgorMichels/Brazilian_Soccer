@@ -150,7 +150,7 @@ if __name__ == '__main__':
         
         years = range(int(base_year) + 2000, 2023)
         data, players, clubs = collect_data(competitions, years)
-        run(model, data, chain, name, num_samples = 500, num_warmup = 500)
+        run(model, data, chain, name, num_samples = 250, num_warmup = 250)
         shutil.rmtree('build', ignore_errors = True)
         os.chdir('..')
         end_time = time()

@@ -14,9 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     
     strategy:
+      max-parallel: 1
       matrix:
         detail: [19B]
-        chain: [2]
+        chain: [1, 2, 3, 4]
 
     steps:
       - name: Checkout repo content
