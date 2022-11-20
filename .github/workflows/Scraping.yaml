@@ -1,10 +1,6 @@
 run-name: Updates
 
 on:
-  push:
-    branchs:
-      - main
-  
   schedule:
     - cron: "3 6 * * *"
 
