@@ -138,7 +138,8 @@ if __name__ == '__main__':
     
         chain = sys.argv[-1]
         chain = chain.split('=')
-        chain = int(chain)
+        if type(chain) == list: chain = int(chain[0])
+        else: chain = int(chain)
         name = sys.argv[-2]
         name = name.split('=')[-1]
         base_year = name[:2]
