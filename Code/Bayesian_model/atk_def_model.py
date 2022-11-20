@@ -60,7 +60,7 @@ def collect_data(competitions, years, players_file):
 
     return data, players
 
-def run(model, data, n_iter, base_player, name, num_samples = 1000, num_warmup = 1000, clear_cache = True):
+def run(model, data, n_iter, name, num_samples = 1000, num_warmup = 1000, clear_cache = True):
     for chain in range(1, n_iter + 1):
         if clear_cache:
             clean_cache(model)
@@ -68,10 +68,6 @@ def run(model, data, n_iter, base_player, name, num_samples = 1000, num_warmup =
         posterior = stan.build(model, data = data, random_seed = chain)
         fit = posterior.sample(num_chains = 1, num_samples = num_samples, num_warmup = num_warmup)
         df = fit.to_frame()
-        avg = np.mean(df[f'theta_atk.{base_player}'])
-        #for column in df.columns[7:]:
-        #    df[column] = df[column] / avg
-            
         df[:len(df) // 4].to_parquet(f'{name}_chain_{chain}_part_1.parquet')
         df[len(df) // 4:len(df) // 2].to_parquet(f'{name}_chain_{chain}_part_2.parquet')
         df[len(df) // 2:3 * len(df) // 4].to_parquet(f'{name}_chain_{chain}_part_3.parquet')
@@ -87,7 +83,7 @@ if __name__ == '__main__':
         log = f.readlines()
         
     recalcular = log[-9].split() != []
-    recalcular = False
+    recalcular = True
     if not recalcular:
         with open(f'{model_name}.log', 'a') as f:
             f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - AD Model] - Parâmetros já atualizados.\n\n')
@@ -120,17 +116,18 @@ if __name__ == '__main__':
                   }
                 '''
     
-        competitions = ['Serie_A', 'Serie_B']
-        for base_year in range(2022, 2017, -1):
-            years = range(base_year, 2023)
-            data, players = collect_data(competitions, years, f'../../Commons/players_{str(years[0])[-2:]}{competitions[-1][-1]}_all.json')
-            base_player = '691654' # german cano
-            base_player = players[base_player]
-            n_iter = 2
-            name = f'{str(years[0])[-2:]}{competitions[-1][-1]}'
-            print(name, model_name)
-            run(model, data, n_iter, base_player, name, num_samples = 500, num_warmup = 500)
-            
+        name = sys.argv[-1]
+        name = name.split('=')[-1]
+        base_year = name[:2]
+        div = name[2:]
+        competitions = ['Serie_A', 'Serie_B', 'Serie_C', 'Serie_D', 'CdB']
+        if div != 'CdB':
+            competitions = competitions[:competitions.index('Serie_' + div) + 1]
+        
+        years = range(int(base_year) + 2000, 2023)
+        data, players = collect_data(competitions, years, f'../../Commons/players_{base_year}{div}_all.json')
+        n_iter = 2
+        run(model, data, n_iter, base_player, name, num_samples = 500, num_warmup = 500)
         shutil.rmtree('build', ignore_errors = True)
         os.chdir('..')
         end_time = time()

@@ -5,8 +5,8 @@ on:
     branches:
       - main
   
-  schedule:
-    - cron: "3 6 * * *"
+  #schedule:
+  #  - cron: "3 6 * * *"
 
 jobs:
   Scrape:
@@ -61,14 +61,14 @@ jobs:
           git commit -m "Automated update"
           git push
 
-  Parameters:
-    name: Parameters
+  ADM:
+    name: ADM
     needs: Scrape
     runs-on: ubuntu-latest
     
     strategy:
       matrix:
-        script: [atk_def_model.py, home_away_model.py, home_away_model_2.py]
+        detail: [22B, 21B, 20B, 19B, 18B]
 
     steps:
       - name: Checkout repo content
@@ -94,7 +94,7 @@ jobs:
         run: |
           cd Code/
           cd Bayesian_model/
-          python ${{ matrix.script }}
+          python atk_def_model.py d=${{ matrix.details }}
           cd ../
           cd ../
       
@@ -102,6 +102,94 @@ jobs:
         run: |
           git add *
           git pull
-          git commit -m "Automated update (parameters sampling)"
+          git commit -m "Automated update (parameters sampling ADM)"
+          git push
+
+  HAM1:
+    name: HAM1
+    needs: ADM
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        detail: [22B, 21B, 20B, 19B, 18B]
+
+    steps:
+      - name: Checkout repo content
+        uses: actions/checkout@v2
+      
+      - name: Configure repo
+        run: |
+          git config --global user.name 'IgorMichels'
+          git config --global user.email 'igorxadrezbr@gmail.com'
+          git pull
+      
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      
+      - name: Execute models
+        run: |
+          cd Code/
+          cd Bayesian_model/
+          python home_away_model.py d=${{ matrix.detail }}
+          cd ../
+          cd ../
+      
+      - name: Commit changes
+        run: |
+          git add *
+          git pull
+          git commit -m "Automated update (parameters sampling HAM1)"
+          git push
+
+  HAM2:
+    name: HAM2
+    needs: HAM1
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        detail: [22B, 21B, 20B, 19B, 18B]
+
+    steps:
+      - name: Checkout repo content
+        uses: actions/checkout@v2
+      
+      - name: Configure repo
+        run: |
+          git config --global user.name 'IgorMichels'
+          git config --global user.email 'igorxadrezbr@gmail.com'
+          git pull
+      
+      - name: Setup python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      
+      - name: Execute models
+        run: |
+          cd Code/
+          cd Bayesian_model/
+          python home_away_model_2.py d=${{ matrix.detail }}
+          cd ../
+          cd ../
+      
+      - name: Commit changes
+        run: |
+          git add *
+          git pull
+          git commit -m "Automated update (parameters sampling HAM2)"
           git push
 
