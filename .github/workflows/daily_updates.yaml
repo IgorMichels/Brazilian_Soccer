@@ -101,6 +101,7 @@ jobs:
       
       - name: Commit changes
         run: |
+          git checkout chain${{ matrix.chain }}
           git add *
           git pull
           git commit -m "Automated update (parameters sampling ADM)"
@@ -146,6 +147,7 @@ jobs:
       
       - name: Commit changes
         run: |
+          git checkout chain${{ matrix.chain }}
           git add *
           git pull
           git commit -m "Automated update (parameters sampling HAM1)"
@@ -191,6 +193,7 @@ jobs:
       
       - name: Commit changes
         run: |
+          git checkout chain${{ matrix.chain }}
           git add *
           git pull
           git commit -m "Automated update (parameters sampling HAM2)"
