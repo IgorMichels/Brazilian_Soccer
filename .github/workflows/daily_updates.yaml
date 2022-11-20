@@ -94,7 +94,7 @@ jobs:
         run: |
           cd Code/
           cd Bayesian_model/
-          python atk_def_model.py d=${{ matrix.details }}
+          python atk_def_model.py d=${{ matrix.detail }}
           cd ../
           cd ../
       

@@ -131,7 +131,7 @@ if __name__ == '__main__':
         years = range(int(base_year) + 2000, 2023)
         data, players = collect_data(competitions, years, f'../../Commons/players_{base_year}{div}_all.json')
         n_iter = 2
-        run(model, data, n_iter, base_player, name, num_samples = 500, num_warmup = 500)
+        run(model, data, n_iter, name, num_samples = 500, num_warmup = 500)
         shutil.rmtree('build', ignore_errors = True)
         os.chdir('..')
         end_time = time()
