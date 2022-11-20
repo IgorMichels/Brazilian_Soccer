@@ -1,9 +1,9 @@
 run-name: Updates
 
 on:
-  push:
-    branches:
-      - main
+  #push:
+  #  branches:
+  #    - main
   
   schedule:
     - cron: "3 6 * * *"
