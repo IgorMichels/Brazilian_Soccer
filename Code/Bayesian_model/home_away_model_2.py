@@ -146,7 +146,7 @@ if __name__ == '__main__':
             competitions = competitions[:competitions.index('Serie_' + div) + 1]
         
         years = range(int(base_year) + 2000, 2023)
-        data, players = collect_data(competitions, years)
+        data, players, clubs = collect_data(competitions, years)
         n_iter = 2
         run(model, data, n_iter, name, num_samples = 500, num_warmup = 500)
         shutil.rmtree('build', ignore_errors = True)
