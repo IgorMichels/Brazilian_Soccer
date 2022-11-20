@@ -1,9 +1,9 @@
 run-name: Updates
 
 on:
-  #push:
-  #  branches:
-  #    - main
+  push:
+    branches:
+      - main
   
   schedule:
     - cron: "3 6 * * *"
@@ -69,6 +69,7 @@ jobs:
     strategy:
       matrix:
         detail: [22B, 21B, 20B, 19B, 18B]
+        chain: [1, 2]
 
     steps:
       - name: Checkout repo content
@@ -94,7 +95,7 @@ jobs:
         run: |
           cd Code/
           cd Bayesian_model/
-          python atk_def_model.py d=${{ matrix.detail }} > ADM_${{ matrix.detail }}.txt
+          python atk_def_model.py d=${{ matrix.detail }} c=${{ matrix.chain }} > trash/ADM_${{ matrix.detail }}_${{ matrix.chain }}.txt
           cd ../
           cd ../
       
@@ -113,6 +114,7 @@ jobs:
     strategy:
       matrix:
         detail: [22B, 21B, 20B, 19B, 18B]
+        chain: [1, 2]
 
     steps:
       - name: Checkout repo content
@@ -138,7 +140,7 @@ jobs:
         run: |
           cd Code/
           cd Bayesian_model/
-          python home_away_model.py d=${{ matrix.detail }} > HAM1_${{ matrix.detail }}.txt
+          python home_away_model.py d=${{ matrix.detail }} c=${{ matrix.chain }} > trash/HAM1_${{ matrix.detail }}_${{ matrix.chain }}.txt
           cd ../
           cd ../
       
@@ -157,6 +159,7 @@ jobs:
     strategy:
       matrix:
         detail: [22B, 21B, 20B, 19B, 18B]
+        chain: [1, 2]
 
     steps:
       - name: Checkout repo content
@@ -182,7 +185,7 @@ jobs:
         run: |
           cd Code/
           cd Bayesian_model/
-          python home_away_model_2.py d=${{ matrix.detail }} > HAM2_${{ matrix.detail }}.txt
+          python home_away_model_2.py d=${{ matrix.detail }} c=${{ matrix.chain }} > trash/HAM2_${{ matrix.detail }}_${{ matrix.chain }}.txt
           cd ../
           cd ../
       

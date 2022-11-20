@@ -72,18 +72,17 @@ def collect_data(competitions, years):
 
     return data, players, clubs
 
-def run(model, data, n_iter, name, num_samples = 1000, num_warmup = 1000, clear_cache = True):
-    for chain in range(1, n_iter + 1):
-        if clear_cache:
-            clean_cache(model)
-        
-        posterior = stan.build(model, data = data, random_seed = chain)
-        fit = posterior.sample(num_chains = 1, num_samples = num_samples, num_warmup = num_warmup)
-        df = fit.to_frame()
-        df[:len(df) // 4].to_parquet(f'{name}_chain_{chain}_part_1.parquet')
-        df[len(df) // 4:len(df) // 2].to_parquet(f'{name}_chain_{chain}_part_2.parquet')
-        df[len(df) // 2:3 * len(df) // 4].to_parquet(f'{name}_chain_{chain}_part_3.parquet')
-        df[3 * len(df) // 4:].to_parquet(f'{name}_chain_{chain}_part_4.parquet')
+def run(model, data, chain, name, num_samples = 1000, num_warmup = 1000, clear_cache = True):
+    if clear_cache:
+        clean_cache(model)
+    
+    posterior = stan.build(model, data = data, random_seed = chain)
+    fit = posterior.sample(num_chains = 1, num_samples = num_samples, num_warmup = num_warmup)
+    df = fit.to_frame()
+    df[:len(df) // 4].to_parquet(f'{name}_chain_{chain}_part_1.parquet')
+    df[len(df) // 4:len(df) // 2].to_parquet(f'{name}_chain_{chain}_part_2.parquet')
+    df[len(df) // 2:3 * len(df) // 4].to_parquet(f'{name}_chain_{chain}_part_3.parquet')
+    df[3 * len(df) // 4:].to_parquet(f'{name}_chain_{chain}_part_4.parquet')
 
 if __name__ == '__main__':
     start_time = time()
@@ -137,7 +136,10 @@ if __name__ == '__main__':
                   }
                 '''
     
-        name = sys.argv[-1]
+        chain = sys.argv[-1]
+        chain = chain.split('=')
+        chain = int(chain)
+        name = sys.argv[-2]
         name = name.split('=')[-1]
         base_year = name[:2]
         div = name[2:]
@@ -147,8 +149,7 @@ if __name__ == '__main__':
         
         years = range(int(base_year) + 2000, 2023)
         data, players, clubs = collect_data(competitions, years)
-        n_iter = 2
-        run(model, data, n_iter, name, num_samples = 500, num_warmup = 500)
+        run(model, data, chain, name, num_samples = 500, num_warmup = 500)
         shutil.rmtree('build', ignore_errors = True)
         os.chdir('..')
         end_time = time()
