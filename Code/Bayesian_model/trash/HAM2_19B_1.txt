@@ -1,2 +1,2 @@
 Building...
-Cálculos finalizados em 2016.61 segundos!
+Cálculos finalizados em 1369.18 segundos!
