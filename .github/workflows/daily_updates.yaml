@@ -1,12 +1,12 @@
 run-name: Updates
 
 on:
-  push:
-    branches:
-      - main
+  #push:
+  #  branches:
+  #    - main
   
-  #schedule:
-  #  - cron: "3 6 * * *"
+  schedule:
+    - cron: "3 6 * * *"
 
 jobs:
   Scrape:
