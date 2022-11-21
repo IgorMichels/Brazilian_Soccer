@@ -8,27 +8,20 @@ from itertools import product
 prop_cycle = plt.rcParams['axes.prop_cycle']
 colors = prop_cycle.by_key()['color']
 
-def plot_distribuition(players, model = 'atk_def_model', base = 18, atk = True, dim = (2, 2), show = True, save_name = 'players_distribuitions'):
-    if model == 'atk_def_model':
-        alias = 'ADM'
-    elif '_2' in model:
-        alias = 'HAM2'
-    else:
-        alias = 'HAM'
-    
+def plot_distribuition(players, model = 'ADM', base = 18, atk = True, dim = (2, 2), show = True, save_name = 'players_distribuitions'):
     for year in range(base, 23):
         data = f'{year}B'
         df = pd.DataFrame()
         for chain in range(1, 3):
             for part in range(1, 5):
-                aux = pd.read_parquet(f'{model}/{data}_chain_{chain}_part_{part}.parquet')
+                aux = pd.read_parquet(f'../results/{model}/{data}_chain_{chain}_part_{part}.parquet')
                 df = pd.concat([df, aux])
 
-        players_file = f'../Commons/players_{data}_all.json'
+        players_file = f'../../Commons/players_{data}_all.json'
         with open(players_file, 'r') as f:
             players_id = json.load(f)
 
-        if alias == 'HAM': avg = df[f'theta_atk_m.{players_id[players[0][0]]}'].values.mean()
+        if model == 'HAM': avg = df[f'theta_atk_m.{players_id[players[0][0]]}'].values.mean()
         else: avg = df[f'theta_atk.{players_id[players[0][0]]}'].values.mean()
         for column in df.columns:
             df[column] = df[column] / avg
@@ -70,7 +63,7 @@ def plot_distribuition(players, model = 'atk_def_model', base = 18, atk = True, 
             player, name = player
             player = players_id[player]
             if atk:
-                if alias == 'HAM':
+                if model == 'HAM':
                     ax[i].hist(df[f'theta_atk_m.{player}'].values, alpha = 0.7, bins = bins)
                     atk_force = df[f'theta_atk_m.{player}'].values.mean()
                     ax[i].axvline(atk_force, color = colors[0], linestyle = 'dashed',
@@ -86,7 +79,7 @@ def plot_distribuition(players, model = 'atk_def_model', base = 18, atk = True, 
                     ax[i].axvline(atk_force, color = colors[0], linestyle = 'dashed',
                                   linewidth = 1, label = f'Ataque (média): {atk_force:.2f}')
             else:
-                if alias == 'HAM':
+                if model == 'HAM':
                     ax[i].hist(df[f'theta_def_m.{player}'].values, color = colors[1], alpha = 0.7, bins = bins)
                     def_force = df[f'theta_def_m.{player}'].values.mean()
                     ax[i].axvline(def_force, color = colors[1], linestyle = 'dashed',
@@ -106,8 +99,8 @@ def plot_distribuition(players, model = 'atk_def_model', base = 18, atk = True, 
             ax[i].legend(loc = 'upper right')
 
         fig.suptitle(f'Distribuições - 20{data[:2]} a 2022')
-        if atk: plt.savefig(f'plots/{save_name}_{data}_{alias}_atk.png')
-        else: plt.savefig(f'plots/{save_name}_{data}_{alias}_def.png')
+        if atk: plt.savefig(f'../plots/{save_name}_{data}_{model}_atk.png')
+        else: plt.savefig(f'../plots/{save_name}_{data}_{model}_def.png')
         if show: plt.show()
         plt.close()
 
@@ -126,7 +119,7 @@ if __name__ == '__main__':
                    ['337830', 'Gabigol - Flamengo']
                   ]
     
-    for model, atk in product(['atk_def_model', 'home_away_model', 'home_away_model_2'], [True, False]):
+    for model, atk in product(['ADM', 'HAM1', 'HAM2'], [True, False]):
         print(model, atk)
-        plot_distribuition(players_atk, model = model, atk = atk, show = False, save_name = 'atk_players_distribuitions')
-        plot_distribuition(players_def, model = model, atk = atk, show = False, save_name = 'def_players_distribuitions')
+        plot_distribuition(players_atk, model = model, atk = atk, show = False, save_name = 'atk_players')
+        plot_distribuition(players_def, model = model, atk = atk, show = False, save_name = 'def_players')

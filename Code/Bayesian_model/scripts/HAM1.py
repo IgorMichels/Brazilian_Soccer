@@ -27,7 +27,7 @@ def collect_data(competitions, years, players_file):
     club_2 = []
     for competition in competitions:
         for year in years:
-            with open(f'../../../Scrape/{competition}/{year}/squads.json', 'r') as f:
+            with open(f'../../../../Scrape/{competition}/{year}/squads.json', 'r') as f:
                 squads = json.load(f)
 
             for game in squads:
@@ -74,24 +74,23 @@ def run(model, data, chain, name, num_samples = 1000, num_warmup = 1000, clear_c
 
 if __name__ == '__main__':
     start_time = time()
-    model_name = 'HAM'
-    write_log = False
+    model_name = 'HAM1'
+    write_log = True
     if write_log:
-        with open(f'{model_name}.log', 'a') as f:
+        with open(f'../logs/{model_name}.log', 'a') as f:
             f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - AD Model] - Iniciando recálculo dos parâmetros.\n')
     
-    with open('../../Scrape/scrape.log', 'r') as f:
+    with open('../../../Scrape/scrape.log', 'r') as f:
         log = f.readlines()
         
     recalcular = log[-9].split() != []
-    recalcular = False
     if not recalcular:
         if write_log:
-            with open(f'{model_name}.log', 'a') as f:
+            with open(f'../logs/{model_name}.log', 'a') as f:
                 f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - AD Model] - Parâmetros já atualizados.\n\n')
         
     else:
-        os.chdir('home_away_model')
+        os.chdir('../results/HAM1')
         model = '''
                   data {
                     int<lower = 1> n_obs;
@@ -123,9 +122,9 @@ if __name__ == '__main__':
                 '''
         
         chain = sys.argv[-1]
-        chain = chain.split('=')
+        chain = chain.split('=')[-1]
         chain = int(chain)
-        name = sys.argv[-1]
+        name = sys.argv[-2]
         name = name.split('=')[-1]
         base_year = name[:2]
         div = name[2:]
@@ -134,12 +133,12 @@ if __name__ == '__main__':
             competitions = competitions[:competitions.index('Serie_' + div) + 1]
         
         years = range(int(base_year) + 2000, 2023)
-        data, players = collect_data(competitions, years, f'../../Commons/players_{base_year}{div}_all.json')
+        data, players = collect_data(competitions, years, f'../../../Commons/players_{base_year}{div}_all.json')
         run(model, data, chain, name, num_samples = 500, num_warmup = 500)
         shutil.rmtree('build', ignore_errors = True)
-        os.chdir('..')
+        os.chdir('../../scripts')
         end_time = time()
         print(f'Cálculos finalizados em {end_time - start_time:.2f} segundos!')
         if write_log:
-            with open(f'{model_name}.log', 'a') as f:
+            with open(f'../logs/{model_name}.log', 'a') as f:
                 f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - AD Model] - Finalizado recálculo dos parâmetros.\n\n')
