@@ -13,8 +13,8 @@ jobs:
     strategy:
       max-parallel: 5
       matrix:
-        detail: [22B, 21B, 20B, 19B, 18B]
         chain: [1, 2, 3, 4]
+        detail: [22B, 21B, 20B, 19B, 18B]
 
     steps:
       - name: Checkout repo content
@@ -61,8 +61,8 @@ jobs:
     strategy:
       max-parallel: 5
       matrix:
-        detail: [22B, 21B, 20B, 19B, 18B]
         chain: [1, 2, 3, 4]
+        detail: [22B, 21B, 20B, 19B, 18B]
 
     steps:
       - name: Checkout repo content
@@ -109,8 +109,8 @@ jobs:
     strategy:
       max-parallel: 5
       matrix:
-        detail: [22B, 21B, 20B, 19B, 18B]
         chain: [1, 2, 3, 4]
+        detail: [22B, 21B, 20B, 19B, 18B]
 
     steps:
       - name: Checkout repo content
