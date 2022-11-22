@@ -11,7 +11,7 @@ if __name__ == '__main__':
     years = range(2018, 2023)
     for competition in competitions:
         for year in years:
-            opening = f'../../Scrape/{competition}/{year}/squads.json'
+            opening = f'../../Scrape/results/{competition}/{year}/squads.json'
             with open(opening, 'r') as f:
                 squads = json.load(f)
     

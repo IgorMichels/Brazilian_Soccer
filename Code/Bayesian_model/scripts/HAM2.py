@@ -31,10 +31,10 @@ def collect_data(competitions, years):
     home_clubs = []
     for competition in competitions:
         for year in years:
-            with open(f'../../../../Scrape/{competition}/{year}/squads.json', 'r') as f:
+            with open(f'../../../../Scrape/results/{competition}/{year}/squads.json', 'r') as f:
                 squads = json.load(f)
                 
-            with open(f'../../../../Scrape/{competition}/{year}/games.json', 'r') as f:
+            with open(f'../../../../Scrape/results/{competition}/{year}/games.json', 'r') as f:
                 games = json.load(f)
 
             for game in squads:
@@ -92,7 +92,7 @@ if __name__ == '__main__':
         with open(f'../logs/{model_name}.log', 'a') as f:
             f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - AD Model] - Iniciando recálculo dos parâmetros.\n')
     
-    with open('../../../Scrape/scrape.log', 'r') as f:
+    with open('../../../Scrape/auxiliary/scrape.log', 'r') as f:
         log = f.readlines()
         
     recalcular = log[-9].split() != []

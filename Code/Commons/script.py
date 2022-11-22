@@ -5,7 +5,7 @@ def create_clubs(years, competitions):
     n_clubs = 1
     for competition in competitions:
         for year in years:
-            with open(f'../../Scrape/{competition}/{year}/games.json', 'r') as f:
+            with open(f'../../Scrape/results/{competition}/{year}/games.json', 'r') as f:
                 games = json.load(f)
                 
             for game in games:
@@ -21,7 +21,7 @@ def sum_players_times(years, competitions):
     players_subgames = {}
     for competition in competitions:
         for year in years:
-            with open(f'../../Scrape/{competition}/{year}/squads.json', 'r') as f:
+            with open(f'../../Scrape/results/{competition}/{year}/squads.json', 'r') as f:
                 squads = json.load(f)
 
             for game in squads:

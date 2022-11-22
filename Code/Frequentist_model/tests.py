@@ -18,7 +18,7 @@ sub_games = 0
 players_ids = {}
 for competition in competitions:
     for year in range(2013, max_year + 1):
-        with open(f'../../Scrape/{competition}/{year}/squads.json', 'r') as f:
+        with open(f'../../Scrape/results/{competition}/{year}/squads.json', 'r') as f:
             squads = json.load(f)
             
         for game in squads:

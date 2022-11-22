@@ -125,7 +125,7 @@ def collect_data(years, competitions, players_file):
     new_squads = {}
     for competition in competitions:
         for year in years:
-            with open(f'../../Scrape/{competition}/{year}/squads.json', 'r') as f:
+            with open(f'../../Scrape/results/{competition}/{year}/squads.json', 'r') as f:
                 squads = json.load(f)
             
             for game in squads:
