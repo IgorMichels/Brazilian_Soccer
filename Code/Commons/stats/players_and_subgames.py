@@ -22,7 +22,7 @@ for year in range(2022, 2012, -1):
             players[2022 - year][i] = players[2022 - year][i].copy()
             
         competition = competitions[i]
-        with open(f'../../Scrape/results/{competition}/{year}/squads.json', 'r') as f:
+        with open(f'../../../Scrape/results/{competition}/{year}/squads.json', 'r') as f:
             squads = json.load(f)
         
         for game in squads:
