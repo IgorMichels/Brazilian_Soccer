@@ -1,6 +1,10 @@
 run-name: Updates
 
 on:
+  push:
+    branches:
+      - main
+      
   schedule:
     - cron: "3 6 * * *"
 
@@ -32,7 +36,9 @@ jobs:
       - name: Execute scraping
         run: |
           cd Scrape/
+          cd scripts/
           python main.py -s -a
+          cd ../
           cd ../
           
       - name: Reindex players
@@ -40,14 +46,12 @@ jobs:
           cd Code/
           cd Commons/
           python script.py
-          cd ../
-          cd ../
           
       - name: Counts stats
         run: |
-          cd Code/
-          cd Graphs/
+          cd stats/
           python players_and_subgames.py > players_and_subgames.txt
+          cd ../
           cd ../
           cd ../
                 
