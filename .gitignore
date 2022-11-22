@@ -26,6 +26,7 @@ Manifest.toml
 */.ipynb_checkpoints
 .ipynb_checkpoints
 */__pycache__
+*/*/__pycache__
 Scrape/tests.py
 Scrape/test.json
 Scrape/mail_data.py
