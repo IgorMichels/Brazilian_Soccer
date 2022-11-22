@@ -67,15 +67,16 @@ def run(model, data, chain, name, num_samples = 1000, num_warmup = 1000, clear_c
     posterior = stan.build(model, data = data, random_seed = chain)
     fit = posterior.sample(num_chains = 1, num_samples = num_samples, num_warmup = num_warmup)
     df = fit.to_frame()
-    df[:len(df) // 4].to_parquet(f'{name}_chain_{chain}_part_1.parquet')
-    df[len(df) // 4:len(df) // 2].to_parquet(f'{name}_chain_{chain}_part_2.parquet')
-    df[len(df) // 2:3 * len(df) // 4].to_parquet(f'{name}_chain_{chain}_part_3.parquet')
-    df[3 * len(df) // 4:].to_parquet(f'{name}_chain_{chain}_part_4.parquet')
+    df[:len(df) // 5].to_parquet(f'{name}_chain_{chain}_part_1.parquet')
+    df[1 * len(df) // 5:2 * len(df) // 5].to_parquet(f'{name}_chain_{chain}_part_2.parquet')
+    df[2 * len(df) // 5:3 * len(df) // 5].to_parquet(f'{name}_chain_{chain}_part_3.parquet')
+    df[3 * len(df) // 5:4 * len(df) // 5].to_parquet(f'{name}_chain_{chain}_part_4.parquet')
+    df[4 * len(df) // 5:].to_parquet(f'{name}_chain_{chain}_part_5.parquet')
 
 if __name__ == '__main__':
     start_time = time()
     model_name = 'HAM1'
-    write_log = True
+    write_log = False
     if write_log:
         with open(f'../logs/{model_name}.log', 'a') as f:
             f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Fitting - AD Model] - Iniciando recálculo dos parâmetros.\n')
@@ -84,6 +85,7 @@ if __name__ == '__main__':
         log = f.readlines()
         
     recalcular = log[-9].split() != []
+    recalcular = True
     if not recalcular:
         if write_log:
             with open(f'../logs/{model_name}.log', 'a') as f:
@@ -134,7 +136,7 @@ if __name__ == '__main__':
         
         years = range(int(base_year) + 2000, 2023)
         data, players = collect_data(competitions, years, f'../../../Commons/players_{base_year}{div}_all.json')
-        run(model, data, chain, name, num_samples = 500, num_warmup = 500)
+        run(model, data, chain, name, num_samples = 250, num_warmup = 250)
         shutil.rmtree('build', ignore_errors = True)
         os.chdir('../../scripts')
         end_time = time()
