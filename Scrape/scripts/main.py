@@ -1,9 +1,11 @@
 from datetime import datetime
 from scrape import *
 import sys
+import os
 
 if __name__ == '__main__':
     now = datetime.now()
+    os.chdir('..')
     if now.strftime('%d') == '01':
         min_year = 2013
     else:
@@ -24,29 +26,29 @@ if __name__ == '__main__':
     if '-s' in sys.argv or len(sys.argv) == 1:
         make_directories(competitions, min_year, max_year)
 
-        with open('scrape.log', 'a') as f:
+        with open('auxiliary/scrape.log', 'a') as f:
             f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Scraping]   - Iniciando extração das súmulas.\n')
         
         start_scrape = time()
-        n = len(glob('*/*/CSVs/*.csv'))
+        n = len(glob('*/*/*/CSVs/*.csv'))
         max_time = 30
         added = 0
         it = 1
         k = 0
         while n != k:
-            files = glob('*/*/CSVs/*.csv')
+            files = glob('*/*/*/CSVs/*.csv')
             k = len(files)
             if it == 1:
                 scrape(competitions, min_year, max_year, files, max_time, cleaning = cleaning)
             else:
                 scrape(competitions, min_year, max_year, files, max_time / 2, cleaning = cleaning)
     
-            n = len(glob('*/*/CSVs/*.csv'))
+            n = len(glob('*/*/*/CSVs/*.csv'))
             added += n - k
             it += 1
         
         end_scrape = time()
-        with open('scrape.log', 'a') as f:
+        with open('auxiliary/scrape.log', 'a') as f:
             f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Scraping]   - Finalizada extração das súmulas.\n')
             if added == 0:
                 f.write('                                   [INFO] Nenhuma súmula foi adicionada.\n')
@@ -57,11 +59,11 @@ if __name__ == '__main__':
             
         if added > 0 or '-e' in sys.argv:
             start_extract = time()
-            with open('scrape.log', 'a') as f:
+            with open('auxiliary/scrape.log', 'a') as f:
                 f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Extração]   - Iniciada extração das informações.\n')
             
             cont_fail = extract(competitions, min_year, max_year, cleaning = cleaning)
-            with open('scrape.log', 'a') as f:
+            with open('auxiliary/scrape.log', 'a') as f:
                 f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Extração]   - Finalizada extração das informações.\n')
                 if cont_fail == 1:
                     f.write('                                   [INFO] 1 jogo falhou ao ser extraído.\n')
@@ -73,7 +75,7 @@ if __name__ == '__main__':
                 f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Escalações] - Iniciada geração das escalações.\n')
             
             catch_squads(competitions, min_year, max_year, cleaning = cleaning)
-            with open('scrape.log', 'a') as f:
+            with open('auxiliary/scrape.log', 'a') as f:
                 f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Escalações] - Finalizada geração das escalações.\n')
                 
             end_extract = time()
@@ -93,11 +95,11 @@ if __name__ == '__main__':
                   
     elif '-e' in sys.argv:
         start_extract = time()
-        with open('scrape.log', 'a') as f:
+        with open('auxiliary/scrape.log', 'a') as f:
             f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Extração]   - Iniciada extração das informações.\n')
         
         cont_fail = extract(competitions, min_year, max_year, cleaning = cleaning)
-        with open('scrape.log', 'a') as f:
+        with open('auxiliary/scrape.log', 'a') as f:
             f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Extração]   - Finalizada extração das informações.\n')
             if cont_fail == 1:
                 f.write('                                   [INFO] 1 jogo falhou ao ser extraído.\n')
@@ -109,7 +111,7 @@ if __name__ == '__main__':
             f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Escalações] - Iniciada geração das escalações.\n')
         
         catch_squads(competitions, min_year, max_year, cleaning = cleaning)
-        with open('scrape.log', 'a') as f:
+        with open('auxiliary/scrape.log', 'a') as f:
             f.write(f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")} [Escalações] - Finalizada geração das escalações.\n')
                 
         end_extract = time()
@@ -118,7 +120,7 @@ if __name__ == '__main__':
               f'{cont_fail} jogos falharam ao extrair as informações.',
               sep = '\n')
               
-    with open('scrape.log', 'a') as f:
+    with open('auxiliary/scrape.log', 'a') as f:
         f.write('\n')
         f.write('-' * 85 + '\n')
         f.write('\n')

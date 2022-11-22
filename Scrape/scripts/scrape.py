@@ -43,7 +43,7 @@ def extract_games(competition, cod, year, n_max, files, exceptions):
 	        break
 	    
 	    try:
-	        name = f'{competition}/{year}/PDFs/{str(game).zfill(3)}.pdf'
+	        name = f'results/{competition}/{year}/PDFs/{str(game).zfill(3)}.pdf'
 	        if name.replace('PDFs', 'CSVs').replace('pdf', 'csv') in files:
 	            count_end = 0
 	            continue
@@ -80,10 +80,10 @@ def get_pdf(url):
     return requests.get(url).content
 
 def scrape(competitions, min_year, max_year, files, max_time = 120, cleaning = True):
-    with open('number_of_games.json', 'r') as f:
+    with open('auxiliary/number_of_games.json', 'r') as f:
         n_games = json.load(f)
     
-    with open('exceptions.json', 'r') as f:
+    with open('auxiliary/exceptions.json', 'r') as f:
         exceptions = json.load(f)
 
     errors = {}
@@ -101,10 +101,10 @@ def scrape(competitions, min_year, max_year, files, max_time = 120, cleaning = T
             p.terminate()
 
 def extract(competitions, min_year, max_year, cleaning = True):
-    with open('number_of_games.json', 'r') as f:
+    with open('auxiliary/number_of_games.json', 'r') as f:
         n_games = json.load(f)
     
-    with open('exceptions.json', 'r') as f:
+    with open('auxiliary/exceptions.json', 'r') as f:
         exceptions = json.load(f)
 
     errors = {}
@@ -117,11 +117,11 @@ def extract(competitions, min_year, max_year, cleaning = True):
             print(f'Iniciando o ano de {year} para {competition.replace("_", " ")} (extração)')
             games = {}
             count_end = 0
-            if f'games.json' in os.listdir(f'{competition}/{year}'):
-                files = glob(f'{competition}/{year}/CSVs/*.csv')
+            if f'games.json' in os.listdir(f'results/{competition}/{year}'):
+                files = glob(f'results/{competition}/{year}/CSVs/*.csv')
                 latest_file = max(files, key = os.path.getmtime)
                 mod_time = os.path.getmtime(latest_file)
-                if mod_time < os.path.getmtime(f'{competition}/{year}/games.json'):
+                if mod_time < os.path.getmtime(f'results/{competition}/{year}/games.json'):
                     continue
             
             summary = [['Game', 'Home', 'Away']]
@@ -137,7 +137,7 @@ def extract(competitions, min_year, max_year, cleaning = True):
                     
                 f_club, f_result, f_players, f_goals, f_changes = False, False, False, False, False
                 try:
-                    with open(f'{competition}/{year}/CSVs/{str(game).zfill(3)}.csv', 'r') as f:
+                    with open(f'results/{competition}/{year}/CSVs/{str(game).zfill(3)}.csv', 'r') as f:
                         data = f.readlines()
                     
                     text = ''
@@ -203,25 +203,25 @@ def extract(competitions, min_year, max_year, cleaning = True):
                         errors[competition][year] = {}
                         errors[competition][year][str(game).zfill(3)] = erro
 
-            with open(f'{competition}/{year}/games.json', 'w') as f:
+            with open(f'results/{competition}/{year}/games.json', 'w') as f:
                 json.dump(games, f)
                 
-            with open(f'{competition}/{year}/summary.csv', 'w') as f:
+            with open(f'results/{competition}/{year}/summary.csv', 'w') as f:
                 writer = csv.writer(f)
                 for row in summary:
                     writer.writerow(row)
                     
-    with open('Errors/infos_errors.json', 'w') as f:
+    with open('results/infos_errors.json', 'w') as f:
         json.dump(errors, f)
     
     return cont_fail
 
 def catch_squads(competitions, min_year, max_year, cleaning = True):
     erros = []
-    with open('number_of_games.json', 'r') as f:
+    with open('auxiliary/number_of_games.json', 'r') as f:
         n_games = json.load(f)
     
-    with open('exceptions.json', 'r') as f:
+    with open('auxiliary/exceptions.json', 'r') as f:
         exceptions = json.load(f)
         
     model = {'Mandante' : [],
@@ -236,14 +236,14 @@ def catch_squads(competitions, min_year, max_year, cleaning = True):
             if cleaning: clear()
             print(f'Iniciando o ano de {year} para {competition.replace("_", " ")} (escalações)')
             if f'squads.json' in os.listdir(f'{competition}/{year}'):
-                files = glob(f'{competition}/{year}/CSVs/*.csv')
+                files = glob(f'results/{competition}/{year}/CSVs/*.csv')
                 latest_file = max(files, key = os.path.getmtime)
                 mod_time = os.path.getmtime(latest_file)
-                if mod_time < os.path.getmtime(f'{competition}/{year}/squads.json'):
+                if mod_time < os.path.getmtime(f'results/{competition}/{year}/squads.json'):
                     continue
 
             squads = {}
-            with open(f'{competition}/{year}/games.json') as f:
+            with open(f'results/{competition}/{year}/games.json') as f:
                 games = json.load(f)
             
             for game in games:
@@ -330,6 +330,6 @@ def catch_squads(competitions, min_year, max_year, cleaning = True):
                             squads[game][changes_breaks]['Tempo'] = 90 - time
                             
                     actual_minute = time
-            with open(f'{competition}/{year}/squads.json', 'w') as f:
+            with open(f'results/{competition}/{year}/squads.json', 'w') as f:
                 json.dump(squads, f)
 
