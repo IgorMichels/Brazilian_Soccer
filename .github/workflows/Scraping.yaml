@@ -46,9 +46,13 @@ jobs:
           cd Code/
           cd Commons/
           python script.py
+          cd ../
+          cd ../
           
       - name: Counts stats
         run: |
+          cd Code/
+          cd Commons/
           cd stats/
           python players_and_subgames.py > players_and_subgames.txt
           cd ../
