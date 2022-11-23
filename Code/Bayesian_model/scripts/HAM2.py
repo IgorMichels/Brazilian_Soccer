@@ -61,7 +61,7 @@ def collect_data(competitions, years):
     assert len(club_1) == len(home_clubs)
     assert len(club_1) == n_obs
     data = {'n_obs': n_obs,
-            'n_clubs' : len(home_clubs),
+            'n_clubs' : len(clubs),
             'n_players': n_players,
             'n_players_per_game': n_players_per_game,
             'times': times,
