@@ -8,7 +8,7 @@ players = {}
 max_games = 0
 for competition in competitions:
     for year in range(2022, 2017, -1):
-        with open(f'../../Scrape/results/{competition}/{year}/squads.json', 'r') as f:
+        with open(f'../../../Scrape/results/{competition}/{year}/squads.json', 'r') as f:
             squads = json.load(f)
 
         for game in squads:
