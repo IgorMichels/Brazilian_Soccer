@@ -192,9 +192,9 @@ if __name__ == '__main__':
                args = (players, squads),
               )
 
-    np.save('result_fmin.npy', res.x)
-    #np.save('result_trust_exact.npy', res.x)
-    #np.save('newton_cg.npy', res.x)
+    np.save('results/result_fmin.npy', res.x)
+    #np.save('results/result_trust_exact.npy', res.x)
+    #np.save('results/newton_cg.npy', res.x)
     print(proficiencies)
     print(res.x)
     print(res.fun)
