@@ -10,9 +10,9 @@ if __name__ == '__main__':
     n_best = 10
     headers = ['Modelo', 'Ano'] + [str(i + 1) for i in range(n_best)]
     table = []
-    models = ['ADM', 'HAM1', 'HAM2']
+    model = 'HAM2'
     years = range(18, 23)
-    for model, year in product(models, years):
+    for year in years:
         results = {}
         data = f'{year}B'
         df = pd.DataFrame()
@@ -30,18 +30,17 @@ if __name__ == '__main__':
         for key in results:
             results[key] = np.array(results[key])
         
-        if model == 'HAM1': results = (results['theta_atk_v'] + results['theta_atk_v']) * (results['theta_def_m'] + results['theta_def_v']) / 4
-        else: results = results['theta_atk'] * results['theta_def']
+        results = results['sigma_atk'] * results['sigma_def']
         results = np.argsort(results)
         best = list(results[- n_best:])
-        players_file = f'../../Commons/players_{data}_all.json'
-        with open(players_file, 'r') as f:
-            players_id = json.load(f)
+        clubs_file = f'../../Commons/clubs_{data}.json'
+        with open(clubs_file, 'r') as f:
+            clubs_id = json.load(f)
         
-        for player in players_id:
-            if players_id[player] in best:
-                ind = best.index(players_id[player])
-                best[ind] = player
+        for club in clubs_id:
+            if clubs_id[club] in best:
+                ind = best.index(clubs_id[club])
+                best[ind] = club
                 break
         
         best = [model, year] + best
