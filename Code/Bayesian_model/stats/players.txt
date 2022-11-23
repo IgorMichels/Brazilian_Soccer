@@ -1,0 +1,14 @@
+Modelo: ADM
+Ano: 22
+Jogadores:
+   ('B', 22, '019', '565195', 'Brusque / SC', '16Wagner Wagner Pereira Marques RP565195')
+   ('A', 22, '004', '517179', 'Palmeiras / SP', '11Wesley Rib ... Wesley Ribeiro Silva RP517179')
+   ('B', 22, '333', '660227', 'Cruzeiro / MG', '88Xavier Matheus Xavier de Fr ... RP660227')
+   ('A', 22, '023', '567173', 'Red Bull Red Bull Bragantino / SP', '29Bruninho Bruno Gonçalves de Jesus RP567173')
+   ('B', 22, '363', '606961', 'Operário / PR', '17Marcos Vin ... Marcos Vinicius Corr ... RP606961')
+   ('A', 22, '049', '749291', 'Coritiba / PR', '28Pablo Garcia Pablo Javier Garcia  ... RP749291')
+   ('A', 22, '235', '337017', 'Botafogo / RJ', '12Lucas Perri Lucas Estella Perri R(g)P337017')
+   ('A', 22, '377', '616276', 'Ceará / CE', '35Daniel Daniel Henrique Agui ... RP616276')
+   ('A', 22, '145', '568563', 'Flamengo / RJ', '48Igor Jesus Igor Jesus Lima RP568563')
+   ('A', 22, '003', '346745', 'São Paulo / SP', '11Luciano Luciano da Rocha Neves RP346745')
+
