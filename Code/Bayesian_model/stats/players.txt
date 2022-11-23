@@ -1,4 +1,60 @@
 Modelo: ADM
+Ano: 18
+Jogadores:
+   ('B', 19, '019', '536800', 'Vila Nova / GO', '13Sávio Sávio dos Santos Maciel RP536800')
+   ('B', 22, '125', '509608', 'Novorizontino / SP', '21Bruno Bruno da Silva Costa RP509608')
+   ('B', 22, '011', '409125', 'Guarani / SP', '6Vitinho Victor Hugo Santana  ... RP409125')
+   ('B', 22, '022', '410340', 'CSA / AL', '18Henrique Luiz Henrique Beserr ... RP410340')
+   ('B', 20, '010', '295087', 'Brasil / RS', '7Maicon Maicon da Silva Macedo TP295087')
+   ('B', 22, '137', '307735', 'Operário / PR', '18Leandro Leandro Alves de Carvalho RP307735')
+   ('B', 18, '079', '405888', 'Londrina / PR', '15Fernando J ... Fernando Antonio da  ... RP405888')
+   ('A', 20, '122', '584599', 'Botafogo / RJ', '35Lessa Wendel Lessa de Mace ... RP584599')
+   ('A', 22, '020', '620423', 'Atlético Mineiro / MG', '33Sávio Savio Moreira de Oliveira RP620423')
+   ('B', 20, '007', '537696', 'CRB / AL', '17Darli Darlisson Mateus Net ... RP537696')
+
+Modelo: ADM
+Ano: 19
+Jogadores:
+   ('A', 22, '145', '568563', 'Flamengo / RJ', '48Igor Jesus Igor Jesus Lima RP568563')
+   ('B', 22, '363', '606961', 'Operário / PR', '17Marcos Vin ... Marcos Vinicius Corr ... RP606961')
+   ('B', 21, '109', '184087', 'Sampaio Corrêa / MA', '4Eder Eder Lima dos Santos RP184087')
+   ('B', 22, '019', '565195', 'Brusque / SC', '16Wagner Wagner Pereira Marques RP565195')
+   ('B', 19, '019', '536800', 'Vila Nova / GO', '13Sávio Sávio dos Santos Maciel RP536800')
+   ('B', 20, '375', '523339', 'Botafogo / SP', '21Marlon Marlon Mykaion Almei ... TP523339')
+   ('B', 19, '080', '384218', 'Cuiabá / MT', '16Rincon Rincon Teixeira da Rocha RP384218')
+   ('A', 22, '020', '620423', 'Atlético Mineiro / MG', '33Sávio Savio Moreira de Oliveira RP620423')
+   ('A', 20, '122', '584599', 'Botafogo / RJ', '35Lessa Wendel Lessa de Mace ... RP584599')
+   ('B', 20, '007', '537696', 'CRB / AL', '17Darli Darlisson Mateus Net ... RP537696')
+
+Modelo: ADM
+Ano: 20
+Jogadores:
+   ('A', 22, '049', '749291', 'Coritiba / PR', '28Pablo Garcia Pablo Javier Garcia  ... RP749291')
+   ('B', 20, '145', '583841', 'Oeste / SP', '14Douglas Douglas Luiz Pereira ... RP583841')
+   ('B', 22, '363', '606961', 'Operário / PR', '17Marcos Vin ... Marcos Vinicius Corr ... RP606961')
+   ('B', 22, '213', '436949', 'Sport / PE', '91Gustavo Gustavo Coutinho Sil ... RP436949')
+   ('B', 20, '375', '523339', 'Botafogo / SP', '21Marlon Marlon Mykaion Almei ... TP523339')
+   ('B', 22, '011', '409125', 'Guarani / SP', '6Vitinho Victor Hugo Santana  ... RP409125')
+   ('A', 20, '122', '584599', 'Botafogo / RJ', '35Lessa Wendel Lessa de Mace ... RP584599')
+   ('B', 22, '255', '671013', 'Novorizontino / SP', '5Ramon Mart ... Ramon Martinez Lopez TP671013')
+   ('A', 22, '004', '297441', 'Ceará / CE', '20Wescley Wescley Gomes dos Santos RP297441')
+   ('B', 22, '015', '324829', 'Ituano / SP', '12Glauco Glauco Tadeu Passos  ... R(g)P324829')
+
+Modelo: ADM
+Ano: 21
+Jogadores:
+   ('B', 22, '173', '177363', 'Náutico / PE', '19Jonathas Jonathas Cristian de ... RP177363')
+   ('B', 22, '363', '606961', 'Operário / PR', '17Marcos Vin ... Marcos Vinicius Corr ... RP606961')
+   ('A', 22, '222', '779019', 'Coritiba / PR', '27JUAN DIAZ Juan Carlos Diaz Mena RP779019')
+   ('B', 22, '019', '565195', 'Brusque / SC', '16Wagner Wagner Pereira Marques RP565195')
+   ('A', 21, '129', '179880', 'Juventude / RS', '19Roberson Roberson de Arruda Alves RP179880')
+   ('B', 22, '213', '436949', 'Sport / PE', '91Gustavo Gustavo Coutinho Sil ... RP436949')
+   ('A', 22, '377', '619311', 'Juventude / RS', '35Guilherme Guilherme Gehring RP619311')
+   ('A', 22, '018', '533140', 'Goiás / GO', '97Adailson Adailson Freire Pere ... TP533140')
+   ('B', 22, '029', '544734', 'Cruzeiro / MG', '18Jajá Jair Diego Alves de Brito TP544734')
+   ('A', 22, '049', '749291', 'Coritiba / PR', '28Pablo Garcia Pablo Javier Garcia  ... RP749291')
+
+Modelo: ADM
 Ano: 22
 Jogadores:
    ('B', 22, '019', '565195', 'Brusque / SC', '16Wagner Wagner Pereira Marques RP565195')
@@ -10,5 +66,145 @@ Jogadores:
    ('A', 22, '235', '337017', 'Botafogo / RJ', '12Lucas Perri Lucas Estella Perri R(g)P337017')
    ('A', 22, '377', '616276', 'Ceará / CE', '35Daniel Daniel Henrique Agui ... RP616276')
    ('A', 22, '145', '568563', 'Flamengo / RJ', '48Igor Jesus Igor Jesus Lima RP568563')
+   ('A', 22, '003', '346745', 'São Paulo / SP', '11Luciano Luciano da Rocha Neves RP346745')
+
+Modelo: HAM1
+Ano: 18
+Jogadores:
+   ('B', 20, '005', '406111', 'Oeste / SP', '6Gustavo Gustavo Salomao Miguel TP406111')
+   ('B', 19, '082', '160028', 'Botafogo / SP', '84Tiago Cardoso Tiago Cardoso dos Santos R(g)P160028')
+   ('B', 20, '041', '411070', 'Oeste / SP', '17Marlon Marlon Douglas de Sa ... RP411070')
+   ('A', 22, '234', '616219', 'Red Bull Red Bull Bragantino / SP', '45Werik Werik Silva Pinto RP616219')
+   ('A', 22, '377', '622070', 'Juventude / RS', '13Caue Caue Pereira da Rocha RP622070')
+   ('A', 22, '007', '749416', 'Fortaleza / CE', '3Landazuri Anthony Rigoberto La ... RP749416')
+   ('B', 18, '003', '359353', 'Brasil / RS', '23Leo Bahia Francisco Eliomar Ro ... RP359353')
+   ('A', 21, '005', '529339', 'Internacional / RS', '36Leonardo Leonardo Borges da Silva RP529339')
+   ('B', 22, '231', '779228', 'Guarani / SP', '99Bruno Miranda Bruno Miranda Villagomez RP779228')
+   ('A', 22, '009', '180622', 'Avaí / SC', '89Vladimir Vladimir Orlando Car ... RP180622')
+
+Modelo: HAM1
+Ano: 19
+Jogadores:
+   ('B', 22, '006', '605646', 'Náutico / PE', '14LUAN Luan Freire Veras RP605646')
+   ('B', 21, '024', '533689', 'Goiás / GO', '13Heron Heron Crespo da Silva RP533689')
+   ('A', 22, '059', '621747', 'Juventude / RS', '44RAMIRES Lucas Pereira Ramire ... RP621747')
+   ('B', 19, '033', '334505', 'Cuiabá / MT', '20Alef Alef Vieira Santos RP334505')
+   ('A', 22, '007', '749416', 'Fortaleza / CE', '3Landazuri Anthony Rigoberto La ... RP749416')
+   ('B', 22, '256', '174541', 'Operário / PR', '3Dirceu Dirceu Wiggers de Ol ... TP174541')
+   ('A', 22, '009', '412852', 'América / MG', '3Iago Iago Justen Maidana  ... TP412852')
+   ('A', 20, '153', '307076', 'Coritiba / PR', '94Mattheus O ... Mattheus de Andrade  ... RP307076')
+   ('A', 21, '005', '529339', 'Internacional / RS', '36Leonardo Leonardo Borges da Silva RP529339')
+   ('B', 22, '231', '779228', 'Guarani / SP', '99Bruno Miranda Bruno Miranda Villagomez RP779228')
+
+Modelo: HAM1
+Ano: 20
+Jogadores:
+   ('B', 22, '008', '587060', 'Cruzeiro / MG', '60Breno Breno Henrique Neres ... RP587060')
+   ('B', 22, '023', '376246', 'Operário / PR', '21Giovanni Giovanni Fernando Co ... RP376246')
+   ('A', 22, '377', '619311', 'Juventude / RS', '35Guilherme Guilherme Gehring RP619311')
+   ('B', 22, '012', '525941', 'CRB / AL', '18Wallace Wallace Madeira Almeida RP525941')
+   ('B', 22, '006', '605646', 'Náutico / PE', '14LUAN Luan Freire Veras RP605646')
+   ('A', 21, '023', '593158', 'Santos / SP', '26Robson Robson Alves Reis RP593158')
+   ('B', 22, '146', '666724', 'Operário / PR', '23Guilherme  ... Guilherme Christino  ... RP666724')
+   ('A', 21, '005', '529339', 'Internacional / RS', '36Leonardo Leonardo Borges da Silva RP529339')
+   ('A', 20, '153', '307076', 'Coritiba / PR', '94Mattheus O ... Mattheus de Andrade  ... RP307076')
+   ('B', 22, '243', '189739', 'Vila Nova / GO', '22HUGO CABRAL Hugo da Silva Cabral RP189739')
+
+Modelo: HAM1
+Ano: 21
+Jogadores:
+   ('B', 21, '005', '174147', 'Londrina / PR', '12Dalton Dalton Alan Munaretto R(g)P174147')
+   ('B', 22, '013', '367372', 'Náutico / PE', '3Bruno Bruno Bispo dos Anjos TP367372')
+   ('B', 22, '006', '539820', 'Londrina / PR', '15Luiz Luiz Gustavo da Silv ... RP539820')
+   ('B', 22, '006', '369011', 'Londrina / PR', '17Watson Watson Rennio Pires  ... RP369011')
+   ('B', 22, '349', '559363', 'Ponte Preta / SP', '12Pedro Pedro Henrique Rocha ... R(g)P559363')
+   ('A', 22, '377', '616276', 'Ceará / CE', '35Daniel Daniel Henrique Agui ... RP616276')
+   ('B', 22, '363', '700250', 'Operário / PR', '18Pio Pedro Henrique Pio RP700250')
+   ('B', 21, '018', '543356', 'Vila Nova / GO', '18Breno Breno Silva Gonçalve ... RP543356')
+   ('A', 22, '008', '177444', 'Flamengo / RJ', '7Éverton R ... Everton Augusto de B ... RP177444')
+   ('B', 22, '247', '540186', 'Cruzeiro / MG', '12Lincoln Lincoln Correa dos Santos RP540186')
+
+Modelo: HAM1
+Ano: 22
+Jogadores:
+   ('A', 22, '055', '540906', 'Botafogo / RJ', '3Carli Mauro Joel Carli RP540906')
+   ('A', 22, '087', '630396', 'Ceará / CE', '16David Antonio David Souza  ... RP630396')
+   ('B', 22, '008', '587060', 'Cruzeiro / MG', '60Breno Breno Henrique Neres ... RP587060')
+   ('B', 22, '013', '432199', 'Bahia / BA', '37Rildo Rildo Goncalves de A ... RP432199')
+   ('A', 22, '017', '542822', 'Ceará / CE', '80Leonardo Leonardo Rafael dos  ... RP542822')
+   ('B', 22, '006', '358911', 'Náutico / PE', '5Djavan Djavan Aulim Candido ... RP358911')
+   ('A', 22, '005', '510342', 'Botafogo / RJ', '62Kayque Kayque Luiz Pereira RP510342')
+   ('A', 22, '054', '308661', 'Palmeiras / SP', '1Vinicius Vinicius Silvestre d ... RP308661')
+   ('A', 22, '020', '646474', 'Athletico Paranaense / PR', '24Orejuela Luis Manuel Orejuela ... TP646474')
+   ('B', 22, '247', '540186', 'Cruzeiro / MG', '12Lincoln Lincoln Correa dos Santos RP540186')
+
+Modelo: HAM2
+Ano: 18
+Jogadores:
+   ('B', 22, '125', '509608', 'Novorizontino / SP', '21Bruno Bruno da Silva Costa RP509608')
+   ('B', 19, '080', '384218', 'Cuiabá / MT', '16Rincon Rincon Teixeira da Rocha RP384218')
+   ('B', 19, '019', '536800', 'Vila Nova / GO', '13Sávio Sávio dos Santos Maciel RP536800')
+   ('B', 20, '010', '295087', 'Brasil / RS', '7Maicon Maicon da Silva Macedo TP295087')
+   ('B', 22, '011', '409125', 'Guarani / SP', '6Vitinho Victor Hugo Santana  ... RP409125')
+   ('B', 22, '137', '307735', 'Operário / PR', '18Leandro Leandro Alves de Carvalho RP307735')
+   ('B', 18, '079', '405888', 'Londrina / PR', '15Fernando J ... Fernando Antonio da  ... RP405888')
+   ('A', 22, '020', '620423', 'Atlético Mineiro / MG', '33Sávio Savio Moreira de Oliveira RP620423')
+   ('A', 20, '122', '584599', 'Botafogo / RJ', '35Lessa Wendel Lessa de Mace ... RP584599')
+   ('B', 20, '007', '537696', 'CRB / AL', '17Darli Darlisson Mateus Net ... RP537696')
+
+Modelo: HAM2
+Ano: 19
+Jogadores:
+   ('A', 22, '018', '533140', 'Goiás / GO', '97Adailson Adailson Freire Pere ... TP533140')
+   ('B', 20, '003', '525204', 'Guarani / SP', '19Elias Elias Rezende de Oliveira RP525204')
+   ('B', 22, '011', '409125', 'Guarani / SP', '6Vitinho Victor Hugo Santana  ... RP409125')
+   ('A', 22, '004', '441070', 'Ceará / CE', '11Erick Erick de Arruda Serafim RP441070')
+   ('B', 20, '375', '523339', 'Botafogo / SP', '21Marlon Marlon Mykaion Almei ... TP523339')
+   ('B', 19, '019', '536800', 'Vila Nova / GO', '13Sávio Sávio dos Santos Maciel RP536800')
+   ('B', 19, '080', '384218', 'Cuiabá / MT', '16Rincon Rincon Teixeira da Rocha RP384218')
+   ('A', 20, '122', '584599', 'Botafogo / RJ', '35Lessa Wendel Lessa de Mace ... RP584599')
+   ('A', 22, '020', '620423', 'Atlético Mineiro / MG', '33Sávio Savio Moreira de Oliveira RP620423')
+   ('B', 20, '007', '537696', 'CRB / AL', '17Darli Darlisson Mateus Net ... RP537696')
+
+Modelo: HAM2
+Ano: 20
+Jogadores:
+   ('B', 22, '213', '436949', 'Sport / PE', '91Gustavo Gustavo Coutinho Sil ... RP436949')
+   ('A', 22, '018', '533140', 'Goiás / GO', '97Adailson Adailson Freire Pere ... TP533140')
+   ('B', 20, '145', '583841', 'Oeste / SP', '14Douglas Douglas Luiz Pereira ... RP583841')
+   ('A', 22, '049', '749291', 'Coritiba / PR', '28Pablo Garcia Pablo Javier Garcia  ... RP749291')
+   ('B', 20, '013', '577466', 'CRB / AL', '23Pedro Henr ... Pedro Henrique Souza ... RA577466')
+   ('B', 22, '011', '409125', 'Guarani / SP', '6Vitinho Victor Hugo Santana  ... RP409125')
+   ('B', 22, '255', '671013', 'Novorizontino / SP', '5Ramon Mart ... Ramon Martinez Lopez TP671013')
+   ('A', 22, '004', '297441', 'Ceará / CE', '20Wescley Wescley Gomes dos Santos RP297441')
+   ('A', 20, '122', '584599', 'Botafogo / RJ', '35Lessa Wendel Lessa de Mace ... RP584599')
+   ('B', 22, '015', '324829', 'Ituano / SP', '12Glauco Glauco Tadeu Passos  ... R(g)P324829')
+
+Modelo: HAM2
+Ano: 21
+Jogadores:
+   ('B', 22, '081', '604978', 'Chapecoense / SC', '16Vitor Vitor Gustavo da Sil ... RP604978')
+   ('A', 21, '369', '577505', 'Chapecoense / SC', '38Arthur Arthur Lanzarin Vanzela RP577505')
+   ('A', 21, '129', '179880', 'Juventude / RS', '19Roberson Roberson de Arruda Alves RP179880')
+   ('B', 22, '173', '177363', 'Náutico / PE', '19Jonathas Jonathas Cristian de ... RP177363')
+   ('A', 22, '377', '619311', 'Juventude / RS', '35Guilherme Guilherme Gehring RP619311')
+   ('B', 22, '019', '565195', 'Brusque / SC', '16Wagner Wagner Pereira Marques RP565195')
+   ('B', 22, '213', '436949', 'Sport / PE', '91Gustavo Gustavo Coutinho Sil ... RP436949')
+   ('A', 22, '222', '779019', 'Coritiba / PR', '27JUAN DIAZ Juan Carlos Diaz Mena RP779019')
+   ('B', 22, '363', '606961', 'Operário / PR', '17Marcos Vin ... Marcos Vinicius Corr ... RP606961')
+   ('A', 22, '018', '533140', 'Goiás / GO', '97Adailson Adailson Freire Pere ... TP533140')
+
+Modelo: HAM2
+Ano: 22
+Jogadores:
+   ('A', 22, '004', '517179', 'Palmeiras / SP', '11Wesley Rib ... Wesley Ribeiro Silva RP517179')
+   ('A', 22, '277', '599516', 'Flamengo / RJ', '19Werton Werton de Almeida Rego RP599516')
+   ('A', 22, '027', '463428', 'Ceará / CE', '50Vinicius Vinicius Requia Machado R(g)P463428')
+   ('B', 22, '363', '606961', 'Operário / PR', '17Marcos Vin ... Marcos Vinicius Corr ... RP606961')
+   ('A', 22, '023', '567173', 'Red Bull Red Bull Bragantino / SP', '29Bruninho Bruno Gonçalves de Jesus RP567173')
+   ('A', 22, '235', '337017', 'Botafogo / RJ', '12Lucas Perri Lucas Estella Perri R(g)P337017')
+   ('B', 22, '019', '565195', 'Brusque / SC', '16Wagner Wagner Pereira Marques RP565195')
+   ('A', 22, '084', '307406', 'Palmeiras / SP', '13Luan Garcia Luan Garcia Teixeira TP307406')
+   ('A', 22, '049', '749291', 'Coritiba / PR', '28Pablo Garcia Pablo Javier Garcia  ... RP749291')
    ('A', 22, '003', '346745', 'São Paulo / SP', '11Luciano Luciano da Rocha Neves RP346745')
 
