@@ -10,9 +10,8 @@ if __name__ == '__main__':
     n_best = 10
     headers = ['Modelo', 'Ano'] + [str(i + 1) for i in range(n_best)]
     table = []
-    models = ['ADM']#, 'HAM1', 'HAM2']
+    models = ['ADM', 'HAM1', 'HAM2']
     years = range(18, 23)
-    years = range(22, 23)
     for model, year in product(models, years):
         results = {}
         data = f'{year}B'
