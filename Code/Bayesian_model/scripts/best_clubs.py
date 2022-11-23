@@ -41,7 +41,6 @@ if __name__ == '__main__':
             if clubs_id[club] in best:
                 ind = best.index(clubs_id[club])
                 best[ind] = club
-                break
         
         best = [model, year] + best
         table.append(best.copy())

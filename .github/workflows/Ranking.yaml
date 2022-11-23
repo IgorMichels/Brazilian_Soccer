@@ -37,6 +37,7 @@ jobs:
           cd scripts/
           python best_players_1.py > ../stats/best_players.txt
           python best_players_2.py > ../stats/players.txt
+          python best_clubs.py > ../stats/best_clubs.txt
           cd ../
           cd ../
           cd ../
