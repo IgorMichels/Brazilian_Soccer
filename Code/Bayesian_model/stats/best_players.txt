@@ -1,17 +1,210 @@
-Modelo      Ano       1       2       3       4       5       6       7       8       9      10
---------  -----  ------  ------  ------  ------  ------  ------  ------  ------  ------  ------
-ADM          18  536800  509608  409125  410340  295087  307735  405888  584599  620423  537696
-ADM          19  568563  606961  184087  565195  536800  523339  384218  620423  584599  537696
-ADM          20  749291  583841  606961  436949  523339  409125  584599  671013  297441  324829
-ADM          21  177363  606961  779019  565195  179880  436949  619311  533140  544734  749291
-ADM          22  565195  517179  660227  567173  606961  749291  337017  616276  568563  346745
-HAM1         18  406111  160028  411070  616219  622070  749416  359353  529339  779228  180622
-HAM1         19  605646  533689  621747  334505  749416  174541  412852  307076  529339  779228
-HAM1         20  587060  376246  619311  525941  605646  593158  666724  529339  307076  189739
-HAM1         21  174147  367372  539820  369011  559363  616276  700250  543356  177444  540186
-HAM1         22  540906  630396  587060  432199  542822  358911  510342  308661  646474  540186
-HAM2         18  409125  295087  509608  384218  536800  307735  405888  620423  584599  537696
-HAM2         19  565195  409125  533140  523339  749291  536800  384218  584599  620423  537696
-HAM2         20  577466  779019  565195  533140  523339  409125  671013  584599  297441  324829
-HAM2         21  606961  563757  179880  568563  604978  184041  436949  544734  749291  533140
-HAM2         22  599516  619311  660227  567173  749291  307406  606961  568563  565195  346745
+Modelo: ADM
+Ano: 18
+Jogadores:
+   ('A', 22, '008', '307285', 'Atlético / GO', '9Wellington ... Wellington Soares da ... TP307285')
+   ('B', 20, '007', '348248', 'CRB / AL', '14Ricardo Ricardo Thalheimer RP348248')
+   ('A', 22, '031', '152788', 'América / MG', '7Wellington ... Wellington Pereira d ... RP152788')
+   ('A', 22, '005', '178486', 'Corinthians / SP', '11Giuliano Giuliano Victor de Paula RP178486')
+   ('A', 22, '007', '421778', 'Cuiabá / MT', '6Igor Carius Igor Aquino da Silva TP421778')
+   ('A', 22, '005', '322852', 'Botafogo / RJ', '20Daniel Borges Daniel Fortunato Borges RP322852')
+   ('A', 19, '009', '565315', 'Corinthians / SP', '7Sornoza Junior Nazareno Sorn... TP565315')
+   ('B', 19, '003', '325020', 'São Bento / SP', '6Mansur Joeliton Lima Santos TP325020')
+   ('B', 22, '010', '174360', 'Chapecoense / SC', '3Leo Leonardo Renan Simoe ... TP174360')
+   ('A', 22, '010', '308316', 'Goiás / GO', '23Tadeu Tadeu Antonio Ferreira T(g)P308316')
+
+Modelo: ADM
+Ano: 19
+Jogadores:
+   ('B', 20, '007', '348248', 'CRB / AL', '14Ricardo Ricardo Thalheimer RP348248')
+   ('A', 22, '001', '317445', 'Atlético Mineiro / MG', '2Guga Claudio Rodrigues Gomes TP317445')
+   ('A', 22, '010', '308316', 'Goiás / GO', '23Tadeu Tadeu Antonio Ferreira T(g)P308316')
+   ('A', 22, '005', '322852', 'Botafogo / RJ', '20Daniel Borges Daniel Fortunato Borges RP322852')
+   ('B', 22, '010', '174360', 'Chapecoense / SC', '3Leo Leonardo Renan Simoe ... TP174360')
+   ('A', 22, '022', '430588', 'Internacional / RS', '17David David Correa da Fonseca RP430588')
+   ('A', 19, '050', '453172', 'Corinthians / SP', '19Gustavo Gustavo Henrique da  ... RP453172')
+   ('A', 22, '005', '511533', 'Botafogo / RJ', '1Gatito Fer ... Roberto Junior Ferna ... T(g)P511533')
+   ('B', 22, '003', '431106', 'Sampaio Corrêa / MA', '18Eronildo Eronildo dos Santos Rocha RP431106')
+   ('B', 20, '010', '310724', 'Cuiabá / MT', '3Everton Sena Antonio Everton Sena ... TP310724')
+
+Modelo: ADM
+Ano: 20
+Jogadores:
+   ('A', 20, '002', '137990', 'Botafogo / RJ', '12Diego Cava ... Diego Cavalieri T(g)P137990')
+   ('A', 22, '005', '322852', 'Botafogo / RJ', '20Daniel Borges Daniel Fortunato Borges RP322852')
+   ('A', 22, '018', '502361', 'Goiás / GO', '11Pedro Raul Pedro Raul Garay da Silva TP502361')
+   ('A', 22, '088', '523897', 'Corinthians / SP', '39Xavier João Vitor Xavier de ... RP523897')
+   ('B', 22, '005', '291797', 'Novorizontino / SP', '4Ligger Ligger Moreira Malaquias TP291797')
+   ('A', 22, '005', '355418', 'Botafogo / RJ', '4Victor Victor Hugo Soares d ... TP355418')
+   ('A', 21, '009', '169374', 'Chapecoense / SC', '27Felipe Felipe Augusto Santana RP169374')
+   ('A', 22, '221', '190389', 'Goiás / GO', '10Marquinhos ... Marcos Gabriel do Na ... RP190389')
+   ('B', 22, '006', '351605', 'Londrina / PR', '16Jean Henrique Jean Henrique dos Santos RP351605')
+   ('B', 21, '009', '150549', 'Cruzeiro / MG', '10Rafael Sobis Rafael Augusto Sobis TP150549')
+
+Modelo: ADM
+Ano: 21
+Jogadores:
+   ('B', 22, '003', '460562', 'Sport / PE', '1Mailson Mailson Tenorio dos  ... T(g)P460562')
+   ('A', 22, '002', '373768', 'Santos / SP', '3Felipe Felipe Jonatan Rocha ... RP373768')
+   ('A', 21, '009', '365361', 'Chapecoense / SC', '98Tiepo Giovanni Silva Tiepo T(g)P365361')
+   ('A', 22, '066', '313582', 'Juventude / RS', '20Moraes Onitlasi Junior de M ... RP313582')
+   ('B', 22, '183', '502079', 'Sport / PE', '88Denner Denner Fernando Melz RP502079')
+   ('A', 22, '009', '311988', 'América / MG', '30Ale Alexandre Egea TP311988')
+   ('A', 22, '045', '305521', 'Cuiabá / MT', '18Jenison Jenison de Jesus Bri ... RP305521')
+   ('A', 22, '006', '409084', 'Juventude / RS', '31Cesar Cesar Augusto Soares ... T(g)P409084')
+   ('B', 22, '012', '317697', 'Vasco da Gama / RJ', '13Gabriel Dias Gabriel Dias de Oliveira TP317697')
+   ('A', 22, '007', '345210', 'Cuiabá / MT', '15Marcos Marcos Antonio Almei ... RP345210')
+
+Modelo: ADM
+Ano: 22
+Jogadores:
+   ('A', 22, '006', '175720', 'Juventude / RS', '12Rafael Rafael Forster TP175720')
+   ('B', 22, '006', '185126', 'Náutico / PE', '9Kieza Welker Marcal Almeida TP185126')
+   ('A', 22, '006', '409084', 'Juventude / RS', '31Cesar Cesar Augusto Soares ... T(g)P409084')
+   ('A', 22, '006', '342224', 'Juventude / RS', '2Rodrigo Rodrigo Alves Soares TP342224')
+   ('A', 22, '006', '179974', 'Juventude / RS', '9Ricardo Bueno Ricardo Bueno da Silva TP179974')
+   ('B', 22, '002', '177948', 'CSA / AL', '31Marcelo Marcelo Henrique Pas ... T(g)P177948')
+   ('B', 22, '006', '344841', 'Náutico / PE', '7Ewandro Ewandro Felipe de Li ... TP344841')
+   ('A', 22, '005', '322852', 'Botafogo / RJ', '20Daniel Borges Daniel Fortunato Borges RP322852')
+   ('B', 22, '009', '394762', 'Operário / PR', '21Jean Jean Carlo Bernieri  ... RP394762')
+   ('A', 22, '010', '172576', 'Goiás / GO', '22Apodi Luiz Diallisson de S ... TP172576')
+
+Modelo: HAM1
+Ano: 18
+Jogadores:
+   ('A', 22, '009', '337261', 'América / MG', '8Juninho Adilson dos Anjos Ol ... TP337261')
+   ('A', 19, '009', '565315', 'Corinthians / SP', '7Sornoza Junior Nazareno Sorn... TP565315')
+   ('B', 21, '005', '377856', 'Brasil / RS', '7Jarro Emilton Pedroso Domingues TP377856')
+   ('B', 21, '239', '343349', 'Sampaio Corrêa / MA', '10Léo Artur Leonardo Artur de Melo TP343349')
+   ('A', 22, '008', '402095', 'Atlético / GO', '14Ramon Menezes Ramon Menezes Roma RP402095')
+   ('B', 22, '002', '184819', 'Criciúma / SC', '13Rayan Rayan Poltronieri Pereira RP184819')
+   ('A', 22, '027', '381689', 'Ceará / CE', '28Matheus Pe ... Matheus Vieira Campo ... RP381689')
+   ('A', 22, '005', '387432', 'Corinthians / SP', '29Roni Roni Medeiros de Moura RP387432')
+   ('A', 22, '031', '152788', 'América / MG', '7Wellington ... Wellington Pereira d ... RP152788')
+   ('A', 22, '010', '308316', 'Goiás / GO', '23Tadeu Tadeu Antonio Ferreira T(g)P308316')
+
+Modelo: HAM1
+Ano: 19
+Jogadores:
+   ('A', 22, '001', '317445', 'Atlético Mineiro / MG', '2Guga Claudio Rodrigues Gomes TP317445')
+   ('A', 22, '010', '308316', 'Goiás / GO', '23Tadeu Tadeu Antonio Ferreira T(g)P308316')
+   ('A', 19, '002', '137982', 'Avaí / SC', '33Marquinhos ... Marcos Roberto da Si... TP137982')
+   ('A', 22, '005', '376586', 'Corinthians / SP', '2Joao Pedro Joao Pedro Maturano  ... TP376586')
+   ('A', 22, '022', '430588', 'Internacional / RS', '17David David Correa da Fonseca RP430588')
+   ('B', 22, '273', '347998', 'Ituano / SP', '19Brenner Brenner Marlos Varan ... RP347998')
+   ('A', 22, '001', '438212', 'Atlético Mineiro / MG', '19Ademir Ademir da Silva Sant ... TP438212')
+   ('A', 22, '005', '178486', 'Corinthians / SP', '11Giuliano Giuliano Victor de Paula RP178486')
+   ('B', 21, '239', '343349', 'Sampaio Corrêa / MA', '10Léo Artur Leonardo Artur de Melo TP343349')
+   ('A', 22, '005', '387432', 'Corinthians / SP', '29Roni Roni Medeiros de Moura RP387432')
+
+Modelo: HAM1
+Ano: 20
+Jogadores:
+   ('B', 22, '005', '291797', 'Novorizontino / SP', '4Ligger Ligger Moreira Malaquias TP291797')
+   ('A', 22, '005', '178486', 'Corinthians / SP', '11Giuliano Giuliano Victor de Paula RP178486')
+   ('A', 22, '025', '183755', 'América / MG', '22Danilo Danilo Fernando Avelar RP183755')
+   ('A', 20, '002', '137990', 'Botafogo / RJ', '12Diego Cava ... Diego Cavalieri T(g)P137990')
+   ('A', 22, '002', '691654', 'Fluminense / RJ', '14German Cano German Ezequiel Cano TP691654')
+   ('A', 22, '088', '523897', 'Corinthians / SP', '39Xavier João Vitor Xavier de ... RP523897')
+   ('A', 21, '009', '365361', 'Chapecoense / SC', '98Tiepo Giovanni Silva Tiepo T(g)P365361')
+   ('B', 22, '006', '174223', 'Londrina / PR', '5João Paulo Joao Paulo da Silva TP174223')
+   ('A', 22, '227', '435371', 'Corinthians / SP', '38Leo Leonardo Natel Vieira RP435371')
+   ('A', 22, '005', '166276', 'Corinthians / SP', '12Cássio Cassio Ramos T(g)P166276')
+
+Modelo: HAM1
+Ano: 21
+Jogadores:
+   ('A', 22, '066', '313582', 'Juventude / RS', '20Moraes Onitlasi Junior de M ... RP313582')
+   ('A', 21, '009', '365361', 'Chapecoense / SC', '98Tiepo Giovanni Silva Tiepo T(g)P365361')
+   ('A', 22, '045', '305521', 'Cuiabá / MT', '18Jenison Jenison de Jesus Bri ... RP305521')
+   ('B', 22, '004', '302881', 'Brusque / SC', '3Everton Everton Paulo Strieder TP302881')
+   ('B', 22, '003', '460562', 'Sport / PE', '1Mailson Mailson Tenorio dos  ... T(g)P460562')
+   ('A', 21, '005', '169888', 'Sport / PE', '30Thiago Neves Thiago Neves Augusto TP169888')
+   ('B', 22, '089', '350716', 'Bahia / BA', '77Mateus Claus Mateus Eduardo Claus RP350716')
+   ('A', 22, '002', '373768', 'Santos / SP', '3Felipe Felipe Jonatan Rocha ... RP373768')
+   ('A', 21, '010', '336531', 'Juventude / RS', '6Alyson Alyson Vinicius Alme ... TP336531')
+   ('A', 21, '076', '299142', 'Fortaleza / CE', '4Jackson Jackson de Souza RP299142')
+
+Modelo: HAM1
+Ano: 22
+Jogadores:
+   ('A', 22, '006', '175720', 'Juventude / RS', '12Rafael Rafael Forster TP175720')
+   ('B', 22, '006', '185126', 'Náutico / PE', '9Kieza Welker Marcal Almeida TP185126')
+   ('A', 22, '006', '342224', 'Juventude / RS', '2Rodrigo Rodrigo Alves Soares TP342224')
+   ('B', 22, '002', '184798', 'CSA / AL', '19Didira Cicero dos Santos RP184798')
+   ('B', 22, '006', '344841', 'Náutico / PE', '7Ewandro Ewandro Felipe de Li ... TP344841')
+   ('A', 22, '004', '522146', 'Ceará / CE', '10Mendoza John Steven Mendoza  ... TP522146')
+   ('B', 22, '003', '345443', 'Sampaio Corrêa / MA', '16Lucas Lucas Hipolito Caval ... RP345443')
+   ('A', 22, '006', '409084', 'Juventude / RS', '31Cesar Cesar Augusto Soares ... T(g)P409084')
+   ('A', 22, '004', '540357', 'Palmeiras / SP', '28Danilo Santos Danilo dos Santos de ... TP540357')
+   ('A', 22, '009', '398805', 'América / MG', '40Matheusinho Matheus Leonardo Sal ... RP398805')
+
+Modelo: HAM2
+Ano: 18
+Jogadores:
+   ('A', 22, '008', '307285', 'Atlético / GO', '9Wellington ... Wellington Soares da ... TP307285')
+   ('A', 22, '005', '178486', 'Corinthians / SP', '11Giuliano Giuliano Victor de Paula RP178486')
+   ('B', 20, '007', '348248', 'CRB / AL', '14Ricardo Ricardo Thalheimer RP348248')
+   ('A', 22, '005', '322852', 'Botafogo / RJ', '20Daniel Borges Daniel Fortunato Borges RP322852')
+   ('A', 22, '031', '152788', 'América / MG', '7Wellington ... Wellington Pereira d ... RP152788')
+   ('A', 22, '007', '421778', 'Cuiabá / MT', '6Igor Carius Igor Aquino da Silva TP421778')
+   ('A', 19, '009', '565315', 'Corinthians / SP', '7Sornoza Junior Nazareno Sorn... TP565315')
+   ('B', 19, '003', '325020', 'São Bento / SP', '6Mansur Joeliton Lima Santos TP325020')
+   ('B', 22, '006', '339225', 'Londrina / PR', '20Augusto Augusto de Souza Silva TP339225')
+   ('B', 22, '010', '174360', 'Chapecoense / SC', '3Leo Leonardo Renan Simoe ... TP174360')
+
+Modelo: HAM2
+Ano: 19
+Jogadores:
+   ('A', 22, '001', '317445', 'Atlético Mineiro / MG', '2Guga Claudio Rodrigues Gomes TP317445')
+   ('B', 20, '007', '348248', 'CRB / AL', '14Ricardo Ricardo Thalheimer RP348248')
+   ('A', 22, '005', '322852', 'Botafogo / RJ', '20Daniel Borges Daniel Fortunato Borges RP322852')
+   ('A', 22, '010', '308316', 'Goiás / GO', '23Tadeu Tadeu Antonio Ferreira T(g)P308316')
+   ('A', 22, '022', '430588', 'Internacional / RS', '17David David Correa da Fonseca RP430588')
+   ('B', 22, '003', '431106', 'Sampaio Corrêa / MA', '18Eronildo Eronildo dos Santos Rocha RP431106')
+   ('A', 21, '001', '165924', 'Palmeiras / SP', '10Luiz Adriano Luiz Adriano Souza d... TP165924')
+   ('A', 22, '004', '333975', 'Ceará / CE', '6Bruno Pacheco Bruno de Jesus Pacheco TP333975')
+   ('A', 19, '050', '453172', 'Corinthians / SP', '19Gustavo Gustavo Henrique da  ... RP453172')
+   ('B', 21, '014', '175018', 'CRB / AL', '13Celsinho Celsonil Santos de M ... RP175018')
+
+Modelo: HAM2
+Ano: 20
+Jogadores:
+   ('A', 20, '002', '137990', 'Botafogo / RJ', '12Diego Cava ... Diego Cavalieri T(g)P137990')
+   ('A', 22, '005', '322852', 'Botafogo / RJ', '20Daniel Borges Daniel Fortunato Borges RP322852')
+   ('B', 22, '005', '291797', 'Novorizontino / SP', '4Ligger Ligger Moreira Malaquias TP291797')
+   ('A', 22, '008', '307285', 'Atlético / GO', '9Wellington ... Wellington Soares da ... TP307285')
+   ('A', 22, '221', '190389', 'Goiás / GO', '10Marquinhos ... Marcos Gabriel do Na ... RP190389')
+   ('A', 22, '018', '502361', 'Goiás / GO', '11Pedro Raul Pedro Raul Garay da Silva TP502361')
+   ('A', 22, '005', '355418', 'Botafogo / RJ', '4Victor Victor Hugo Soares d ... TP355418')
+   ('B', 21, '009', '150549', 'Cruzeiro / MG', '10Rafael Sobis Rafael Augusto Sobis TP150549')
+   ('A', 22, '088', '523897', 'Corinthians / SP', '39Xavier João Vitor Xavier de ... RP523897')
+   ('B', 20, '002', '187522', 'Náutico / PE', '6Wilian Wilian Simoes TP187522')
+
+Modelo: HAM2
+Ano: 21
+Jogadores:
+   ('B', 22, '003', '460562', 'Sport / PE', '1Mailson Mailson Tenorio dos  ... T(g)P460562')
+   ('A', 22, '066', '313582', 'Juventude / RS', '20Moraes Onitlasi Junior de M ... RP313582')
+   ('A', 22, '007', '345210', 'Cuiabá / MT', '15Marcos Marcos Antonio Almei ... RP345210')
+   ('B', 22, '183', '502079', 'Sport / PE', '88Denner Denner Fernando Melz RP502079')
+   ('B', 22, '012', '317697', 'Vasco da Gama / RJ', '13Gabriel Dias Gabriel Dias de Oliveira TP317697')
+   ('A', 22, '011', '525042', 'Juventude / RS', '34Vitor Mendes Vitor Mendes Alves RP525042')
+   ('B', 22, '006', '351605', 'Londrina / PR', '16Jean Henrique Jean Henrique dos Santos RP351605')
+   ('A', 21, '009', '365361', 'Chapecoense / SC', '98Tiepo Giovanni Silva Tiepo T(g)P365361')
+   ('B', 22, '041', '166649', 'Brusque / SC', '40Wallace Reis Wallace Reis Silva RP166649')
+   ('A', 22, '002', '373768', 'Santos / SP', '3Felipe Felipe Jonatan Rocha ... RP373768')
+
+Modelo: HAM2
+Ano: 22
+Jogadores:
+   ('A', 22, '006', '175720', 'Juventude / RS', '12Rafael Rafael Forster TP175720')
+   ('B', 22, '006', '185126', 'Náutico / PE', '9Kieza Welker Marcal Almeida TP185126')
+   ('A', 22, '006', '342224', 'Juventude / RS', '2Rodrigo Rodrigo Alves Soares TP342224')
+   ('A', 22, '006', '409084', 'Juventude / RS', '31Cesar Cesar Augusto Soares ... T(g)P409084')
+   ('B', 22, '006', '344841', 'Náutico / PE', '7Ewandro Ewandro Felipe de Li ... TP344841')
+   ('B', 22, '002', '177948', 'CSA / AL', '31Marcelo Marcelo Henrique Pas ... T(g)P177948')
+   ('B', 22, '009', '341715', 'Operário / PR', '3Thales Thales Natanael Lira ... TP341715')
+   ('B', 22, '009', '178294', 'Operário / PR', '9Paulo Sergio Paulo Sergio Luiz de ... TP178294')
+   ('A', 22, '006', '179974', 'Juventude / RS', '9Ricardo Bueno Ricardo Bueno da Silva TP179974')
+   ('B', 22, '009', '394762', 'Operário / PR', '21Jean Jean Carlo Bernieri  ... RP394762')
+
