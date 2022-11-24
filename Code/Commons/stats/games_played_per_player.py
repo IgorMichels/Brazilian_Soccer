@@ -35,6 +35,9 @@ cont = {n : 0 for n in range(1, max_games + 1)}
 for player in players:
     cont[players[player]] += 1
     
+with open('games_played.json', 'w') as f:
+    json.dump(players, f)
+    
 plt.bar(cont.keys(), cont.values())
 plt.title('Número de subpartidas x Quantidade de jogadores')
 plt.xlabel('Número de subpartidas')
