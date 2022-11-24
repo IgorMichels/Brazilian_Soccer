@@ -1,7 +1,7 @@
-Modelo      Ano  1                   2  3               4             5                            6    7    8  9                            10
---------  -----  ----------------  ---  --------------  ------------  -------------------------  ---  ---  ---  -------------------------  ----
-HAM2         18  26                 40  51              49            Athletico Paranaense / PR   25   41   53  42                           44
-HAM2         19  39                 53  Joinville / SC  45            49                          51   50   41  43                           40
-HAM2         20  25                 42  53              41            43                          44   40   49  Athletico Paranaense / PR    46
-HAM2         21  45                 37  41              Náutico / PE  53                          26   44   29  49                           19
-HAM2         22  Corinthians / SP   39  60              49            40                          43   23   51  45                           58
+Modelo      Ano  1                 2                 3                4               5                          6                   7                8                9                          10
+--------  -----  ----------------  ----------------  ---------------  --------------  -------------------------  ------------------  ---------------  ---------------  -------------------------  -------------------------
+HAM2         18  Joinville / SC    Icasa / CE        Mogi Mirim / SP  Vila Nova / GO  Athletico Paranaense / PR  Avaí / SC           ABC / RN         CRB / AL         São Caetano / SP           Paysandu / PA
+HAM2         19  Boa / MG          CRB / AL          Joinville / SC   ASA / AL        Vila Nova / GO             Mogi Mirim / SP     Luverdense / MT  ABC / RN         Guaratinguetá / SP         Icasa / CE
+HAM2         20  Avaí / SC         São Caetano / SP  CRB / AL         ABC / RN        Guaratinguetá / SP         Paysandu / PA       Icasa / CE       Vila Nova / GO   Athletico Paranaense / PR  América / RN
+HAM2         21  ASA / AL          Juventude / RS    ABC / RN         Náutico / PE    CRB / AL                   Joinville / SC      Paysandu / PA    Atlético / GO    Vila Nova / GO             Athletico Paranaense / PR
+HAM2         22  Corinthians / SP  Boa / MG          Operário / PR    Vila Nova / GO  Icasa / CE                 Guaratinguetá / SP  Palmeiras / SP   Mogi Mirim / SP  ASA / AL                   São Bento / SP
