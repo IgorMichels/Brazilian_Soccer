@@ -10,9 +10,8 @@ if __name__ == '__main__':
     n_best = 10
     headers = ['Modelo', 'Ano'] + [str(i + 1) for i in range(n_best)]
     table = []
-    models = ['ADM']#, 'HAM1', 'HAM2']
+    models = ['ADM', 'HAM1', 'HAM2']
     years = range(18, 23)
-    years = range(22, 23)
     for model, year in product(models, years):
         results = {}
         data = f'{year}B'
@@ -39,7 +38,6 @@ if __name__ == '__main__':
         results = np.argsort(results)
         best = list(results[- n_best:])
         players_file = f'../../Commons/players_{data}_all.json'
-        print(players_file)
         with open(players_file, 'r') as f:
             players_id = json.load(f)
         
