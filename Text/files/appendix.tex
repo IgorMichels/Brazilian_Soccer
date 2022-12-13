@@ -1,0 +1,119 @@
+\chapter{Códigos Stan}
+\label{apendice}
+
+\section{Attack and Defense Model}
+\label{stan_model_1}
+
+Código Stan para o modelo visto na Seção \ref{ADM_text}.
+
+\begin{lstlisting}[language = Stan, firstnumber = 1]
+data {
+  int<lower = 1> n_obs;
+  int<lower = 1> n_players;
+  array[n_obs] int<lower = 1> times;
+  int<lower = 1> n_players_per_game;
+  array[n_obs, 2] int results;
+  array[n_obs, n_players_per_game] int club_1;
+  array[n_obs, n_players_per_game] int club_2;
+}
+
+parameters {
+  array[n_players] real<lower = 0> theta_atk;
+  array[n_players] real<lower = 0> theta_def;
+}
+
+model {
+  theta_atk ~ std_normal();
+  theta_def ~ std_normal();
+  for (n in 1:n_obs){
+    results[n, 1] ~ poisson(sum(theta_atk[club_1[n, ]]) /
+                            sum(theta_def[club_2[n, ]]) *
+                            times[n]);
+    results[n, 2] ~ poisson(sum(theta_atk[club_2[n, ]]) /
+                            sum(theta_def[club_1[n, ]]) *
+                            times[n]);
+  }
+}
+\end{lstlisting}
+
+\section{Home Away Model 1}
+\label{stan_model_2}
+
+Código Stan para o modelo visto na Seção \ref{HAM1_text}.
+
+\begin{lstlisting}[language = Stan, firstnumber = 1]
+data {
+  int<lower = 1> n_obs;
+  int<lower = 1> n_players;
+  array[n_obs] int<lower = 1> times;
+  int<lower = 1> n_players_per_game;
+  array[n_obs, 2] int results;
+  array[n_obs, n_players_per_game] int club_1;
+  array[n_obs, n_players_per_game] int club_2;
+}
+
+parameters {
+  array[n_players] real<lower = 0> theta_atk_m;
+  array[n_players] real<lower = 0> theta_def_m;
+  array[n_players] real<lower = 0> theta_atk_v;
+  array[n_players] real<lower = 0> theta_def_v;
+}
+
+model {
+  theta_atk_m ~ std_normal();
+  theta_def_m ~ std_normal();
+  theta_atk_v ~ std_normal();
+  theta_def_v ~ std_normal();
+  for (n in 1:n_obs){
+    results[n, 1] ~ poisson(sum(theta_atk_m[club_1[n, ]]) /
+                    sum(theta_def_v[club_2[n, ]]) *
+                    times[n]);
+    results[n, 2] ~ poisson(sum(theta_atk_v[club_2[n, ]]) /
+                    sum(theta_def_m[club_1[n, ]]) *
+                    times[n]);
+  }
+}
+\end{lstlisting}
+
+\section{Home Away Model 2}
+\label{stan_model_3}
+
+Código Stan para o modelo visto na Seção \ref{HAM2_text}.
+
+\begin{lstlisting}[language = Stan, firstnumber = 1]
+data {
+  int n_obs;
+  int n_clubs;
+  int n_players;
+  int n_players_per_game;
+  array[n_obs] int times;
+  array[n_obs] int home_clubs;
+  array[n_obs, 2] int results;
+  array[n_obs, n_players_per_game] int club_1;
+  array[n_obs, n_players_per_game] int club_2;
+}
+
+parameters {
+  array[n_players] real<lower = 0> theta_atk;
+  array[n_players] real<lower = 0> theta_def;
+  array[n_clubs] real<lower = 0> sigma_atk;
+  array[n_clubs] real<lower = 0> sigma_def;
+}
+
+model {
+  theta_atk ~ std_normal();
+  theta_def ~ std_normal();
+  sigma_atk ~ std_normal();
+  sigma_def ~ std_normal();
+  for (n in 1:n_obs){
+    results[n, 1] ~ poisson(((sum(theta_atk[club_1[n, ]]) +
+                              sigma_atk[home_clubs[n]]) / 
+                             sum(theta_def[club_2[n, ]])) *
+                            times[n]);
+    results[n, 2] ~ poisson((sum(theta_atk[club_2[n, ]]) / 
+                             (sum(theta_def[club_1[n, ]]) +
+                              sigma_def[home_clubs[n]])) *
+                            times[n]);
+  }
+}
+\end{lstlisting}
